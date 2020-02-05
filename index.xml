@@ -6,7 +6,7 @@
     <description>Recent content on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 05 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://unamelinux.com/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Simple Samba</title>
       <link>https://unamelinux.com/posts/samba/</link>
-      <pubDate>Tue, 04 Feb 2020 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 05 Feb 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/posts/samba/</guid>
       <description>As a first post I thought I would tackle a topic I initially avoided for quite a while, Samba. Setting up a Samba server can be incredibly simple and is a great first step to setting up your own personal cloud at home.
@@ -24,7 +24,7 @@ Sharing files via Samba allows me to go from my desktop to my laptop without ski
     <item>
       <title>About</title>
       <link>https://unamelinux.com/about/</link>
-      <pubDate>Mon, 04 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/about/</guid>
       <description>I am an aspiring sys admin, coder, and Linux enthusiast.
@@ -34,7 +34,7 @@ Over the past five years or so I&amp;rsquo;ve become increasingly interested in 
     <item>
       <title>Contact</title>
       <link>https://unamelinux.com/contact/</link>
-      <pubDate>Mon, 04 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/contact/</guid>
       <description>If you have any questions, comments, or just want to reach out feel free to contact me via Twitter, Telegram, or shoot an email over to pabuffon@protonmail.com.</description>
@@ -43,7 +43,7 @@ Over the past five years or so I&amp;rsquo;ve become increasingly interested in 
     <item>
       <title>Theme</title>
       <link>https://unamelinux.com/theme/</link>
-      <pubDate>Mon, 04 Feb 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/theme/</guid>
       <description>The blog was generated using Hugo and is hosted on GitHub Pages using Cloudflare for DNS. I developed the theme myself using HTML, CSS, and a bit of Golang to piece everything together.
