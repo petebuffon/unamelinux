@@ -48,7 +48,7 @@
 <p>First off let me introduce my home server.  I have an Intel Kaby Lake Pentium G4600 two core four thread CPU with 8 GB of DDR4 RAM.  It&rsquo;s capable system, but by no means a beast.  You could easily repurpose an older system or use a single board computer such as a Raspberry Pi as a Samba Server.  There are tons of great options out there.  As a side note, prior to the Rasbperry Pi 4, the USB ports connected to a combo hub/Ethernet chip and the ethernet throughput was hindered as a result.  Something to keep in mind.</p>
 <hr>
 <h2 id="server">Server</h2>
-<p>Install the Samba package and create a backup of the default smb.conf config.
+<p>Install the Samba package and create a backup of the default smb.conf config.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -58,10 +58,10 @@
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pete@home:~$ sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt install samba -y
 pete@home:~$ sudo mv /etc/samba/smb.conf /etc/smb.conf.bak</code></pre></td></tr></table>
 </div>
-</div></p>
+</div>
 <p>Samba configs can get complicated fast and here I&rsquo;m outling the bare minimum to get started.  Each section is started with a name enclosed in brackets.  The global section outlines the guest user and log settings.  You will then need a section for each directory you want to share.</p>
 <p>Here I am sharing the /tank/media/music directory with guest access and read only permissions.  This configuration allows any user on the LAN to mount the music directory, but changes can&rsquo;t be made to it as it is shared read only.  I am also sharing the /tank/media/documents directory with security=user access and read/write permissions (both defaults). This configuration requires a samba user name and password before mounting the documents directory.</p>
-<p>Create a new config at /etc/samba/smb.conf (I like to create a new file to avoid clutter):
+<p>Create a new config at /etc/samba/smb.conf (I like to create a new file to avoid clutter):</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -93,8 +93,8 @@ pete@home:~$ sudo mv /etc/samba/smb.conf /etc/smb.conf.bak</code></pre></td></tr
     path <span style="color:#f92672">=</span> /samba/documents
     read only <span style="color:#f92672">=</span> no</code></pre></td></tr></table>
 </div>
-</div></p>
-<p>Check the config file for errors:
+</div>
+<p>Check the config file for errors:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -102,8 +102,8 @@ pete@home:~$ sudo mv /etc/samba/smb.conf /etc/smb.conf.bak</code></pre></td></tr
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> pete@home:~$ testparm -s</code></pre></td></tr></table>
 </div>
-</div></p>
-<p>Samba requires a Linux user account.  I&rsquo;m going to go ahead a use my existing account, but a new one can also be created explicitly for Samba.  While the user name is shared with Linux system, a new password needs to be set for Samba.
+</div>
+<p>Samba requires a Linux user account.  I&rsquo;m going to go ahead a use my existing account, but a new one can also be created explicitly for Samba.  While the user name is shared with Linux system, a new password needs to be set for Samba.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -111,8 +111,8 @@ pete@home:~$ sudo mv /etc/samba/smb.conf /etc/smb.conf.bak</code></pre></td></tr
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> pete@home:~$ sudo smbpasswd -a pete</code></pre></td></tr></table>
 </div>
-</div></p>
-<p>Next go ahead and start the Samba service and open up your firewall to allow Samba access.
+</div>
+<p>Next go ahead and start the Samba service and open up your firewall to allow Samba access.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -122,11 +122,11 @@ pete@home:~$ sudo mv /etc/samba/smb.conf /etc/smb.conf.bak</code></pre></td></tr
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pete@home:~$ sudo systemctl start smbd.service
 pete@home:~$ sudo ufw allow samba</code></pre></td></tr></table>
 </div>
-</div></p>
+</div>
 <p>That&rsquo;s it!  Now you have a working Samba server ready to be accessed.</p>
 <hr>
 <h2 id="client">Client</h2>
-<p>First install the necessary package.
+<p>First install the necessary package.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -134,8 +134,8 @@ pete@home:~$ sudo ufw allow samba</code></pre></td></tr></table>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> pete@home:~$ sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt install cifs-utils -y</code></pre></td></tr></table>
 </div>
-</div></p>
-<p>Now go ahead and test your server by mounting one of the file systems.  In this example I am mounting the documents share in the /mnt/documents directory on the client system in read/write mode with the uid of 1000 and a gid of 1000.  You will be prompted for the Samba password you set earlier.<br>
+</div>
+<p>Now go ahead and test your server by mounting one of the file systems.  In this example I am mounting the documents share in the /mnt/documents directory on the client system in read/write mode with the uid of 1000 and a gid of 1000.  You will be prompted for the Samba password you set earlier.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -145,9 +145,9 @@ pete@home:~$ sudo ufw allow samba</code></pre></td></tr></table>
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pete@home:~$ sudo mkdir /mnt/documents
 pete@home:~$ sudo mount -t cifs //server_ip/documents /mnt/documents-ousername<span style="color:#f92672">=</span>pete,uid<span style="color:#f92672">=</span>1000,gid<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span></code></pre></td></tr></table>
 </div>
-</div></p>
+</div>
 <p>For simplicity both my server and client usernames, uids, and gids are the same, pete, 1000, 1000.  I could have also created a user named samba on the server with uid=1001, gid=1001 and on the client computer still mounted the share as uid=1000 and gid=1000 (pete).  A quick <code>ip -a</code> on the server will return its IP address if you don&rsquo;t know it off hand.</p>
-<p>Finally let&rsquo;s get a permanent mount set up using fstab.  Avoid storing your Samba password in plaintext by creating a credentials file at /etc/samba/credentials/share.
+<p>Finally let&rsquo;s get a permanent mount set up using fstab.  Avoid storing your Samba password in plaintext by creating a credentials file at /etc/samba/credentials/share.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -157,8 +157,8 @@ pete@home:~$ sudo mount -t cifs //server_ip/documents /mnt/documents-ousername<s
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">username<span style="color:#f92672">=</span>pete
 password<span style="color:#f92672">=</span>this_is_my_password</code></pre></td></tr></table>
 </div>
-</div></p>
-<p>Modify the permissions of the credential file to be readable/writable by root:
+</div>
+<p>Modify the permissions of the credential file to be readable/writable by root:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -170,8 +170,8 @@ password<span style="color:#f92672">=</span>this_is_my_password</code></pre></td
 pete@home:~$ sudo chmod <span style="color:#ae81ff">700</span> /etc/samba/credentials
 pete@home:~$ sudo chmod <span style="color:#ae81ff">600</span> /etc/samba credentials/share</code></pre></td></tr></table>
 </div>
-</div></p>
-<p>Enter a new line for each share in /etc/fstab:
+</div>
+<p>Enter a new line for each share in /etc/fstab:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -181,8 +181,8 @@ pete@home:~$ sudo chmod <span style="color:#ae81ff">600</span> /etc/samba creden
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">//server_ip/music /home/pete/Music _netdev,ro,uid<span style="color:#f92672">=</span>1000,gid<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span>
 //server_ip/documents /home/pete/Documents _netdev,credentials<span style="color:#f92672">=</span>/etc/samba/credentials/share,uid<span style="color:#f92672">=</span>1000,gid<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span></code></pre></td></tr></table>
 </div>
-</div></p>
-<p>Go ahead and either mount the shares right away or reboot.
+</div>
+<p>Go ahead and either mount the shares right away or reboot.</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -190,7 +190,7 @@ pete@home:~$ sudo chmod <span style="color:#ae81ff">600</span> /etc/samba creden
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> pete@home:~$ sudo mount -a</code></pre></td></tr></table>
 </div>
-</div></p>
+</div>
 <p>For additional information I&rsquo;d recommend checking out the Samba entry over at <a href="https://wiki.archlinux.org/index.php/samba">ArchWiki</a>.  There are a lot more advanced things you can do with Samba.  I plan on tackling autofs mounting and VPN access in future installments.</p>
 <hr>
 
