@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
-    <link>http://example.org/</link>
-    <description>Recent content on My New Hugo Site</description>
+    <title>uname Linux</title>
+    <link>https://unamelinux.com/</link>
+    <description>Recent content on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 04 Feb 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://unamelinux.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Simple Samba</title>
-      <link>http://example.org/posts/samba/</link>
+      <link>https://unamelinux.com/posts/samba/</link>
       <pubDate>Tue, 04 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/posts/samba/</guid>
+      <guid>https://unamelinux.com/posts/samba/</guid>
       <description>As a first post I thought I would tackle a topic I initially avoided for quite a while, Samba. Setting up a Samba server can be incredibly simple and is a great first step to setting up your own personal cloud at home.
 Sharing files via Samba allows me to go from my desktop to my laptop without skipping a beat. I can also feel at ease because my sensitive files are password protected and remain solely on the LAN.</description>
     </item>
     
     <item>
       <title>About</title>
-      <link>http://example.org/about/</link>
+      <link>https://unamelinux.com/about/</link>
       <pubDate>Mon, 04 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/about/</guid>
+      <guid>https://unamelinux.com/about/</guid>
       <description>I am an aspiring sys admin, coder, and Linux enthusiast.
 Over the past five years or so I&amp;rsquo;ve become increasingly interested in computers. It all started with a long time dream of building my own computer, which I accomplished in 2014. I grew up with Macs, but I began to have an itch to tinker and I found myself installing Ubuntu on my new desktop rig. This path eventually led to installing Arch, but nowadays I find myself going back and forth between Fedora and Ubuntu.</description>
     </item>
     
     <item>
       <title>Contact</title>
-      <link>http://example.org/contact/</link>
+      <link>https://unamelinux.com/contact/</link>
       <pubDate>Mon, 04 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/contact/</guid>
+      <guid>https://unamelinux.com/contact/</guid>
       <description>If you have any questions, comments, or just want to reach out feel free to contact me via Twitter, Telegram, or shoot an email over to pabuffon@protonmail.com.</description>
     </item>
     
     <item>
       <title>Theme</title>
-      <link>http://example.org/theme/</link>
+      <link>https://unamelinux.com/theme/</link>
       <pubDate>Mon, 04 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/theme/</guid>
+      <guid>https://unamelinux.com/theme/</guid>
       <description>The blog was generated using Hugo and is hosted on GitHub Pages using Cloudflare for DNS. I developed the theme myself using HTML, CSS, and a bit of Golang to piece everything together.
 The design of the blog itself was an experiment to create a static website using HTML and CSS. I&amp;rsquo;m going for simplicity and speed here with the potential for further experimentation in the future.
 Right now the Hugo theme code for this site is fairly specific (and a little messy), but I do plan on simplifying and generalizing it in the future so I can release it as a theme on themes.</description>

@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on My New Hugo Site</title>
-    <link>http://example.org/tags/</link>
-    <description>Recent content in Tags on My New Hugo Site</description>
+    <title>Tags on uname Linux</title>
+    <link>https://unamelinux.com/tags/</link>
+    <description>Recent content in Tags on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 04 Feb 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://example.org/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://unamelinux.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>home server</title>
-      <link>http://example.org/tags/home-server/</link>
+      <link>https://unamelinux.com/tags/home-server/</link>
       <pubDate>Tue, 04 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/home-server/</guid>
+      <guid>https://unamelinux.com/tags/home-server/</guid>
       <description></description>
     </item>
     
     <item>
       <title>NAS</title>
-      <link>http://example.org/tags/nas/</link>
+      <link>https://unamelinux.com/tags/nas/</link>
       <pubDate>Tue, 04 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/nas/</guid>
+      <guid>https://unamelinux.com/tags/nas/</guid>
       <description></description>
     </item>
     
     <item>
       <title>samba</title>
-      <link>http://example.org/tags/samba/</link>
+      <link>https://unamelinux.com/tags/samba/</link>
       <pubDate>Tue, 04 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/tags/samba/</guid>
+      <guid>https://unamelinux.com/tags/samba/</guid>
       <description></description>
     </item>
     
