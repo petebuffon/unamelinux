@@ -5,7 +5,7 @@
   <title>
     uname Linux
   </title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto|Space+Mono|Ubuntu&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto|Space+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unamelinux.com/css/style.css">
 </head><body><nav>
     <li>
@@ -125,7 +125,7 @@ pete@home:~$ sudo ufw allow samba</code></pre></td></tr></table>
 </div></p>
 <p>That&rsquo;s it!  Now you have a working Samba server ready to be accessed.</p>
 <hr>
-<h1 id="client">Client</h1>
+<h2 id="client">Client</h2>
 <p>First install the necessary package.
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -145,8 +145,8 @@ pete@home:~$ sudo ufw allow samba</code></pre></td></tr></table>
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pete@home:~$ sudo mkdir /mnt/documents
 pete@home:~$ sudo mount -t cifs //server_ip/documents /mnt/documents-ousername<span style="color:#f92672">=</span>pete,uid<span style="color:#f92672">=</span>1000,gid<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span></code></pre></td></tr></table>
 </div>
-</div>
-For simplicity both my server and client usernames, uids, and gids are the same, pete, 1000, 1000.  I could have also created a user named samba on the server with uid=1001, gid=1001 and on the client computer still mounted the share as uid=1000 and gid=1000 (pete).  A quick <code>ip -a</code> on the server will return its IP address if you don&rsquo;t know it off hand.</p>
+</div></p>
+<p>For simplicity both my server and client usernames, uids, and gids are the same, pete, 1000, 1000.  I could have also created a user named samba on the server with uid=1001, gid=1001 and on the client computer still mounted the share as uid=1000 and gid=1000 (pete).  A quick <code>ip -a</code> on the server will return its IP address if you don&rsquo;t know it off hand.</p>
 <p>Finally let&rsquo;s get a permanent mount set up using fstab.  Avoid storing your Samba password in plaintext by creating a credentials file at /etc/samba/credentials/share.
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -188,7 +188,7 @@ pete@home:~$ sudo chmod <span style="color:#ae81ff">600</span> /etc/samba creden
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pete@home:~$ sudo mount -a</code></pre></td></tr></table>
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> pete@home:~$ sudo mount -a</code></pre></td></tr></table>
 </div>
 </div></p>
 <p>For additional information I&rsquo;d recommend checking out the Samba entry over at <a href="https://wiki.archlinux.org/index.php/samba">ArchWiki</a>.  There are a lot more advanced things you can do with Samba.  I plan on tackling autofs mounting and VPN access in future installments.</p>
