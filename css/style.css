@@ -104,7 +104,10 @@ main {
 }
 main h1, main h2, main h3 {
     color: #121212;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Raleway', sans-serif;
+}
+main h1 {
+    font-size: 3rem;
 }
 
 /* card */
@@ -114,7 +117,6 @@ main h1, main h2, main h3 {
     width: 40%;
   }
 .card h1, .card h2, .card h3 {
-    font-family: 'Roboto', sans-serif;
     font-size: 2rem;
 }
 .card br {
@@ -145,7 +147,7 @@ article {
     margin: 0px auto 0px auto;
     width: 45%;
     max-width: 100vw;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     line-height: 2;
 }
 p > a {
@@ -155,7 +157,8 @@ p > a {
 }
 
 article > p {
-    margin-top: 2rem;
+    margin-top: 2.4rem;
+    font-family: 'Roboto' sans-serif;
 }
 
 /* footer */
@@ -171,7 +174,7 @@ footer {
 /* highlight */
 .highlight {
     font-size: 1rem;
-    line-height: 1.2;
+    line-height: 1.4;
 }
 
 /* media */
