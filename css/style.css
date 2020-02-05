@@ -32,7 +32,6 @@ li {
     list-style-type: none;
 }
 
-
 /* taxonomy */
 .taxonomy a {
     color: #121212;
@@ -86,6 +85,9 @@ header {
     text-align: center;
     font-family: 'Space Mono', monospace;
 }
+.header-container > img {
+    width: 40%;
+}
 article > p > img {
     display: block;
     margin-left: auto;
@@ -138,9 +140,7 @@ hr {
     margin-top: 75px;
     margin-bottom: 75px;
 }
-.article-header > img {
-    width: 80%;
-}
+
 article {
     margin: 0px auto 0px auto;
     width: 45%;
@@ -180,7 +180,7 @@ footer {
         justify-content: space-around;
     }
     .header-container > img {
-        width: 85%;
+        width: 80%;
     }
     .card {
         width: 60%;
@@ -210,6 +210,9 @@ footer {
         font-size: .75rem;
     }
     .header-container > img {
+        width: 95%;
+    }
+    .header-container > h2 {
         width: 95%;
     }
     article {
