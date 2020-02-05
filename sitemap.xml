@@ -3,57 +3,57 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://example.org/tags/home-server/</loc>
+    <loc>https://unamelinux.com/tags/home-server/</loc>
     <lastmod>2020-02-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/</loc>
+    <loc>https://unamelinux.com/tags/nas/</loc>
     <lastmod>2020-02-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/tags/nas/</loc>
+    <loc>https://unamelinux.com/posts/</loc>
     <lastmod>2020-02-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/posts/</loc>
+    <loc>https://unamelinux.com/tags/samba/</loc>
     <lastmod>2020-02-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/tags/samba/</loc>
+    <loc>https://unamelinux.com/posts/samba/</loc>
     <lastmod>2020-02-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/posts/samba/</loc>
+    <loc>https://unamelinux.com/tags/</loc>
     <lastmod>2020-02-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/tags/</loc>
+    <loc>https://unamelinux.com/</loc>
     <lastmod>2020-02-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/about/</loc>
+    <loc>https://unamelinux.com/about/</loc>
     <lastmod>2019-02-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/contact/</loc>
+    <loc>https://unamelinux.com/contact/</loc>
     <lastmod>2019-02-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/theme/</loc>
+    <loc>https://unamelinux.com/theme/</loc>
     <lastmod>2019-02-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://example.org/categories/</loc>
+    <loc>https://unamelinux.com/categories/</loc>
   </url>
   
 </urlset>
