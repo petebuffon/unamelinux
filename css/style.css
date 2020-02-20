@@ -88,11 +88,13 @@ header {
 .header-container > img {
     width: 40%;
 }
+
 article > p > img {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 58%;
+    padding: 0.5rem;
 }
 
 /* main */
@@ -156,7 +158,6 @@ p > a {
     color: #262626;
     font-weight: bold;
 }
-
 article > p {
     margin-top: 1.4rem;
     margin-bottom: 1.4rem;
@@ -266,4 +267,9 @@ code {
     font-family: 'Roboto Mono', monospace;
     color: #d9d9d9;
     font-size: 1rem;
+}
+
+.pnf > p, h1 {
+    text-align: center;
+    font-size: 5rem;
 }
