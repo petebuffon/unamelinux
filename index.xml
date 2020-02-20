@@ -6,10 +6,20 @@
     <description>Recent content on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 05 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://unamelinux.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>XPS 13 Tweaks</title>
+      <link>https://unamelinux.com/posts/xps13tweaks/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/xps13tweaks/</guid>
+      <description>I&amp;rsquo;ve had my Dell XPS 13 for about six months now and thought I&amp;rsquo;d write a quick review and summarize some of the tweaks I&amp;rsquo;ve made over time. In August 2019 I purchased a Developer Edition Dell XPS 13 9380 which came with Dell&amp;rsquo;s version of Ubuntu pre-installed. Preferring Canonical&amp;rsquo;s stock version of Ubuntu, the first thing I did was install Ubuntu 19.04 on the new laptop.
+The screen of the XPS 13 is fantastic with great color and clarity.</description>
+    </item>
     
     <item>
       <title>Simple Samba</title>
@@ -19,6 +29,27 @@
       <guid>https://unamelinux.com/posts/samba/</guid>
       <description>As a first post I thought I would tackle a topic I initially avoided for quite a while, Samba. Setting up a Samba server can be incredibly simple and is a great first step to setting up your own personal cloud at home.
 Sharing files via Samba allows me to go from my desktop to my laptop without skipping a beat. I can also feel at ease because my sensitive files are password protected and remain solely on the LAN.</description>
+    </item>
+    
+    <item>
+      <title>Privacy Policy</title>
+      <link>https://unamelinux.com/privacy/</link>
+      <pubDate>Tue, 19 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/privacy/</guid>
+      <description>This website does not contain any trackers or cookies.
+No personally identifiable information is collected on this site.
+Webfonts This website is using Fonts from Google Fonts which are fetched from Google. You can find more information about the privacy implications in the FAQs.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://unamelinux.com/license/</link>
+      <pubDate>Thu, 14 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/license/</guid>
+      <description>Copyright 2020 Peter Buffon
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &amp;ldquo;Software&amp;rdquo;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</description>
     </item>
     
     <item>
@@ -37,7 +68,7 @@ Over the past five years or so I&amp;rsquo;ve become increasingly interested in 
       <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/contact/</guid>
-      <description>If you have any questions, comments, or just want to reach out feel free to contact me via Twitter, Telegram, or shoot an email over to pabuffon@protonmail.com.</description>
+      <description>If you have any questions, comments, or just want to reach out feel free to contact me via Twitter or Telegram.</description>
     </item>
     
     <item>

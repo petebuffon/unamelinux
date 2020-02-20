@@ -3,17 +3,47 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://unamelinux.com/tags/hardware/</loc>
+    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/posts/</loc>
+    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/tags/</loc>
+    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/</loc>
+    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/tags/xps-13/</loc>
+    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/posts/xps13tweaks/</loc>
+    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/tags/zfs/</loc>
+    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://unamelinux.com/tags/home-server/</loc>
     <lastmod>2020-02-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://unamelinux.com/tags/nas/</loc>
-    <lastmod>2020-02-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://unamelinux.com/posts/</loc>
     <lastmod>2020-02-05T00:00:00+00:00</lastmod>
   </url>
   
@@ -28,13 +58,13 @@
   </url>
   
   <url>
-    <loc>https://unamelinux.com/tags/</loc>
-    <lastmod>2020-02-05T00:00:00+00:00</lastmod>
+    <loc>https://unamelinux.com/privacy/</loc>
+    <lastmod>2019-02-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://unamelinux.com/</loc>
-    <lastmod>2020-02-05T00:00:00+00:00</lastmod>
+    <loc>https://unamelinux.com/license/</loc>
+    <lastmod>2019-02-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
