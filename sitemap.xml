@@ -3,22 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://unamelinux.com/tags/hardware/</loc>
-    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+    <loc>https://unamelinux.com/tags/containers/</loc>
+    <lastmod>2020-03-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/tags/docker/</loc>
+    <lastmod>2020-03-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/posts/docker/</loc>
+    <lastmod>2020-03-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/tags/nginx/</loc>
+    <lastmod>2020-03-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://unamelinux.com/posts/</loc>
-    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+    <lastmod>2020-03-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://unamelinux.com/tags/</loc>
-    <lastmod>2020-02-20T00:00:00+00:00</lastmod>
+    <lastmod>2020-03-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://unamelinux.com/</loc>
+    <loc>https://unamelinux.com/tags/web-server/</loc>
+    <lastmod>2020-03-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/tags/hardware/</loc>
     <lastmod>2020-02-20T00:00:00+00:00</lastmod>
   </url>
   
@@ -59,6 +79,11 @@
   
   <url>
     <loc>https://unamelinux.com/privacy/</loc>
+    <lastmod>2019-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/</loc>
     <lastmod>2019-02-19T00:00:00+00:00</lastmod>
   </url>
   

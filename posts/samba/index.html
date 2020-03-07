@@ -5,17 +5,14 @@
   <title>
     uname Linux
     </title>
-  <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto|Roboto+Mono|Space+Mono&display=swap"
-    rel="stylesheet">
   <link rel="stylesheet" href="https://unamelinux.com/css/style.css">
+  <link rel="shortcut icon" href="https://unamelinux.com/favicon.png">
+  
 </head><body><nav>
     <li>
-        <a>
+        <a href="https://unamelinux.com/">
             <img src="https://unamelinux.com/small_logo.png" width="66px">
         </a>
-    </li>
-    <li>
-        <a href="https://unamelinux.com/">Home</a>
     </li>
     <li>
         <a href="https://unamelinux.com/about">About</a>
@@ -40,6 +37,7 @@
     <article>
         <div class="article-header">
             <h1>Simple Samba</h1>
+            <p>Feb 5, 2020</p>
         </div>
         <p>As a first post I thought I would tackle a topic I initially avoided for quite a while, Samba.  Setting up a Samba server can be incredibly simple and is a great first step to setting up your own personal cloud at home.</p>
 <p>Sharing files via Samba allows me to go from my desktop to my laptop without skipping a beat.  I can also feel at ease because my sensitive files are password protected and remain solely on the LAN.</p>
@@ -50,9 +48,9 @@
 <hr>
 <h2 id="server">Server</h2>
 <p>Install Samba and create a backup of the default smb.conf config.</p>
-<pre><code># apt update &amp;&amp; apt install samba -y
-# mv /etc/samba/smb.conf /etc/smb.conf.bak
-</code></pre><p>Samba configs can get complicated fast and here I&rsquo;m outling the bare minimum to get started.  Each section is started with a name enclosed in brackets.  The global section outlines the guest user and log settings.  You will then need a section for each directory you want to share.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># apt update &amp;&amp; apt install samba -y</span>
+<span style="color:#75715e"># mv /etc/samba/smb.conf /etc/smb.conf.bak</span>
+</code></pre></div><p>Samba configs can get complicated fast and here I&rsquo;m outling the bare minimum to get started.  Each section is started with a name enclosed in brackets.  The global section outlines the guest user and log settings.  You will then need a section for each directory you want to share.</p>
 <p>Here I am sharing the <strong>/tank/media/music</strong> directory with guest access and read only permissions.  This configuration allows any user on the LAN to mount the music directory, but changes can&rsquo;t be made to it as it is shared <strong>read only</strong>.  I am also sharing the <strong>/tank/documents</strong> directory with <strong>security=user</strong> access and <strong>read/write</strong> permissions (both defaults). This configuration requires a samba user name and password before mounting the documents directory.</p>
 <p>Create a new config <strong>/etc/samba/smb.conf</strong> (I like to create a new file to avoid clutter)</p>
 <pre><code>[global]
@@ -69,54 +67,54 @@
     path = /tank/documents
     read only = no
 </code></pre><p>Check the config file for errors.</p>
-<pre><code>$ testparm -s
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ testparm -s
 Load smb config files from /etc/samba/smb.conf
-rlimit_max: increasing rlimit_max (1024) to minimum Windows limit (16384)
-Processing section &quot;[music]&quot;
-Processing section &quot;[documents]&quot;
+rlimit_max: increasing rlimit_max <span style="color:#f92672">(</span>1024<span style="color:#f92672">)</span> to minimum Windows limit <span style="color:#f92672">(</span>16384<span style="color:#f92672">)</span>
+Processing section <span style="color:#e6db74">&#34;[music]&#34;</span>
+Processing section <span style="color:#e6db74">&#34;[documents]&#34;</span>
 Loaded services file OK.
 Server role: ROLE_STANDALONE
 
-# Global parameters
-[global]
-	log file = /var/log/samba/%m
-	map to guest = Bad User
-	idmap config * : backend = tdb
+<span style="color:#75715e"># Global parameters</span>
+<span style="color:#f92672">[</span>global<span style="color:#f92672">]</span>
+	log file <span style="color:#f92672">=</span> /var/log/samba/%m
+	map to guest <span style="color:#f92672">=</span> Bad User
+	idmap config * : backend <span style="color:#f92672">=</span> tdb
 
-[music]
-    path = /tank/media/music
-    guest ok = yes
+<span style="color:#f92672">[</span>music<span style="color:#f92672">]</span>
+    path <span style="color:#f92672">=</span> /tank/media/music
+    guest ok <span style="color:#f92672">=</span> yes
 
-[documents]
-	path = /tank/documents
-	read only = No
-</code></pre><p>Samba requires a Linux user account.  I&rsquo;m going to go ahead a use my existing account, but a new one can also be created explicitly for Samba.  While the user name is shared with Linux system, a new password needs to be set for Samba.</p>
-<pre><code># smbpasswd -a pete
-</code></pre><p>Next go ahead and start the Samba service and open up your firewall to allow Samba access.</p>
-<pre><code># systemctl enable --now smbd.service
-# ufw allow samba
-</code></pre><p>That&rsquo;s it!  Now you have a working Samba server ready to be accessed.</p>
+<span style="color:#f92672">[</span>documents<span style="color:#f92672">]</span>
+	path <span style="color:#f92672">=</span> /tank/documents
+	read only <span style="color:#f92672">=</span> No
+</code></pre></div><p>Samba requires a Linux user account.  I&rsquo;m going to go ahead a use my existing account, but a new one can also be created explicitly for Samba.  While the user name is shared with Linux system, a new password needs to be set for Samba.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># smbpasswd -a pete</span>
+</code></pre></div><p>Next go ahead and start the Samba service and open up your firewall to allow Samba access.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># systemctl enable --now smbd.service</span>
+<span style="color:#75715e"># ufw allow samba</span>
+</code></pre></div><p>That&rsquo;s it!  Now you have a working Samba server ready to be accessed.</p>
 <hr>
 <h2 id="client">Client</h2>
 <p>First install the necessary package.</p>
-<pre><code># apt update &amp;&amp; sudo apt install cifs-utils -y
-</code></pre><p>Now go ahead and test your server by mounting one of the file systems.  In this example I am mounting the documents share in the <strong>/mnt/documents</strong> directory on the client system in <strong>read/write</strong> mode with the uid of 1000 and a gid of 1000.  You will be prompted for the Samba password you set earlier.</p>
-<pre><code># mkdir /mnt/documents
-# mount -t cifs //server_ip/documents /mnt/documents-ousername=pete,uid=1000,gid=1000
-</code></pre><p>For simplicity both my server and client usernames, uids, and gids are the same, pete, 1000, 1000.  I could have also created a user named samba on the server with uid=1001, gid=1001 and on the client computer still mounted the share as uid=1000 and gid=1000 (pete).  A quick <strong>ip -a</strong> on the server will return its IP address if you don&rsquo;t know it off hand.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># apt update &amp;&amp; sudo apt install cifs-utils -y</span>
+</code></pre></div><p>Now go ahead and test your server by mounting one of the file systems.  In this example I am mounting the documents share in the <strong>/mnt/documents</strong> directory on the client system in <strong>read/write</strong> mode with the uid of 1000 and a gid of 1000.  You will be prompted for the Samba password you set earlier.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># mkdir /mnt/documents</span>
+<span style="color:#75715e"># mount -t cifs //server_ip/documents /mnt/documents-ousername=pete,uid=1000,gid=1000</span>
+</code></pre></div><p>For simplicity both my server and client usernames, uids, and gids are the same, pete, 1000, 1000.  I could have also created a user named samba on the server with uid=1001, gid=1001 and on the client computer still mounted the share as uid=1000 and gid=1000 (pete).  A quick <strong>ip -a</strong> on the server will return its IP address if you don&rsquo;t know it off hand.</p>
 <p>Finally let&rsquo;s get a permanent mount set up using fstab.  Avoid storing your Samba password in plaintext by creating a credentials file at /etc/samba/credentials/share.</p>
 <pre><code>username=pete
 password=this_is_my_password
 </code></pre><p>Modify the permissions of the credential file to be readable/writable by root:</p>
-<pre><code># chown root:root /etc/samba/credentials
-# chmod 700 /etc/samba/credentials
-# chmod 600 /etc/samba credentials/share
-</code></pre><p>Enter a new line for each share in /etc/fstab:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># chown root:root /etc/samba/credentials</span>
+<span style="color:#75715e"># chmod 700 /etc/samba/credentials</span>
+<span style="color:#75715e"># chmod 600 /etc/samba credentials/share</span>
+</code></pre></div><p>Enter a new line for each share in /etc/fstab:</p>
 <pre><code>//server_ip/music /home/pete/Music _netdev,ro,uid=1000,gid=1000 0 0
 //server_ip/documents /home/pete/Documents _netdev,credentials=/etc/samba/credentials/share,uid=1000,gid=1000 0 0
 </code></pre><p>Go ahead and either mount the shares right away or reboot.</p>
-<pre><code># mount -a
-</code></pre><p>For additional information I&rsquo;d recommend checking out the Samba entry over at <a href="https://wiki.archlinux.org/index.php/samba">ArchWiki</a>.  There are a lot more advanced things you can do with Samba.  I plan on tackling autofs mounting and VPN access in future installments.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># mount -a</span>
+</code></pre></div><p>For additional information I&rsquo;d recommend checking out the Samba entry over at <a href="https://wiki.archlinux.org/index.php/samba">ArchWiki</a>.  There are a lot more advanced things you can do with Samba.  I plan on tackling autofs mounting and VPN access in future installments.</p>
 <hr>
 
         <div class="tag">
