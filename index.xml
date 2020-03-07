@@ -6,10 +6,20 @@
     <description>Recent content on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://unamelinux.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Linux Containers and Docker</title>
+      <link>https://unamelinux.com/posts/docker/</link>
+      <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/docker/</guid>
+      <description>Containers have radically changed how computer systems and applications are built, managed, and deployed. At home I deploy a combination of containers and VMs for my own personal use.
+Building Blocks While similar to virtualization, containers have several key differences. Each virtual machine created by a hypervisor has its own kernel and emulated hardware. Containers share the same kernel as the host and isolate application processes from the rest of the system.</description>
+    </item>
     
     <item>
       <title>XPS 13 Tweaks</title>
@@ -38,8 +48,7 @@ Sharing files via Samba allows me to go from my desktop to my laptop without ski
       
       <guid>https://unamelinux.com/privacy/</guid>
       <description>This website does not contain any trackers or cookies.
-No personally identifiable information is collected on this site.
-Webfonts This website is using Fonts from Google Fonts which are fetched from Google. You can find more information about the privacy implications in the FAQs.</description>
+No personally identifiable information is collected on this site.</description>
     </item>
     
     <item>
