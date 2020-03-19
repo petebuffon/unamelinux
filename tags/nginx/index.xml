@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>nginx on uname Linux</title>
@@ -6,10 +6,20 @@
     <description>Recent content in nginx on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://unamelinux.com/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Docker Compose and Volumes</title>
+      <link>https://unamelinux.com/posts/docker-compose/</link>
+      <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/docker-compose/</guid>
+      <description>In the first post of the container series Linux Containers and Docker, I introduced Linux Containers and Docker, as well as how to use the Docker CLI and basic management of containers. In this second post of the series I turn my focus to my favorite Docker management tool, Docker Compose.
+Docker Compose is a container management tool for Docker, written in Python, and it is a game changer. While managing a single container with Docker is doable, throwing any additional containers in the mix quickly makes management tedious.</description>
+    </item>
     
     <item>
       <title>Linux Containers and Docker</title>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on uname Linux</title>
@@ -6,7 +6,7 @@
     <description>Recent content in Tags on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://unamelinux.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>containers</title>
       <link>https://unamelinux.com/tags/containers/</link>
-      <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/containers/</guid>
       <description></description>
@@ -23,7 +23,7 @@
     <item>
       <title>docker</title>
       <link>https://unamelinux.com/tags/docker/</link>
-      <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/docker/</guid>
       <description></description>
@@ -32,7 +32,7 @@
     <item>
       <title>nginx</title>
       <link>https://unamelinux.com/tags/nginx/</link>
-      <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/nginx/</guid>
       <description></description>
@@ -41,7 +41,7 @@
     <item>
       <title>web server</title>
       <link>https://unamelinux.com/tags/web-server/</link>
-      <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/web-server/</guid>
       <description></description>
