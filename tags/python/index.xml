@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on uname Linux</title>
+    <link>https://unamelinux.com/tags/python/</link>
+    <description>Recent content in python on uname Linux</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 09 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://unamelinux.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Docker Build</title>
+      <link>https://unamelinux.com/posts/docker-build/</link>
+      <pubDate>Thu, 09 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/docker-build/</guid>
+      <description>If you need a refresher here are the first two posts in the series, Linux Containers and Docker and Docker Compose and Volumes.
+Before moving on to other Linux container platforms, I&amp;rsquo;d like to focus on one more Docker command, docker build. Sometimes it&amp;rsquo;s helpful to slightly alter existing images, or create entirely new images not available on the Docker Hub. Building images is relatively straight forward once you get a feel for the syntax of Docker images.</description>
+    </item>
+    
+  </channel>
+</rss>
