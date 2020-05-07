@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>uname Linux</title>
@@ -6,10 +6,20 @@
     <description>Recent content on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://unamelinux.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>LXC and LXD</title>
+      <link>https://unamelinux.com/posts/lxc-and-lxd/</link>
+      <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/lxc-and-lxd/</guid>
+      <description>Continuing the container series naturally brings us to LXC and LXD. For a background on Linux Containers and an introduction to Docker, see Linux Containers and Docker. The rest of the container series posts can be found here.
+ LXC Engineers from IMB developed LXC in 2008. LXC layered userspace tooling on top of the already existing cgroups and namespace technologies. While LXC improved the user experience of deploying containers, security remained an obstacle with the threat of users being able to break out of containers and attack the host system.</description>
+    </item>
     
     <item>
       <title>Docker Build</title>
@@ -38,7 +48,7 @@ Docker Compose is a container management tool for Docker, written in Python, and
       
       <guid>https://unamelinux.com/posts/docker/</guid>
       <description>Containers have radically changed how computer systems and applications are built, managed, and deployed. At home I deploy a combination of containers and VMs for my own personal use.
-Building Blocks While similar to virtualization, containers have several key differences. Each virtual machine created by a hypervisor has its own kernel and emulated hardware. Containers share the same kernel as the host and isolate application processes from the rest of the system.</description>
+ Building Blocks While similar to virtualization, containers have several key differences. Each virtual machine created by a hypervisor has its own kernel and emulated hardware. Containers share the same kernel as the host and isolate application processes from the rest of the system.</description>
     </item>
     
     <item>

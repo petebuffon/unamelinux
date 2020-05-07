@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on uname Linux</title>
@@ -6,7 +6,7 @@
     <description>Recent content in Tags on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://unamelinux.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,18 @@
     <item>
       <title>containers</title>
       <link>https://unamelinux.com/tags/containers/</link>
-      <pubDate>Thu, 09 Apr 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/containers/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lxd</title>
+      <link>https://unamelinux.com/tags/lxd/</link>
+      <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/tags/lxd/</guid>
       <description></description>
     </item>
     

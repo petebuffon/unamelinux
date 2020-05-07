@@ -39,95 +39,52 @@
             <h1>Linux Containers and Docker</h1>
             <p>Mar 6, 2020</p>
         </div>
-        
-
-<p>Containers have radically changed how computer systems and applications are built, managed, and deployed.  At home I deploy a combination of containers and VMs for my own personal use.</p>
-
-<hr />
-
+        <p>Containers have radically changed how computer systems and applications are built, managed, and deployed.  At home I deploy a combination of containers and VMs for my own personal use.</p>
+<hr>
 <h2 id="building-blocks">Building Blocks</h2>
-
 <p>While similar to virtualization, containers have several key differences.  Each virtual machine created by a hypervisor has its own kernel and emulated hardware.  Containers share the same kernel as the host and isolate application processes from the rest of the system.  This isolation is possible with two key kernel features, Namespaces and Control Groups (Cgroups).</p>
-
 <p><strong>Namespaces</strong> segregate kernel resources from collections of processes.  Resources may exist in multiple spaces.  There are seven different kinds of Namespaces including mount points, process IDs, network stacks, memory, hostnames, user IDs, and Cgroups.</p>
-
 <p><strong>Cgroups</strong> allow for resource limiting, prioritizing, accounting, and control of resource usage (CPU, memory, disk I/O, network, etc.) of a collection of processes.</p>
-
 <p>All the files necessary to run a container are provided in a distinct image. Containers have an ephemeral nature, being quickly and easily built, destroyed, and rebuilt from their base image.  All of these properties of containers allow for increased portability, speed, and security compared to other deployment methods.</p>
-
-<p><img src="/img/docker-logo.png" alt="docker logo" /></p>
-
+<p><img src="/img/docker-logo.png" alt="docker logo"></p>
 <p>This is the first post in a multi-part container series. There are many different implementations of Linux containers and I thought I would first start with the low hanging fruit, Docker.</p>
-
 <p>Docker has essentially become synonymous with containers.  Docker debuted to the public in 2013 and rapidly grew to have over a one billion dollar valuation in 2015.  Originally Docker used LXC as its execution environment (I will go into detail about LXC in a future post), but in 2014 Docker replaced LXC with its own component written in Go.</p>
-
 <p>Docker consists of three different pieces:</p>
-
 <ul>
 <li>A server daemon, <strong>dockerd</strong></li>
 <li>A REST <strong>API</strong> which specifies interfaces that programs can use to talk to the daemon and instruct it what to do</li>
 <li>A command line interface (CLI) client <strong>docker</strong></li>
 </ul>
-
-<hr />
-
+<hr>
 <h2 id="installing-docker">Installing Docker</h2>
-
 <pre><code># apt update &amp;&amp; apt install -y docker.io
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>Note: The Docker package in Ubuntu 18.04, currently version 18.09.7, lags behind the current release, 19.03.07.  If you would prefer a newer version of Docker, I would recommend using Ubuntu 19.10 as a base, which currently includes Docker version 19.03.2. Alternatively if you would like the absolute latest version of Docker you can set up <a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository">Docker repositories</a> and install from them.</p>
 </blockquote>
-
 <p>The Docker daemon always runs as the root user.  I find it convenient to add my user to the docker group so that sudo is not required when running Docker commands.</p>
-
 <pre><code># usermod -aG docker $USER
-</code></pre>
-
-<p>Logging out and back in again in will be required for the changes to go into effect.</p>
-
-<hr />
-
+</code></pre><p>Logging out and back in again in will be required for the changes to go into effect.</p>
+<hr>
 <h2 id="docker-cli">Docker CLI</h2>
-
 <p>Verify Docker is working by firing up an Ubuntu container:</p>
-
 <pre><code>$ docker run -it ubuntu bash
-</code></pre>
-
-<p>This command is our first use of the Docker CLI.  <strong>Run</strong> specifies that we want to create and run a container, <strong>-it</strong> specifies an interactive pseudo-TTY, <strong>ubuntu</strong> specifies the image we want to use, and finally <strong>bash</strong> specifies the command to run once the container has been created.</p>
-
+</code></pre><p>This command is our first use of the Docker CLI.  <strong>Run</strong> specifies that we want to create and run a container, <strong>-it</strong> specifies an interactive pseudo-TTY, <strong>ubuntu</strong> specifies the image we want to use, and finally <strong>bash</strong> specifies the command to run once the container has been created.</p>
 <p>As bash was invoked we now have a root bash shell inside the new Ubuntu container.  Go ahead and explore a bit.  Almost all of the commands you can run in Ubuntu you can run in your Ubuntu container, except to minimize file size, many programs will not be installed by default.  Once you&rsquo;re done you can leave the container with the <strong>exit</strong> command.</p>
-
 <p>To see what containers are currently running:</p>
-
 <pre><code>$ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-</code></pre>
-
-<p>No containers were returned because <strong>docker ps</strong> only returns running containers on the system and our new container was stopped on being exited.  To see all containers on the system use:</p>
-
+</code></pre><p>No containers were returned because <strong>docker ps</strong> only returns running containers on the system and our new container was stopped on being exited.  To see all containers on the system use:</p>
 <pre><code>$ docker ps -a
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                        PORTS               NAMES
 6637b187fe0e        ubuntu              &quot;bash&quot;              12 minutes ago      Exited (127) 11 minutes ago                       affectionate_shamir
-</code></pre>
-
-<p>We can access this container again with the <strong>start</strong> and <strong>exec</strong> commands.  The container is referenced by its unique container ID (6637b187fe0e) or randomly generated name (in this example affectionate_shamir).</p>
-
+</code></pre><p>We can access this container again with the <strong>start</strong> and <strong>exec</strong> commands.  The container is referenced by its unique container ID (6637b187fe0e) or randomly generated name (in this example affectionate_shamir).</p>
 <pre><code>$ docker start affectionate_shamir
 affectionate_shamir
 $ docker exec -it 6637b187fe0e bash
-</code></pre>
-
-<p>To delete the container (the &ndash;force flag is needed for running containers):</p>
-
+</code></pre><p>To delete the container (the &ndash;force flag is needed for running containers):</p>
 <pre><code>$ docker rm --force affectionate_shamir
 affectionate_shamir
-</code></pre>
-
-<p>Similar syntax can be used to list and remove images</p>
-
+</code></pre><p>Similar syntax can be used to list and remove images</p>
 <pre><code>$ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 ubuntu              latest              72300a873c2c        12 days ago         64.2MB
@@ -139,83 +96,47 @@ Deleted: sha256:d3991ad41f89923dac46b632e2b9869067e94fcdffa3ef56cd2d35b26dd9bce7
 Deleted: sha256:2e533c5c9cc8936671e2012d79fc6ec6a3c8ed432aa81164289056c71ed5f539
 Deleted: sha256:282c79e973cf51d330b99d2a90e6d25863388f66b1433ae5163ded929ea7e64b
 Deleted: sha256:cc4590d6a7187ce8879dd8ea931ffaa18bc52a1c1df702c9d538b2f0c927709d
-</code></pre>
-
-<h2 id="images-and-docker-hub">Images and Docker Hub</h2>
-
+</code></pre><h2 id="images-and-docker-hub">Images and Docker Hub</h2>
 <p><a href="https://hub.docker.com">Docker Hub</a> is a service provided by Docker for finding and sharing container images.  Docker Hub can be accessed from the web or the Docker CLI.  Docker Hub pages often contain documentation and other helpful information.</p>
-
 <blockquote>
 <p>Note: As with downloading and installing any software and on your system, there is potential for malicious code from Docker Hub.  Exercize caution and generally stick to using official Docker images or images created by a project&rsquo;s authors when possible.</p>
 </blockquote>
-
 <p>Let&rsquo;s download the <a href="https://hub.docker.com/_/nginx">official Nginx docker image</a> to our system with the pull command:</p>
-
 <pre><code>$ docker pull nginx
-</code></pre>
-
-<h2 id="tags">Tags</h2>
-
+</code></pre><h2 id="tags">Tags</h2>
 <p>If you scroll down to the <strong>Image Variants</strong> section we can see there are multiple OS base options.  If you want a smaller image base for your nginx container then specify the Alpine image with a colon.  This is one instance of an image tag.</p>
-
 <pre><code>$ docker pull nginx:alpine
-</code></pre>
-
-<p>Looking at our images again we can see that we can have multiple nginx images.  Another thing to note was that when we pulled the <strong>nginx</strong> image, the default flag was <strong>latest</strong>.</p>
-
+</code></pre><p>Looking at our images again we can see that we can have multiple nginx images.  Another thing to note was that when we pulled the <strong>nginx</strong> image, the default flag was <strong>latest</strong>.</p>
 <pre><code>$ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 nginx               alpine              377c0837328f        47 hours ago        19.7MB
 nginx               latest              6678c7c2e56c        47 hours ago        127MB
-</code></pre>
-
-<p>If we navigate to the supported tags of the nginx Docker Hub page we can see there are even more tag options available.  We can also use tags to specify a specific image version.</p>
-
+</code></pre><p>If we navigate to the supported tags of the nginx Docker Hub page we can see there are even more tag options available.  We can also use tags to specify a specific image version.</p>
 <pre><code>$ docker pull nginx:1.16
-</code></pre>
-
-<h2 id="flags-and-web-servers">Flags and Web Servers</h2>
-
+</code></pre><h2 id="flags-and-web-servers">Flags and Web Servers</h2>
 <p>Next we&rsquo;ll host a static html file with an nginx container to showcase other docker run flags and a common docker use case, as a web server.  First let&rsquo;s create simple html file to host:</p>
-
 <pre><code>$ cd ~/ &amp;&amp; echo 'Hello world!' &gt; index.html
-</code></pre>
-
-<p>Now this time we&rsquo;ll run our nginx container in the background:</p>
-
+</code></pre><p>Now this time we&rsquo;ll run our nginx container in the background:</p>
 <pre><code>$ docker run -d --name nginx -p 8080:80 -v ~/index.html:/usr/share/nginx/html/index.html:ro nginx
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>Note: When issuing a docker run command, Docker will first try to find the image locally. If an image isn&rsquo;t found, Docker will then search the Docker Hub.  In this case a separate docker pull command isn&rsquo;t necessary.</p>
 </blockquote>
-
 <p>Let&rsquo;s unpack these last few lines.  First we created a html file in our user&rsquo;s home directory.  Then we started a new container using several new flags.  The <strong>-d</strong> flag ran the container in detached mode, the <strong>&ndash;name nginx</strong> flag ran the container with the name nginx, the <strong>-p 8080:80</strong> flag published port 80 on the container to port 8080 on the the host, and the <strong>-v ~/index.html:/usr/share/nginx/html/index.html:ro</strong> flag mounted the index.html file we created on the host system as a volume in the default nginx static content directory in the container in read only mode.</p>
-
 <p>In a browser navigate to localhost:8080 or host_ip_address:8080 and you should find the Hello world! page we created earlier.</p>
-
 <blockquote>
 <p>Note: We just touched the surface on the flags you can use with docker run.  Check out the other options available by exploring the Docker man pages, e.g. <strong>man docker run</strong>.</p>
 </blockquote>
-
-<hr />
-
+<hr>
 <h2 id="updating-containers">Updating containers</h2>
-
 <p>The process of updating containers illustrates their ephemeral nature.  First let&rsquo;s imagine an updated version of the latest nginx image has been released.  In order to update our container we must first stop and delete the container.  We then pull the new version of the image and start a new instance of the container using our original docker run command.</p>
-
 <pre><code>$ docker stop nginx &amp;&amp; docker rm nginx
 $ docker pull nginx
 $ docker run -d --name nginx -p 8080:80 -v ~/index.html:/usr/share/nginx/html/index.html:ro nginx
-</code></pre>
-
-<blockquote>
+</code></pre><blockquote>
 <p>Note: the only data that will carry over into our updated container will be the data stored in volumes.</p>
 </blockquote>
-
 <p>You can imagine keeping track of Docker run parameters and checking to see if each container needs updating could easily turn into a daunting and tedious task.  Next time we&rsquo;ll introduce a tool that makes Docker administration easy and straightforward, <strong>Docker Compose</strong>.  In the mean time feel free to check out <a href="https://docs.docker.com/">Docker&rsquo;s great documentation</a> to dive deeper into topics introduced today.</p>
-
-<hr />
+<hr>
 
         <div class="tag">
             
