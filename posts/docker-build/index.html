@@ -1,54 +1,5 @@
-<!DOCTYPE html>
-<html><head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    uname Linux
-    </title>
-  <link rel="stylesheet" href="https://unamelinux.com/css/style.css">
-  <link rel="shortcut icon" href="https://unamelinux.com/favicon.png">
-  
-</head><body><nav>
-    <li>
-        <a href="https://unamelinux.com/">
-            <img src="https://unamelinux.com/small_logo.png" width="66px">
-        </a>
-    </li>
-    <li>
-        <a href="https://unamelinux.com/about">About</a>
-    </li>
-    <li>
-        <a href="https://unamelinux.com/contact">Contact</a>
-    </li>
-    <li>
-        <a href="https://unamelinux.com/theme">Theme</a>
-    </li>
-    <li>
-        <a href="https://unamelinux.com/tags">Tags</a>
-    </li>
-    <li class="align-right">
-        <a href="https://github.com/petebuffon">
-            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
-        </a>
-    </li>
-</nav>
-        <main>
-<main>
-    <article>
-        <div class="article-header">
-            <h1>Docker Build</h1>
-            <p>Apr 9, 2020</p>
-        </div>
-        <p>If you need a refresher here are the first two posts in the series, <a href="https://unamelinux.com/posts/docker">Linux Containers and Docker</a> and <a href="https://unamelinux.com/posts/docker-compose">Docker Compose and Volumes</a>.</p>
-<p>Before moving on to other Linux container platforms, I&rsquo;d like to focus on one more Docker command, <strong>docker build</strong>.  Sometimes it&rsquo;s helpful to slightly alter existing images, or create entirely new images not available on the Docker Hub.  Building images is relatively straight forward once you get a feel for the syntax of Docker images.  The build system is included in the base Docker packages.</p>
-<p>The docker build command creates a Docker image from a <strong>Dockerfile</strong>.  Files used for the build can be specified in a &ldquo;context&rdquo;, either a <strong>PATH</strong> or <strong>URL</strong>.  For this example we&rsquo;ll be using the PATH context to create a Dockerfile on our own system.</p>
-<p>While you could grab an official <a href="https://hub.docker.com/_/python">Python 3.8.2</a> image from the Docker Hub, we&rsquo;re going to create our own image from an Ubuntu 18.04 base.</p>
-<hr>
-<h2 id="dockerfile">Dockerfile</h2>
-<p>Let&rsquo;s create our Dockfile in the compose directory of home.</p>
-<pre><code>$ mkdir -p ~/compose/python-3.8 &amp;&amp; cd ~/compose/python-3.8
-</code></pre><p>Here is the Dockerfile we will be building towards in our example:</p>
-<pre><code>FROM ubuntu:18.04
+<!doctype html><html><head><html lang=en><meta charset=utf-8><meta name=description content="The third post in a multi-part container series.  How to build and mange your own images in Docker with docker build."><meta name=viewport content="width=device-width,initial-scale=1"><title>uname Linux</title><link rel=stylesheet href=https://unamelinux.com/css/style.css><link rel="shortcut icon" href=https://unamelinux.com/favicon.svg><meta name=theme-color content="#ffffff"><link rel=icon href=https://unamelinux.com/favicon.svg><link rel=mask-icon href=https://unamelinux.com/mask-icon.svg color=#000000><link rel=apple-touch-icon href=https://unamelinux.com/apple-touch-icon.svg><link rel=manifest href=https://unamelinux.com/manifest.json></head><body><nav><li><a href=https://unamelinux.com/><img src=https://unamelinux.com/logo-small.svg width=66px></a></li><li><a href=https://unamelinux.com/about>About</a></li><li><a href=https://unamelinux.com/contact>Contact</a></li><li><a href=https://unamelinux.com/theme>Theme</a></li><li><a href=https://unamelinux.com/tags>Tags</a></li><li class=align-right><a href=https://github.com/petebuffon><img src=https://unamelinux.com/img/GitHub-Mark-Light-64px.png height=35px></a></li></nav><main><main><article><div class=article-header><h1>Docker Build</h1><p>Apr 9, 2020</p></div><p>If you need a refresher here are the first two posts in the series, <a href=https://unamelinux.com/posts/docker>Linux Containers and Docker</a> and <a href=https://unamelinux.com/posts/docker-compose>Docker Compose and Volumes</a>.</p><p>Before moving on to other Linux container platforms, I&rsquo;d like to focus on one more Docker command, <strong>docker build</strong>. Sometimes it&rsquo;s helpful to slightly alter existing images, or create entirely new images not available on the Docker Hub. Building images is relatively straight forward once you get a feel for the syntax of Docker images. The build system is included in the base Docker packages.</p><p>The docker build command creates a Docker image from a <strong>Dockerfile</strong>. Files used for the build can be specified in a &ldquo;context&rdquo;, either a <strong>PATH</strong> or <strong>URL</strong>. For this example we&rsquo;ll be using the PATH context to create a Dockerfile on our own system.</p><p>While you could grab an official <a href=https://hub.docker.com/_/python>Python 3.8.2</a> image from the Docker Hub, we&rsquo;re going to create our own image from an Ubuntu 18.04 base.</p><hr><h2 id=dockerfile>Dockerfile</h2><p>Let&rsquo;s create our Dockfile in the compose directory of home.</p><pre><code>$ mkdir -p ~/compose/python-3.8 &amp;&amp; cd ~/compose/python-3.8
+</code></pre><p>Here is the Dockerfile we will be building towards in our example:</p><pre><code>FROM ubuntu:18.04
 
 # set up environment
 ENV DEBIAN_FRONTEND=noninteractive
@@ -97,16 +48,8 @@ RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
 COPY --from=0 /usr/local/bin /usr/local/bin
 COPY --from=0 /usr/local/lib /usr/local/lib
 CMD [&quot;python3&quot;]
-</code></pre><h2 id="build">Build</h2>
-<p>Before we examine the Dockerfile in detail, let&rsquo;s go ahead and build our image with the <strong>docker build</strong> command.  Compiling Python will take a few minutes, potentially longer based on your system:</p>
-<pre><code>$ docker build -t petebuffon/python-3.8.2 .
-</code></pre><p>You can give your image any name you want.  Here to differentiate images from the Docker Hub and images I have created, I am preceding container names with my Github profile name and a slash.  The build command ends with a space a <strong>period</strong> indicating docker should look for a Dockerfile to build from in the current directory.</p>
-<hr>
-<h2 id="instructions-and-layers">Instructions and Layers</h2>
-<p>Each action in a Dockerfile is preceded by an <strong>INSTRUCTION</strong> argument all in UPPERCASE. Instructions in a Dockerfile are run in order during build time.  Each instruction represents a read-only layer which are stacked at build time to form a complete Docker image.  The <strong>RUN</strong>, <strong>COPY</strong>, and <strong>ADD</strong> instructions create layers while all other instructions create temporary intermediate images that do not increase the size of the build.</p>
-<p>When a docker image is run and a container is generated, a new writable layer is added on top of the read-only layers.  All changes made to the container during its lifetime are written to this writable container layer.</p>
-<p>Let&rsquo;s take a look at all of the layers of our image:</p>
-<pre><code>$ docker history petebuffon/python-3.8
+</code></pre><h2 id=build>Build</h2><p>Before we examine the Dockerfile in detail, let&rsquo;s go ahead and build our image with the <strong>docker build</strong> command. Compiling Python will take a few minutes, potentially longer based on your system:</p><pre><code>$ docker build -t petebuffon/python-3.8.2 .
+</code></pre><p>You can give your image any name you want. Here to differentiate images from the Docker Hub and images I have created, I am preceding container names with my Github profile name and a slash. The build command ends with a space a <strong>period</strong> indicating docker should look for a Dockerfile to build from in the current directory.</p><hr><h2 id=instructions-and-layers>Instructions and Layers</h2><p>Each action in a Dockerfile is preceded by an <strong>INSTRUCTION</strong> argument all in UPPERCASE. Instructions in a Dockerfile are run in order during build time. Each instruction represents a read-only layer which are stacked at build time to form a complete Docker image. The <strong>RUN</strong>, <strong>COPY</strong>, and <strong>ADD</strong> instructions create layers while all other instructions create temporary intermediate images that do not increase the size of the build.</p><p>When a docker image is run and a container is generated, a new writable layer is added on top of the read-only layers. All changes made to the container during its lifetime are written to this writable container layer.</p><p>Let&rsquo;s take a look at all of the layers of our image:</p><pre><code>$ docker history petebuffon/python-3.8
 IMAGE               CREATED              CREATED BY                                      SIZE                COMMENT
 b406a2d3f589        About a minute ago   /bin/sh -c #(nop)  CMD [&quot;python3&quot;]              0B                  
 7f21428b44b9        About a minute ago   /bin/sh -c #(nop) COPY dir:c33605b876f922410…   221MB               
@@ -117,76 +60,25 @@ b683d2cbe1de        About a minute ago   /bin/sh -c apt-get update &amp;&amp; ap
 &lt;missing&gt;           2 weeks ago          /bin/sh -c set -xe   &amp;&amp; echo '#!/bin/sh' &gt; /…   745B                
 &lt;missing&gt;           2 weeks ago          /bin/sh -c [ -z &quot;$(apt-get indextargets)&quot; ]     987kB               
 &lt;missing&gt;           2 weeks ago          /bin/sh -c #(nop) ADD file:594fa35cf803361e6…   63.2MB 
-</code></pre><p>A Dockerfile must begin with a <strong>FROM</strong> instruction, which specifies the parent image.  Docker treats lines that begin with <strong>#</strong> as a comment.  Add any necessary environment variables with the <strong>ENV</strong> instruction and set the working directory with the <strong>WORKDIR</strong> instruction.</p>
-<p>Each <strong>RUN</strong> instruction precedes a single command to the base OS of the container image.  Multiple commands can be strung together with <strong>&amp;&amp;</strong> in order to reduce the number layers in the final image.  If any changes are made to the Dockerfile and the build command is run again, only the changed layers will have to be rebuilt.</p>
-<hr>
-<h2 id="multi-stage-builds-and-cmd">multi-stage builds and CMD</h2>
-<p>Invoking a second <strong>FROM</strong> instruction in a Dockerfile sets up a multi-stage build.  Here our final container image is based on a fresh Ubuntu 18.04 image.  The <strong>COPY</strong> instruction copies files or directories from one location to another.  Here we are copying the <strong>/usr/local/bin</strong> and <strong>/usr/local/lib</strong> directories from our first stage (denoted with &ndash;from=0) to our fresh image.</p>
-<pre><code>$ docker images
+</code></pre><p>A Dockerfile must begin with a <strong>FROM</strong> instruction, which specifies the parent image. Docker treats lines that begin with <strong>#</strong> as a comment. Add any necessary environment variables with the <strong>ENV</strong> instruction and set the working directory with the <strong>WORKDIR</strong> instruction.</p><p>Each <strong>RUN</strong> instruction precedes a single command to the base OS of the container image. Multiple commands can be strung together with <strong>&&</strong> in order to reduce the number layers in the final image. If any changes are made to the Dockerfile and the build command is run again, only the changed layers will have to be rebuilt.</p><hr><h2 id=multi-stage-builds-and-cmd>multi-stage builds and CMD</h2><p>Invoking a second <strong>FROM</strong> instruction in a Dockerfile sets up a multi-stage build. Here our final container image is based on a fresh Ubuntu 18.04 image. The <strong>COPY</strong> instruction copies files or directories from one location to another. Here we are copying the <strong>/usr/local/bin</strong> and <strong>/usr/local/lib</strong> directories from our first stage (denoted with &ndash;from=0) to our fresh image.</p><pre><code>$ docker images
 REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
 petebuffon/python-3.8   latest              b406a2d3f589        21 hours ago        309MB
 &lt;none&gt;                  &lt;none&gt;              e7e5b2133bf4        21 hours ago        874MB
 ubuntu                  18.04               4e5021d210f6        2 weeks ago         64.2MB
-</code></pre><p>We can see here that using a multi-stage build reduced our image size from 874MB in our build image to 309MB in our final image.</p>
-<blockquote>
-<p>Note: Base images such as Alpine can reduce image sizes even further.  The current Alpine base image is a lean 5.95MB.</p>
-</blockquote>
-<p>There can be only one <strong>CMD</strong> instruction in a Dockerfile.  A <strong>CMD</strong> instruction often specifies an executable, in our case, <strong>python3</strong>.  The preferred form of the <strong>CMD</strong> instruction is: CMD [&ldquo;executable&rdquo;,&ldquo;param1&rdquo;,&ldquo;param2&rdquo;].  When a new container is spun up without a command specified, the container will default to running the contents of the <strong>CMD</strong> instruction:</p>
-<pre><code>$ docker run -it --rm petebuffon/python-3.8
+</code></pre><p>We can see here that using a multi-stage build reduced our image size from 874MB in our build image to 309MB in our final image.</p><blockquote><p>Note: Base images such as Alpine can reduce image sizes even further. The current Alpine base image is a lean 5.95MB.</p></blockquote><p>There can be only one <strong>CMD</strong> instruction in a Dockerfile. A <strong>CMD</strong> instruction often specifies an executable, in our case, <strong>python3</strong>. The preferred form of the <strong>CMD</strong> instruction is: CMD [&ldquo;executable&rdquo;,&ldquo;param1&rdquo;,&ldquo;param2&rdquo;]. When a new container is spun up without a command specified, the container will default to running the contents of the <strong>CMD</strong> instruction:</p><pre><code>$ docker run -it --rm petebuffon/python-3.8
 Python 3.8.2+ (heads/3.8:6318e45, Apr  8 2020, 19:35:50) 
 [GCC 7.5.0] on linux
 Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
 &gt;&gt;&gt;
-</code></pre><p>When a new container is spun up with a command specified, the <strong>CMD</strong> instruction is not run and replaced by the specified command.</p>
-<pre><code>$ docker run -it --rm petebuffon/python-3.8 /bin/bash
+</code></pre><p>When a new container is spun up with a command specified, the <strong>CMD</strong> instruction is not run and replaced by the specified command.</p><pre><code>$ docker run -it --rm petebuffon/python-3.8 /bin/bash
 root@d256094e3573:/#
-</code></pre><p>We now have a fully functional python-3.8 container image ready for use.  You can just use it yourself or even upload it to the <a href="https://dockerhub.com">Docker Hub</a>.  Creating functional images can take some work and perhaps require many iterations to get them just right.</p>
-<p>Leveraging layers in the images can help reduce build time between steps.  Sometimes it can help to run a container from a base image directly to get a more immediate and interactive response to troublesome commands.</p>
-<hr>
-<h2 id="updates">Updates</h2>
-<p>Over time both your parent image and the packages installed on your image will become outdated.  In order to update your own containers you will have to re-run the build command, stop any running containers, and re-create them.  If you utilize Compose, this process is fairly streamlined.</p>
-<p>You can set up your own images in Compose with the following syntax in your docker-compose.yaml file:</p>
-<pre><code>version: '2'
+</code></pre><p>We now have a fully functional python-3.8 container image ready for use. You can just use it yourself or even upload it to the <a href=https://dockerhub.com>Docker Hub</a>. Creating functional images can take some work and perhaps require many iterations to get them just right.</p><p>Leveraging layers in the images can help reduce build time between steps. Sometimes it can help to run a container from a base image directly to get a more immediate and interactive response to troublesome commands.</p><hr><h2 id=updates>Updates</h2><p>Over time both your parent image and the packages installed on your image will become outdated. In order to update your own containers you will have to re-run the build command, stop any running containers, and re-create them. If you utilize Compose, this process is fairly streamlined.</p><p>You can set up your own images in Compose with the following syntax in your docker-compose.yaml file:</p><pre><code>version: '2'
 services:
   python-3.8:
     build: ./python-3.8
     restart: unless-stopped
-</code></pre><p>In order to update your own images with Compose, run:</p>
-<pre><code>$ docker-compose build --pull 
+</code></pre><p>In order to update your own images with Compose, run:</p><pre><code>$ docker-compose build --pull 
 $ docker-compose up -d
-</code></pre><p>You should now be relatively comfortable with building Docker images.  Be sure to check out Docker&rsquo;s <a href="https://docs.docker.com/engine/reference/builder/">Dockerfile reference</a> and <a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">Best practices for writing Dockerfiles</a> documentation.  Well that should just about wrap it up for Docker.  Next time we&rsquo;ll be looking at another Linux Container implementation, <strong>LXD</strong>.</p>
-<hr>
-
-        <div class="tag">
-            
-            
-            <a href="/tags/containers">#containers</a>
-            
-            <a href="/tags/python">#python</a>
-            
-            <a href="/tags/docker">#docker</a>
-            
-            
-        </div>
-    </article>
-</main>
-
-        </main><footer>
-    <li>
-        <a href="https://unamelinux.com/license">&copy; 2020 Peter Buffon</a>
-    </li>
-    <li>
-        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
-    </li>
-    <li>
-        <a href="https://twitter.com/petebuffon">
-            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
-        </a>
-    </li>
-    <li>
-        <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
-            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
-        </a>
-    </li>
-</footer></body>
-</html>
+</code></pre><p>You should now be relatively comfortable with building Docker images. Be sure to check out Docker&rsquo;s <a href=https://docs.docker.com/engine/reference/builder/>Dockerfile reference</a> and <a href=https://docs.docker.com/develop/develop-images/dockerfile_best-practices/>Best practices for writing Dockerfiles</a> documentation. Well that should just about wrap it up for Docker. Next time we&rsquo;ll be looking at another Linux Container implementation, <strong>LXD</strong>.</p><hr><div class=tag><a href=/tags/containers>#containers</a>
+<a href=/tags/python>#python</a>
+<a href=/tags/docker>#docker</a></div></article></main></main><footer><li><a href=https://unamelinux.com/license>&copy; 2020 Peter Buffon</a></li><li><a href=https://unamelinux.com/privacy>Privacy Policy</a></li><li><a href=https://twitter.com/petebuffon><img src=https://unamelinux.com/img/Twitter_Logo_Blue.svg height=50px></a></li><li><a href=https://t.me/joinchat/KnD86BPTALN6747G9_Biog><img src=https://unamelinux.com/img/64px-Telegram_logo.svg.png height=35px></a></li></footer></body></html>

@@ -1,25 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>hardware on uname Linux</title>
-    <link>https://unamelinux.com/tags/hardware/</link>
-    <description>Recent content in hardware on uname Linux</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 20 Feb 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://unamelinux.com/tags/hardware/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>XPS 13 Tweaks</title>
-      <link>https://unamelinux.com/posts/xps13tweaks/</link>
-      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://unamelinux.com/posts/xps13tweaks/</guid>
-      <description>I&amp;rsquo;ve had my Dell XPS 13 for about six months now and thought I&amp;rsquo;d write a quick review and summarize some of the tweaks I&amp;rsquo;ve made over time. In August 2019 I purchased a Developer Edition Dell XPS 13 9380 which came with Dell&amp;rsquo;s version of Ubuntu pre-installed. Preferring Canonical&amp;rsquo;s stock version of Ubuntu, the first thing I did was install Ubuntu 19.04 on the new laptop.
-The screen of the XPS 13 is fantastic with great color and clarity.</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>hardware on uname Linux</title><link>https://unamelinux.com/tags/hardware/</link><description>Recent content in hardware on uname Linux</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 20 Feb 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/hardware/index.xml" rel="self" type="application/rss+xml"/><item><title>XPS 13 Tweaks</title><link>https://unamelinux.com/posts/xps13tweaks/</link><pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate><guid>https://unamelinux.com/posts/xps13tweaks/</guid><description>I&amp;rsquo;ve had my Dell XPS 13 for about six months now and thought I&amp;rsquo;d write a quick review and summarize some of the tweaks I&amp;rsquo;ve made over time. In August 2019 I purchased a Developer Edition Dell XPS 13 9380 which came with Dell&amp;rsquo;s version of Ubuntu pre-installed. Preferring Canonical&amp;rsquo;s stock version of Ubuntu, the first thing I did was install Ubuntu 19.04 on the new laptop.
+The screen of the XPS 13 is fantastic with great color and clarity.</description></item></channel></rss>

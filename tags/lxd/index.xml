@@ -1,25 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>lxd on uname Linux</title>
-    <link>https://unamelinux.com/tags/lxd/</link>
-    <description>Recent content in lxd on uname Linux</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 07 May 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://unamelinux.com/tags/lxd/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>LXC and LXD</title>
-      <link>https://unamelinux.com/posts/lxc-and-lxd/</link>
-      <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://unamelinux.com/posts/lxc-and-lxd/</guid>
-      <description>Continuing the container series naturally brings us to LXC and LXD. For a background on Linux Containers and an introduction to Docker, see Linux Containers and Docker. The rest of the container series posts can be found here.
- LXC Engineers from IMB developed LXC in 2008. LXC layered userspace tooling on top of the already existing cgroups and namespace technologies. While LXC improved the user experience of deploying containers, security remained an obstacle with the threat of users being able to break out of containers and attack the host system.</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>lxd on uname Linux</title><link>https://unamelinux.com/tags/lxd/</link><description>Recent content in lxd on uname Linux</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 07 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/lxd/index.xml" rel="self" type="application/rss+xml"/><item><title>LXC and LXD</title><link>https://unamelinux.com/posts/lxc-and-lxd/</link><pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate><guid>https://unamelinux.com/posts/lxc-and-lxd/</guid><description>Continuing the container series naturally brings us to LXC and LXD. For a background on Linux Containers and an introduction to Docker, see Linux Containers and Docker. The rest of the container series posts can be found here.
+LXC Engineers from IMB developed LXC in 2008. LXC layered userspace tooling on top of the already existing cgroups and namespace technologies. While LXC improved the user experience of deploying containers, security remained an obstacle with the threat of users being able to break out of containers and attack the host system.</description></item></channel></rss>

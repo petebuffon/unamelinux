@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   version="1.1"
+   viewBox="0 0 2.56 2.56"
+   id="svg20"
+   sodipodi:docname="safari-pinned-tab.svg"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
+  <defs
+     id="defs24" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     id="namedview22"
+     showgrid="false"
+     inkscape:zoom="3.337544"
+     inkscape:cx="-1.1222459"
+     inkscape:cy="65.478835"
+     inkscape:window-x="0"
+     inkscape:window-y="34"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g16" />
+  <metadata
+     id="metadata2">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="g16"
+     transform="matrix(0.98047,0,0,0.98047,73.3547,-125.2471)"
+     style="fill:#000000;fill-opacity:1">
+    <g
+       id="g14"
+       style="fill:#000000;fill-opacity:1"
+       transform="matrix(0.05510084,0,0,0.05510084,-70.69339,121.45814)">
+      <g
+         id="g8"
+         aria-label="u"
+         style="fill:#000000;fill-opacity:1">
+        <path
+           inkscape:connector-curvature="0"
+           id="path6"
+           style="font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;fill:#000000;fill-opacity:1;stroke-width:0.85468"
+           d="m -63.384,130.84 v 12.427 q 0,1.3162 0.47862,1.8119 0.49571,0.49571 1.3675,0.49571 0.83758,0 1.6752,-0.5299 0.83762,-0.5299 1.4017,-1.4359 v -12.769 h 5.4016 v 18.153 h -4.7178 l -0.23931,-2.1196 q -0.92305,1.3333 -2.4273,2.017 -1.5042,0.68374 -3.1452,0.68374 -2.6324,0 -3.9144,-1.5213 -1.282,-1.5384 -1.282,-4.1196 v -13.094 z" />
+      </g>
+      <g
+         id="g12"
+         aria-label="L"
+         style="fill:#000000;fill-opacity:1">
+        <path
+           inkscape:connector-curvature="0"
+           id="path10"
+           style="font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;fill:#000000;fill-opacity:1;stroke-width:0.85468"
+           d="m -49.342,149.58 v -23.692 h 5.6067 v 19.264 h 10.273 l -0.58118,4.4272 z" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,12 +1,12 @@
 /* root */
 :root {
-    --color-background: #ffffff;
+    --color-background: #fafafa;
     --color-secondary: #121212;
     --color-shadow:  #272822;
     --color-text-default: #262626;
     --color-text-header: #121212;
     --color-text-light: #d9d9d9;
-    --color-text-secondary: darkgrey;
+    --color-text-secondary: #8c8c8c;
 
     --font-text: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Droid Sans", "Helvetica Neue", sans-serif;
     --font-header: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Droid Sans", "Helvetica Neue", sans-serif;
@@ -115,15 +115,11 @@ header {
     width: 40%;
 }
 
-article > p > img {
+article > img {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 58%;
     padding: 0.5rem;
-}
-.sm-img {
-    width: 35%;
 }
 
 /* main */
@@ -232,14 +228,11 @@ footer {
     article {
         width: 60%;
     }
-    article > p > img {
+    article > img {
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width: 75%;
-    }
-    .sm-img {
-        width: 50%;
+        max-width: 95%;
     }
 }
   
@@ -268,14 +261,11 @@ footer {
     .article-header {
         width: 95%;
     }
-    article > p > img {
+    article > img {
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width: 95%;
-    }
-    .sm-img {
-        width: 50%;
+        max-width: 95%;
     }
     .align-right {
         padding-right: 0px;

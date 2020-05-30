@@ -1,80 +1,17 @@
-<!DOCTYPE html>
-<html><head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    uname Linux
-    </title>
-  <link rel="stylesheet" href="https://unamelinux.com/css/style.css">
-  <link rel="shortcut icon" href="https://unamelinux.com/favicon.png">
-  
-</head><body><nav>
-    <li>
-        <a href="https://unamelinux.com/">
-            <img src="https://unamelinux.com/small_logo.png" width="66px">
-        </a>
-    </li>
-    <li>
-        <a href="https://unamelinux.com/about">About</a>
-    </li>
-    <li>
-        <a href="https://unamelinux.com/contact">Contact</a>
-    </li>
-    <li>
-        <a href="https://unamelinux.com/theme">Theme</a>
-    </li>
-    <li>
-        <a href="https://unamelinux.com/tags">Tags</a>
-    </li>
-    <li class="align-right">
-        <a href="https://github.com/petebuffon">
-            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
-        </a>
-    </li>
-</nav>
-        <main>
-<main>
-    <article>
-        <div class="article-header">
-            <h1>Docker Compose and Volumes</h1>
-            <p>Mar 19, 2020</p>
-        </div>
-        <p>In the first post of the container series <a href="https://unamelinux.com/posts/docker">Linux Containers and Docker</a>, I introduced Linux Containers and Docker, as well as how to use the Docker CLI and basic management of containers. In this second post of the series I turn my focus to my favorite Docker management tool, Docker Compose.</p>
-<!-- raw HTML omitted -->
-<p>Docker Compose is a container management tool for Docker, written in Python, and it is a game changer. While managing a single container with Docker is doable, throwing any additional containers in the mix quickly makes management tedious. With Compose, a YAML file is written for configuration, and a simple CLI interface is used to manage almost the entire life cycle of your containers.</p>
-<hr>
-<h2 id="installation">Installation</h2>
-<p>Let&rsquo;s begin by installing Compose</p>
-<pre><code># apt update &amp;&amp; apt install -y docker-compose
-</code></pre><blockquote>
-<p>Note: The Docker Compose package in Ubuntu 18.04, currently version 1.17.1-2, lags behind the current release, 1.25.4. If you would prefer a newer version of Compose, I would recommend using Ubuntu 19.10 as a base, which currently includes Compose version 1.21.0-3. Alternatively you can directly download the binary if you would like the absolute latest version of Docker Compose <a href="https://docs.docker.com/compose/install">as seen in the docs</a>:</p>
-</blockquote>
-<pre><code>$ curl -L &quot;https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
+<!doctype html><html><head><html lang=en><meta charset=utf-8><meta name=description content="The second post in a multi-part container series. An expansion on Docker volumes followed by how to get started with Docker Compose and easily manage multiple containers."><meta name=viewport content="width=device-width,initial-scale=1"><title>uname Linux</title><link rel=stylesheet href=https://unamelinux.com/css/style.css><link rel="shortcut icon" href=https://unamelinux.com/favicon.svg><meta name=theme-color content="#ffffff"><link rel=icon href=https://unamelinux.com/favicon.svg><link rel=mask-icon href=https://unamelinux.com/mask-icon.svg color=#000000><link rel=apple-touch-icon href=https://unamelinux.com/apple-touch-icon.svg><link rel=manifest href=https://unamelinux.com/manifest.json></head><body><nav><li><a href=https://unamelinux.com/><img src=https://unamelinux.com/logo-small.svg width=66px></a></li><li><a href=https://unamelinux.com/about>About</a></li><li><a href=https://unamelinux.com/contact>Contact</a></li><li><a href=https://unamelinux.com/theme>Theme</a></li><li><a href=https://unamelinux.com/tags>Tags</a></li><li class=align-right><a href=https://github.com/petebuffon><img src=https://unamelinux.com/img/GitHub-Mark-Light-64px.png height=35px></a></li></nav><main><main><article><div class=article-header><h1>Docker Compose and Volumes</h1><p>Mar 19, 2020</p></div><p>In the first post of the container series <a href=https://unamelinux.com/posts/docker>Linux Containers and Docker</a>, I introduced Linux Containers and Docker, as well as how to use the Docker CLI and basic management of containers. In this second post of the series I turn my focus to my favorite Docker management tool, Docker Compose.</p><img width=200px loading=lazy alt="docker-compose logo" src=docker-compose-logo.webp srcset=docker-compose-logo.webp srcset=docker-compose-logo.png srcset=docker-compose-logo.jpeg><p>Docker Compose is a container management tool for Docker, written in Python, and it is a game changer. While managing a single container with Docker is doable, throwing any additional containers in the mix quickly makes management tedious. With Compose, a YAML file is written for configuration, and a simple CLI interface is used to manage almost the entire life cycle of your containers.</p><hr><h2 id=installation>Installation</h2><p>Let&rsquo;s begin by installing Compose</p><pre><code># apt update &amp;&amp; apt install -y docker-compose
+</code></pre><blockquote><p>Note: The Docker Compose package in Ubuntu 18.04, currently version 1.17.1-2, lags behind the current release, 1.25.4. If you would prefer a newer version of Compose, I would recommend using Ubuntu 19.10 as a base, which currently includes Compose version 1.21.0-3. Alternatively you can directly download the binary if you would like the absolute latest version of Docker Compose <a href=https://docs.docker.com/compose/install>as seen in the docs</a>:</p></blockquote><pre><code>$ curl -L &quot;https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
 $ chmod +x /usr/local/bin/docker-compose
-</code></pre><blockquote>
-<p>Note: replace the version number with the latest version number.</p>
-</blockquote>
-<h2 id="yaml">YAML</h2>
-<p>In a bit we&rsquo;ll be writing a <strong>docker-compose.yaml</strong> file so I thought I would briefly introduce YAML for those not familiar. YAML, (YAML Ain&rsquo;t Markup Language) is a data-serialization language, commonly used for configuration files. YAML is a superset of JSON, trading curly brackets for Python-style indentation to indicate nesting. YAML is generally easy for humans to read, but any stray spaces or indentations can cause issues.</p>
-<hr>
-<h2 id="volumes">Volumes</h2>
-<p>At this point before continuing with Compose, I&rsquo;d like to introduce another Docker concept, volumes. Volumes allow for persistent data storage and are managed completely by Docker. I introduced a related topic in the last post, <strong>bind mounts</strong>, which are dependent on the directory structure of the host machine as seen here:</p>
-<pre><code>$ docker run -d --name nginx -p 8080:80 -v ~/index.html:/usr/share/nginx/html/index.html:ro nginx
-</code></pre><p>While both volumes and bind mounts are called with the <strong>-v</strong> flag and use the <strong>text:text</strong> structure, they are differentiated with the text contained before the colon. Bind mounts begin with a path on the host machine and volumes begin with a volume name. The path after the colon designates the mount point on the container file structure. Let&rsquo;s illustrate the same container, but this time using a volume instead of a bind mount:</p>
-<pre><code>$ cd ~/ &amp;&amp; echo 'Hello world!' &gt; index.html
+</code></pre><blockquote><p>Note: replace the version number with the latest version number.</p></blockquote><h2 id=yaml>YAML</h2><p>In a bit we&rsquo;ll be writing a <strong>docker-compose.yaml</strong> file so I thought I would briefly introduce YAML for those not familiar. YAML, (YAML Ain&rsquo;t Markup Language) is a data-serialization language, commonly used for configuration files. YAML is a superset of JSON, trading curly brackets for Python-style indentation to indicate nesting. YAML is generally easy for humans to read, but any stray spaces or indentations can cause issues.</p><hr><h2 id=volumes>Volumes</h2><p>At this point before continuing with Compose, I&rsquo;d like to introduce another Docker concept, volumes. Volumes allow for persistent data storage and are managed completely by Docker. I introduced a related topic in the last post, <strong>bind mounts</strong>, which are dependent on the directory structure of the host machine as seen here:</p><pre><code>$ docker run -d --name nginx -p 8080:80 -v ~/index.html:/usr/share/nginx/html/index.html:ro nginx
+</code></pre><p>While both volumes and bind mounts are called with the <strong>-v</strong> flag and use the <strong>text:text</strong> structure, they are differentiated with the text contained before the colon. Bind mounts begin with a path on the host machine and volumes begin with a volume name. The path after the colon designates the mount point on the container file structure. Let&rsquo;s illustrate the same container, but this time using a volume instead of a bind mount:</p><pre><code>$ cd ~/ &amp;&amp; echo 'Hello world!' &gt; index.html
 $ docker run -d --name nginx -p 8080:80 -v nginx_static:/usr/share/nginx/html nginx
 $ docker cp ~/index.html nginx:/usr/share/nginx/html/
 $ docker restart nginx
-</code></pre><p>In a browser navigate to localhost:8080 or host_ip_address:8080 and you should find the <strong>Hello world!</strong> page (you might have to open a private browser tab to avoid cached content). Here we created a new Docker container, <strong>nginx</strong>, and a new volume, <strong>nginx_static</strong>. Nginx_static was populated with the default contents of Nginx&rsquo;s static directory, <strong>/usr/share/nginx/html</strong>. Using the Docker copy command we then copied our custom html to nginx_static mounted in nginx.</p>
-<p>A key feature of volumes is their enduring nature, as opposed to the ephemeral nature of containers. Let&rsquo;s remove our nginx container and create a new one with the same parameters:</p>
-<pre><code>$ docker stop nginx
+</code></pre><p>In a browser navigate to localhost:8080 or host_ip_address:8080 and you should find the <strong>Hello world!</strong> page (you might have to open a private browser tab to avoid cached content). Here we created a new Docker container, <strong>nginx</strong>, and a new volume, <strong>nginx_static</strong>. Nginx_static was populated with the default contents of Nginx&rsquo;s static directory, <strong>/usr/share/nginx/html</strong>. Using the Docker copy command we then copied our custom html to nginx_static mounted in nginx.</p><p>A key feature of volumes is their enduring nature, as opposed to the ephemeral nature of containers. Let&rsquo;s remove our nginx container and create a new one with the same parameters:</p><pre><code>$ docker stop nginx
 nginx
 $ docker rm nginx
 nginx
 $ docker run -d --name nginx -p 8080:80 -v nginx_static:/usr/share/nginx/html nginx
-</code></pre><p>If we had created the nginx container without the nginx_static volume, we would have found the default nginx landing page, but instead we found our custom html file intact (again you may have to open a new private browser window to avoid cached content).</p>
-<p>All volumes on the system can be listed with <strong>docker volume ls</strong> and specific volumes can be deleted with <strong>docker volume rm</strong>:</p>
-<pre><code>$ docker volume ls
+</code></pre><p>If we had created the nginx container without the nginx_static volume, we would have found the default nginx landing page, but instead we found our custom html file intact (again you may have to open a new private browser window to avoid cached content).</p><p>All volumes on the system can be listed with <strong>docker volume ls</strong> and specific volumes can be deleted with <strong>docker volume rm</strong>:</p><pre><code>$ docker volume ls
 DRIVER VOLUME NAME
 local nginx_static
 $ docker stop nginx
@@ -83,110 +20,54 @@ $ docker rm nginx
 nginx
 $ docker volume rm nginx_static
 nginx_static
-</code></pre><h2 id="from-docker-to-docker-compose">From Docker to Docker Compose</h2>
-<p>Now that we know a bit about volumes let&rsquo;s continue learning about Compose by making a new directory:</p>
-<pre><code>$ mkdir ~/compose &amp;&amp; cd ~/compose
-</code></pre><p>Again let&rsquo;s revisit our simple Nginx container:</p>
-<pre><code>$ docker run -d --name nginx -p 8080:80 --restart unless-stopped nginx
-</code></pre><p>Let&rsquo;s create a docker-compse.yaml file with the equivalent Nginx container with the addition of a volume for the nginx static directory:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#39;2&#39;</span>
-<span style="color:#66d9ef">services</span>:
-  <span style="color:#66d9ef">nginx</span>:
-    <span style="color:#66d9ef">image</span>: nginx
-    <span style="color:#66d9ef">container_name</span>: nginx
-    <span style="color:#66d9ef">ports</span>:
-      - <span style="color:#e6db74">&#34;8080:80&#34;</span>
-    <span style="color:#66d9ef">volumes</span>:
-      - <span style="color:#e6db74">&#34;nginx_static:/usr/share/nginx/html&#34;</span>
-    <span style="color:#66d9ef">restart</span>: unless-stopped
-<span style="color:#66d9ef">volumes</span>:
-  <span style="color:#66d9ef">nginx_static</span>:
-</code></pre></div><blockquote>
-<p>Note: version &lsquo;2&rsquo; at the beginning of the docker-compose.yaml file will be sufficient for most simple use cases. Docker Compose version &lsquo;3&rsquo; and up incorporated Docker Swarm (Docker&rsquo;s alternatie to Kubernetes) and made minimal changes to the version 2 YAML definitions. <a href="https://docs.docker.com/compose/compose-file/compose-versioning/">Docs reference</a>.</p>
-</blockquote>
-<p>Now with our config file created let&rsquo;s start the container with our first Compose command:</p>
-<pre><code>$ docker-compose up -d
+</code></pre><h2 id=from-docker-to-docker-compose>From Docker to Docker Compose</h2><p>Now that we know a bit about volumes let&rsquo;s continue learning about Compose by making a new directory:</p><pre><code>$ mkdir ~/compose &amp;&amp; cd ~/compose
+</code></pre><p>Again let&rsquo;s revisit our simple Nginx container:</p><pre><code>$ docker run -d --name nginx -p 8080:80 --restart unless-stopped nginx
+</code></pre><p>Let&rsquo;s create a docker-compse.yaml file with the equivalent Nginx container with the addition of a volume for the nginx static directory:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>version</span>: <span style=color:#e6db74>&#39;2&#39;</span>
+<span style=color:#66d9ef>services</span>:
+  <span style=color:#66d9ef>nginx</span>:
+    <span style=color:#66d9ef>image</span>: nginx
+    <span style=color:#66d9ef>container_name</span>: nginx
+    <span style=color:#66d9ef>ports</span>:
+      - <span style=color:#e6db74>&#34;8080:80&#34;</span>
+    <span style=color:#66d9ef>volumes</span>:
+      - <span style=color:#e6db74>&#34;nginx_static:/usr/share/nginx/html&#34;</span>
+    <span style=color:#66d9ef>restart</span>: unless-stopped
+<span style=color:#66d9ef>volumes</span>:
+  <span style=color:#66d9ef>nginx_static</span>:
+</code></pre></div><blockquote><p>Note: version &lsquo;2&rsquo; at the beginning of the docker-compose.yaml file will be sufficient for most simple use cases. Docker Compose version &lsquo;3&rsquo; and up incorporated Docker Swarm (Docker&rsquo;s alternatie to Kubernetes) and made minimal changes to the version 2 YAML definitions. <a href=https://docs.docker.com/compose/compose-file/compose-versioning/>Docs reference</a>.</p></blockquote><p>Now with our config file created let&rsquo;s start the container with our first Compose command:</p><pre><code>$ docker-compose up -d
 Creating network &quot;compose_default&quot; with the default driver
 Creating volume &quot;compose_nginx_static&quot; with default driver
 Creating nginx ... 
 Creating nginx ... done
-</code></pre><p>Compose uses a project name (the location of the docker-compose.yaml file, in this case compose) to isolate environments from each other. Networks will be created automatically following the projectName_default naming scheme.</p>
-<p>Running <strong>docker-compose up -d</strong> created and started all containers in detached mode that were specified in the docker-compose.yaml file.</p>
-<hr>
-<h2 id="cli">CLI</h2>
-<p>Generally when working with Compose I&rsquo;ll just <strong>cd</strong> into the compose directory first, but you can use the <strong>-f</strong> flag to run Compose commands from any directory:</p>
-<pre><code>$ docker-compose -f /home/pete/compose/docker-compose.yaml up -d
-</code></pre><p>This is especially useful for running Compose commands with scripts.</p>
-<p>In order to update containers you&rsquo;ll run the following:</p>
-<pre><code>$ docker-compose pull &amp;&amp; docker-compose up -d
+</code></pre><p>Compose uses a project name (the location of the docker-compose.yaml file, in this case compose) to isolate environments from each other. Networks will be created automatically following the projectName_default naming scheme.</p><p>Running <strong>docker-compose up -d</strong> created and started all containers in detached mode that were specified in the docker-compose.yaml file.</p><hr><h2 id=cli>CLI</h2><p>Generally when working with Compose I&rsquo;ll just <strong>cd</strong> into the compose directory first, but you can use the <strong>-f</strong> flag to run Compose commands from any directory:</p><pre><code>$ docker-compose -f /home/pete/compose/docker-compose.yaml up -d
+</code></pre><p>This is especially useful for running Compose commands with scripts.</p><p>In order to update containers you&rsquo;ll run the following:</p><pre><code>$ docker-compose pull &amp;&amp; docker-compose up -d
 Pulling nginx (nginx:latest)...
 latest: Pulling from library/nginx
 Digest: sha256:2539d4344dd18e1df02be842ffc435f8e1f699cfc55516e2cf2cb16b7a9aea0b
 Status: Image is up to date for nginx:latest
 test_nginx is up-to-date
-</code></pre><p>With the <strong>docker-compose pull</strong> command, Compose will check if any containers specified in the docker-compose.yaml have an updated image, then download any new images as necessary. Then with <strong>docker-compose up -d</strong>, Compose removes and recreates only the containers with updated images. This is a massive improvement from checking for new container images, manually removing them, and then finally recreating from their original run command. Additionally, any volumes will be retained and attached to recreated containers.</p>
-<p>In order to stop and destroy all running containers, use the following command:</p>
-<pre><code>$ docker-compose down
+</code></pre><p>With the <strong>docker-compose pull</strong> command, Compose will check if any containers specified in the docker-compose.yaml have an updated image, then download any new images as necessary. Then with <strong>docker-compose up -d</strong>, Compose removes and recreates only the containers with updated images. This is a massive improvement from checking for new container images, manually removing them, and then finally recreating from their original run command. Additionally, any volumes will be retained and attached to recreated containers.</p><p>In order to stop and destroy all running containers, use the following command:</p><pre><code>$ docker-compose down
 Stopping nginx ... done
 Removing nginx ... done
 Removing network compose_default
-</code></pre><p>You can see all containers and networks were removed, but volumes remained intact. Volumes can also be deleted with the <strong>docker-compose down</strong> command by adding the <strong>-v</strong> flag.</p>
-<pre><code>$ docker-compose down -v
+</code></pre><p>You can see all containers and networks were removed, but volumes remained intact. Volumes can also be deleted with the <strong>docker-compose down</strong> command by adding the <strong>-v</strong> flag.</p><pre><code>$ docker-compose down -v
 Stopping nginx ... done
 Removing nginx ... done
 Removing network compose_default
 Removing volume compose_nginx_static
-</code></pre><p>Additionally if you remove a container&rsquo;s configuration from the docker-compose.yaml file and run <strong>docker-compose up -d</strong> without running <strong>docker-compose down</strong> first, the containers will not be automatically removed from the system:</p>
-<pre><code>$ docker-compose up -d
+</code></pre><p>Additionally if you remove a container&rsquo;s configuration from the docker-compose.yaml file and run <strong>docker-compose up -d</strong> without running <strong>docker-compose down</strong> first, the containers will not be automatically removed from the system:</p><pre><code>$ docker-compose up -d
 WARNING: Found orphan containers (nginx) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.
-</code></pre><p>You will need to use the <strong>&ndash;remove-orphans</strong> flag:</p>
-<pre><code>$ docker-compose up -d --remove-orphans
+</code></pre><p>You will need to use the <strong>&ndash;remove-orphans</strong> flag:</p><pre><code>$ docker-compose up -d --remove-orphans
 Removing orphan container &quot;nginx&quot;
-</code></pre><p>Lastly you can either remove orphaned volumes directly with <strong>docker volume rm</strong> or prune all local volumes not used by at least one container:</p>
-<pre><code>$ docker volume prune
+</code></pre><p>Lastly you can either remove orphaned volumes directly with <strong>docker volume rm</strong> or prune all local volumes not used by at least one container:</p><pre><code>$ docker volume prune
 WARNING! This will remove all local volumes not used by at least one container.
 Are you sure you want to continue? [y/N] y
 Deleted Volumes:
 compose_nginx_static
 
 Total reclaimed space: 1.106kB
-</code></pre><p>Check out the Compose manual page for additional commands.</p>
-<pre><code>$ man docker-compose
-</code></pre><p>Next time we&rsquo;ll continue with Docker by expanding our knowledge of Compose and build some containers from scratch with the <strong>docker</strong> build command.</p>
-<hr>
-
-        <div class="tag">
-            
-            
-            <a href="/tags/containers">#containers</a>
-            
-            <a href="/tags/nginx">#nginx</a>
-            
-            <a href="/tags/web-server">#web server</a>
-            
-            <a href="/tags/docker">#docker</a>
-            
-            
-        </div>
-    </article>
-</main>
-
-        </main><footer>
-    <li>
-        <a href="https://unamelinux.com/license">&copy; 2020 Peter Buffon</a>
-    </li>
-    <li>
-        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
-    </li>
-    <li>
-        <a href="https://twitter.com/petebuffon">
-            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
-        </a>
-    </li>
-    <li>
-        <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
-            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
-        </a>
-    </li>
-</footer></body>
-</html>
+</code></pre><p>Check out the Compose manual page for additional commands.</p><pre><code>$ man docker-compose
+</code></pre><p>Next time we&rsquo;ll continue with Docker by expanding our knowledge of Compose and build some containers from scratch with the <strong>docker</strong> build command.</p><hr><div class=tag><a href=/tags/containers>#containers</a>
+<a href=/tags/nginx>#nginx</a>
+<a href=/tags/web-server>#web server</a>
+<a href=/tags/docker>#docker</a></div></article></main></main><footer><li><a href=https://unamelinux.com/license>&copy; 2020 Peter Buffon</a></li><li><a href=https://unamelinux.com/privacy>Privacy Policy</a></li><li><a href=https://twitter.com/petebuffon><img src=https://unamelinux.com/img/Twitter_Logo_Blue.svg height=50px></a></li><li><a href=https://t.me/joinchat/KnD86BPTALN6747G9_Biog><img src=https://unamelinux.com/img/64px-Telegram_logo.svg.png height=35px></a></li></footer></body></html>
