@@ -1,18 +1,143 @@
-<!doctype html><html><head><html lang=en><meta charset=utf-8><meta name=description content="A quick review of the Dell XPS 13 9380 and the various tweaks I've made to the machine over the past six months."><meta name=viewport content="width=device-width,initial-scale=1"><title>uname Linux</title><link rel=stylesheet href=https://unamelinux.com/css/style-min.css><link rel="shortcut icon" href=https://unamelinux.com/favicon.svg><meta name=theme-color content="#ffffff"><link rel=icon href=https://unamelinux.com/favicon.svg><link rel=mask-icon href=https://unamelinux.com/mask-icon.svg color=#000000><link rel=apple-touch-icon href=https://unamelinux.com/apple-touch-icon.svg><link rel=manifest href=https://unamelinux.com/manifest.json></head><body><nav><li><a href=https://unamelinux.com/><img src=https://unamelinux.com/logo-small.svg width=66px></a></li><li><a href=https://unamelinux.com/about>About</a></li><li><a href=https://unamelinux.com/contact>Contact</a></li><li><a href=https://unamelinux.com/theme>Theme</a></li><li><a href=https://unamelinux.com/tags>Tags</a></li><li class=align-right><a href=https://github.com/petebuffon><img src=https://unamelinux.com/img/GitHub-Mark-Light-64px.png height=35px></a></li></nav><main><main><article><div class=article-header><h1>XPS 13 Tweaks</h1><p>Feb 20, 2020</p></div><p>I&rsquo;ve had my Dell XPS 13 for about six months now and thought I&rsquo;d write a quick review and summarize some of the tweaks I&rsquo;ve made over time. In August 2019 I purchased a <strong>Developer Edition Dell XPS 13 9380</strong> which came with Dell&rsquo;s version of Ubuntu pre-installed. Preferring Canonical&rsquo;s stock version of Ubuntu, the first thing I did was install <strong>Ubuntu 19.04</strong> on the new laptop.</p><p>The screen of the XPS 13 is fantastic with great color and clarity. The <strong>1920 x 1080</strong> resolution is entirely sufficient for my general use case and I didn&rsquo;t think the extra cost and battery drain was worth it for a 4K screen. I did bump up the font display size in <strong>Gnome Tweaks</strong>.</p><p>The limited eight GB of RAM hasn&rsquo;t been an issue for me although I don&rsquo;t usually fire up multiple VMs and I game mainly on my desktop PC. I would say not being able to upgrade the RAM is a trade off, definitely not ideal. But the slim and light build of the laptop is top notch. If I wanted something I could easily upgrade, I think I would have gone with a Thinkpad or something from System76.</p><p>The cooling on the XPS 13 is pretty great. The laptop can get warm, but not hot like I&rsquo;ve experienced with other laptops. The fan doesn&rsquo;t kick on unless under heavy loads and I usually don&rsquo;t notice it unless I&rsquo;m gaming, compiling, or having extended video watching sessions. The battery more or less lasts all day. No complaints after having installed <strong>TLP</strong> and keeping screen brightness on the lower end when on battery power.</p><h2 id=specs>Specs</h2><ul><li>Dell XPS 13 9380</li><li>Intel Whiskey Lake i5-8265U CPU @ 1.60GHz</li><li>Toshiba 256 GB NVME SSD</li><li>8 GB 2133 MHz LPDDR3 RAM</li><li>13.3 in 1920 x 1080 IPS screen</li><li>USB-C ports with Thunderbolt 3</li></ul><hr><h2 id=font-scaling>Font Scaling</h2><pre><code># apt update &amp;&amp; apt install gnome-tweaks -y
-</code></pre><p>After installing Tweaks, open up the app and under Fonts set the Scaling Factor to 1.25.</p><picture>
-<source srcset=font-tweaks.webp type=image/webp><source srcset=font-tweaks.png type=image/png><source srcset=font-tweaks.jpeg type=image/jpeg><img src=font-tweaks.jpeg alt="font tweaks" width=100% loading=lazy></picture><hr><h2 id=tlp>TLP</h2><p>TLP is an advanced power management tool for Linux. The defaults for TLP will fit most use cases and is already optimized for battery life. TLP has two run modes, AC and battery. This is great as get the best of both worlds, extended battery life on the go and maximum performance when plugged into power.</p><pre><code># apt install tlp
+<!DOCTYPE html>
+<html><head>
+  <html lang="en">
+  <meta charset="utf-8">
+  <meta name="description" content="A quick review of the Dell XPS 13 9380 and the various tweaks I&#39;ve made to the machine over the past six months."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    uname Linux
+    </title>
+  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
+
+  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
+  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+</head>
+<body><nav>
+    <li>
+        <a href="https://unamelinux.com/">
+            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        </a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/about">About</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/contact">Contact</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/theme">Theme</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/tags">Tags</a>
+    </li>
+    <li class="align-right">
+        <a href="https://github.com/petebuffon">
+            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+        </a>
+    </li>
+</nav>
+        <main>
+<main>
+    <article>
+        <div class="article-header">
+            <h1>XPS 13 Tweaks</h1>
+            <p>Feb 20, 2020</p>
+        </div>
+        <p>I&rsquo;ve had my Dell XPS 13 for about six months now and thought I&rsquo;d write a quick review and summarize some of the tweaks I&rsquo;ve made over time.  In August 2019 I purchased a <strong>Developer Edition Dell XPS 13 9380</strong> which came with Dell&rsquo;s version of Ubuntu pre-installed.  Preferring Canonical&rsquo;s stock version of Ubuntu, the first thing I did was install <strong>Ubuntu 19.04</strong> on the new laptop.</p>
+<p>The screen of the XPS 13 is fantastic with great color and clarity.  The <strong>1920 x 1080</strong> resolution is entirely sufficient for my general use case and I didn&rsquo;t think the extra cost and battery drain was worth it for a 4K screen.  I did bump up the font display size in <strong>Gnome Tweaks</strong>.</p>
+<p>The limited eight GB of RAM hasn&rsquo;t been an issue for me although I don&rsquo;t usually fire up multiple VMs and I game mainly on my desktop PC.  I would say not being able to upgrade the RAM is a trade off, definitely not ideal.  But the slim and light build of the laptop is top notch.  If I wanted something I could easily upgrade, I think I would have gone with a Thinkpad or something from System76.</p>
+<p>The cooling on the XPS 13 is pretty great.  The laptop can get warm, but not hot like I&rsquo;ve experienced with other laptops.  The fan doesn&rsquo;t kick on unless under heavy loads and I usually don&rsquo;t notice it unless I&rsquo;m gaming, compiling, or having extended video watching sessions.  The battery more or less lasts all day.  No complaints after having installed <strong>TLP</strong> and keeping screen brightness on the lower end when on battery power.</p>
+<h2 id="specs">Specs</h2>
+<ul>
+<li>Dell XPS 13 9380</li>
+<li>Intel Whiskey Lake i5-8265U CPU @ 1.60GHz</li>
+<li>Toshiba 256 GB NVME SSD</li>
+<li>8 GB 2133 MHz LPDDR3 RAM</li>
+<li>13.3 in 1920 x 1080 IPS screen</li>
+<li>USB-C ports with Thunderbolt 3</li>
+</ul>
+<hr>
+<h2 id="font-scaling">Font Scaling</h2>
+<pre><code># apt update &amp;&amp; apt install gnome-tweaks -y
+</code></pre><p>After installing Tweaks, open up the app and under Fonts set the Scaling Factor to 1.25.</p>
+<picture>
+    <source srcset="font-tweaks.webp" type="image/webp">
+    <source srcset="font-tweaks.png" type="image/png">
+    <source srcset="font-tweaks.jpeg" type="image/jpeg">
+    <img 
+        src="font-tweaks.jpeg" 
+        alt="font tweaks"
+        width="100%"
+        loading="lazy"
+    >
+</picture>
+<hr>
+<h2 id="tlp">TLP</h2>
+<p>TLP is an advanced power management tool for Linux.  The defaults for TLP will fit most use cases and is already optimized for battery life.  TLP has two run modes, AC and battery.  This is great as get the best of both worlds, extended battery life on the go and maximum performance when plugged into power.</p>
+<pre><code># apt install tlp
 # systemctl enable --now tlp.service
-</code></pre><p>Go ahead and check the status of TLP.</p><pre><code># tlp-stat -s
-</code></pre><h2 id=bluetooth>Bluetooth</h2><p>I don&rsquo;t have any use for Bluetooth with my current laptop. I wanted to disable it so I could hopefully save a bit of battery life and eliminate a potential attack vector. I first disabled Bluetooth in system settings, but found the change was not persistent across reboots. You can make the change persistent by disabling the Bluetooth systemd service.</p><pre><code># systemctl disable bluetooth
-</code></pre><h2 id=dynamic-backlight-control>Dynamic Backlight Control</h2><p>Dell has a dynamic backlight control (DBC) feature on by default. While this feature has the potential for battery savings, I found the feature distracting as the screen would flicker from time to time. I decided to turn the feature off and this can be done in the BIOS.</p><p>After having some issues rebooting into the BIOS by trying to hold various keys, I learned that you can reboot into the BIOS directly with the following command.</p><pre><code># systemctl reboot --firmware-setup
-</code></pre><p>Once in the BIOS settings go ahead and find the DBC option under the Video section and set it to OFF.</p><hr><h2 id=panel-self-refresh>Panel Self Refresh</h2><p>After experiencing some noticeable screen flickering even after turning off DBC, I ran into <a href=https://wiki.archlinux.org/index.php/Intel_graphics#Screen_flickering>this page on the Arch Wiki</a>. Panel Self Refresh (PSR), a power saving feature used by Intel iGPUs can cause screen flickering. A workaround is to disable PSR by adding a Kernel boot parameter to GRUB.</p><p>Add <strong>i915.enable_psr=0</strong> to the <strong>GRUB_CMDLINE_LINUX_DEFAULT</strong> line in <strong>/etc/default/grub</strong>. All Kernel boot parameters are enclosed in a single set of double quotes and are each separated by a space. Here is my resulting <strong>/etc/default/grub</strong> file.</p><pre><code>GRUB_DEFAULT=0
+</code></pre><p>Go ahead and check the status of TLP.</p>
+<pre><code># tlp-stat -s
+</code></pre><h2 id="bluetooth">Bluetooth</h2>
+<p>I don&rsquo;t have any use for Bluetooth with my current laptop.  I wanted to disable it so I could hopefully save a bit of battery life and eliminate a potential attack vector.  I first disabled Bluetooth in system settings, but found the change was not persistent across reboots.  You can make the change persistent by disabling the Bluetooth systemd service.</p>
+<pre><code># systemctl disable bluetooth
+</code></pre><h2 id="dynamic-backlight-control">Dynamic Backlight Control</h2>
+<p>Dell has a dynamic backlight control (DBC) feature on by default.  While this feature has the potential for battery savings, I found the feature distracting as the screen would flicker from time to time.  I decided to turn the feature off and this can be done in the BIOS.</p>
+<p>After having some issues rebooting into the BIOS by trying to hold various keys, I learned that you can reboot into the BIOS directly with the following command.</p>
+<pre><code># systemctl reboot --firmware-setup
+</code></pre><p>Once in the BIOS settings go ahead and find the DBC option under the Video section and set it to OFF.</p>
+<hr>
+<h2 id="panel-self-refresh">Panel Self Refresh</h2>
+<p>After experiencing some noticeable screen flickering even after turning off DBC, I ran into <a href="https://wiki.archlinux.org/index.php/Intel_graphics#Screen_flickering">this page on the Arch Wiki</a>.  Panel Self Refresh (PSR), a power saving feature used by Intel iGPUs can cause screen flickering.  A workaround is to disable PSR by adding a Kernel boot parameter to GRUB.</p>
+<p>Add <strong>i915.enable_psr=0</strong> to the <strong>GRUB_CMDLINE_LINUX_DEFAULT</strong> line in <strong>/etc/default/grub</strong>.  All Kernel boot parameters are enclosed in a single set of double quotes and are each separated by a space.  Here is my resulting <strong>/etc/default/grub</strong> file.</p>
+<pre><code>GRUB_DEFAULT=0
 GRUB_TIMEOUT_STYLE=hidden
 GRUB_TIMEOUT=0
 GRUB_DISTRIBUTOR=`lsb_release -i -s 2&gt; /dev/null || echo Debian`
 GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet splash i915.enable_psr=0&quot;
 GRUB_CMDLINE_LINUX=&quot;&quot;
-</code></pre><p>Update GRUB and reboot for changes to be applied.</p><pre><code># update-grub
+</code></pre><p>Update GRUB and reboot for changes to be applied.</p>
+<pre><code># update-grub
 # systemctl reboot
-</code></pre><h2 id=zfs>ZFS</h2><p>Right when Ubuntu 19.10 came out I did a fresh install to try out the new experimental ZFS on root feature. While I haven&rsquo;t made use of everything ZFS has to offer on the laptop, I haven&rsquo;t experienced any issues since installing in October of 2019. A few of my upcoming projects will include ZFS snapshots, ZFS encryption, and ZFS send and receive.</p><hr><div class=tag><a href=/tags/hardware>#hardware</a>
-<a href=/tags/xps-13>#XPS 13</a>
-<a href=/tags/zfs>#ZFS</a></div></article></main></main><footer><li><a href=https://unamelinux.com/license>&copy; 2020 Peter Buffon</a></li><li><a href=https://unamelinux.com/privacy>Privacy Policy</a></li><li><a href=https://twitter.com/petebuffon><img src=https://unamelinux.com/img/Twitter_Logo_Blue.svg height=50px></a></li><li><a href=https://t.me/joinchat/KnD86BPTALN6747G9_Biog><img src=https://unamelinux.com/img/64px-Telegram_logo.svg.png height=35px></a></li></footer></body></html>
+</code></pre><h2 id="zfs">ZFS</h2>
+<p>Right when Ubuntu 19.10 came out I did a fresh install to try out the new experimental ZFS on root feature.  While I haven&rsquo;t made use of everything ZFS has to offer on the laptop, I haven&rsquo;t experienced any issues since installing in October of 2019.  A few of my upcoming projects will include ZFS snapshots, ZFS encryption, and ZFS send and receive.</p>
+<hr>
+
+        <div class="tag">
+            
+            
+            <a href="/tags/hardware">#hardware</a>
+            
+            <a href="/tags/xps-13">#XPS 13</a>
+            
+            <a href="/tags/zfs">#ZFS</a>
+            
+            
+        </div>
+    </article>
+</main>
+
+        </main><footer>
+    <li>
+        <a href="https://unamelinux.com/license">&copy; 2020 Peter Buffon</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+    </li>
+    <li>
+        <a href="https://twitter.com/petebuffon">
+            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+        </a>
+    </li>
+    <li>
+        <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
+            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+        </a>
+    </li>
+</footer></body>
+</html>

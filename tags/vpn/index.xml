@@ -1,2 +1,25 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>VPN on uname Linux</title><link>https://unamelinux.com/tags/vpn/</link><description>Recent content in VPN on uname Linux</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 03 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/vpn/index.xml" rel="self" type="application/rss+xml"/><item><title>WireGuard</title><link>https://unamelinux.com/posts/wireguard/</link><pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate><guid>https://unamelinux.com/posts/wireguard/</guid><description>Organizations spanning more than one site often use Virtual Private Networks (VPNs) to protect sensitive data sent from site to site. VPNs allow private networks to be extended across a public network. Most software VPN implementations utilize encryption to further protect data in transit.
-Two of the most common VPNs, IPsec and OpenVPN, are long established and feature rich, but often difficult to set up and deploy. A while ago I attempted to set up a IPsec VPN on my home pfSense firewall, but gave up because of the complex authentication setup required.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VPN on uname Linux</title>
+    <link>https://unamelinux.com/tags/vpn/</link>
+    <description>Recent content in VPN on uname Linux</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 03 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://unamelinux.com/tags/vpn/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>WireGuard</title>
+      <link>https://unamelinux.com/posts/wireguard/</link>
+      <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/wireguard/</guid>
+      <description>Organizations spanning more than one site often use Virtual Private Networks (VPNs) to protect sensitive data sent from site to site. VPNs allow private networks to be extended across a public network. Most software VPN implementations utilize encryption to further protect data in transit.
+Two of the most common VPNs, IPsec and OpenVPN, are long established and feature rich, but often difficult to set up and deploy. A while ago I attempted to set up a IPsec VPN on my home pfSense firewall, but gave up because of the complex authentication setup required.</description>
+    </item>
+    
+  </channel>
+</rss>

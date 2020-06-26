@@ -1,4 +1,45 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>docker on uname Linux</title><link>https://unamelinux.com/tags/docker/</link><description>Recent content in docker on uname Linux</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 09 Apr 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker Build</title><link>https://unamelinux.com/posts/docker-build/</link><pubDate>Thu, 09 Apr 2020 00:00:00 +0000</pubDate><guid>https://unamelinux.com/posts/docker-build/</guid><description>If you need a refresher here are the first two posts in the series, Linux Containers and Docker and Docker Compose and Volumes.
-Before moving on to other Linux container platforms, I&amp;rsquo;d like to focus on one more Docker command, docker build. Sometimes it&amp;rsquo;s helpful to slightly alter existing images, or create entirely new images not available on the Docker Hub. Building images is relatively straight forward once you get a feel for the syntax of Docker images.</description></item><item><title>Docker Compose and Volumes</title><link>https://unamelinux.com/posts/docker-compose/</link><pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate><guid>https://unamelinux.com/posts/docker-compose/</guid><description>In the first post of the container series Linux Containers and Docker, I introduced Linux Containers and Docker, as well as how to use the Docker CLI and basic management of containers. In this second post of the series I turn my focus to my favorite Docker management tool, Docker Compose.
-Docker Compose is a container management tool for Docker, written in Python, and it is a game changer.</description></item><item><title>Linux Containers and Docker</title><link>https://unamelinux.com/posts/docker/</link><pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate><guid>https://unamelinux.com/posts/docker/</guid><description>Containers have radically changed how computer systems and applications are built, managed, and deployed. At home I deploy a combination of containers and VMs for my own personal use.
-Building Blocks While similar to virtualization, containers have several key differences. Each virtual machine created by a hypervisor has its own kernel and emulated hardware. Containers share the same kernel as the host and isolate application processes from the rest of the system.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on uname Linux</title>
+    <link>https://unamelinux.com/tags/docker/</link>
+    <description>Recent content in docker on uname Linux</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 09 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://unamelinux.com/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Docker Build</title>
+      <link>https://unamelinux.com/posts/docker-build/</link>
+      <pubDate>Thu, 09 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/docker-build/</guid>
+      <description>If you need a refresher here are the first two posts in the series, Linux Containers and Docker and Docker Compose and Volumes.
+Before moving on to other Linux container platforms, I&amp;rsquo;d like to focus on one more Docker command, docker build. Sometimes it&amp;rsquo;s helpful to slightly alter existing images, or create entirely new images not available on the Docker Hub. Building images is relatively straight forward once you get a feel for the syntax of Docker images.</description>
+    </item>
+    
+    <item>
+      <title>Docker Compose and Volumes</title>
+      <link>https://unamelinux.com/posts/docker-compose/</link>
+      <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/docker-compose/</guid>
+      <description>In the first post of the container series Linux Containers and Docker, I introduced Linux Containers and Docker, as well as how to use the Docker CLI and basic management of containers. In this second post of the series I turn my focus to my favorite Docker management tool, Docker Compose.
+  Docker Compose is a container management tool for Docker, written in Python, and it is a game changer.</description>
+    </item>
+    
+    <item>
+      <title>Linux Containers and Docker</title>
+      <link>https://unamelinux.com/posts/docker/</link>
+      <pubDate>Fri, 06 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/docker/</guid>
+      <description>Containers have radically changed how computer systems and applications are built, managed, and deployed. At home I deploy a combination of containers and VMs for my own personal use.
+ Building Blocks While similar to virtualization, containers have several key differences. Each virtual machine created by a hypervisor has its own kernel and emulated hardware. Containers share the same kernel as the host and isolate application processes from the rest of the system.</description>
+    </item>
+    
+  </channel>
+</rss>

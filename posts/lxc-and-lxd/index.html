@@ -1,9 +1,86 @@
-<!doctype html><html><head><html lang=en><meta charset=utf-8><meta name=description content="Continuing the container series naturally brings us to LXC and LXD.  A brief history of the two container management systems is followed by an introduction to installing, configuring, and running LXD to deploy system containers."><meta name=viewport content="width=device-width,initial-scale=1"><title>uname Linux</title><link rel=stylesheet href=https://unamelinux.com/css/style-min.css><link rel="shortcut icon" href=https://unamelinux.com/favicon.svg><meta name=theme-color content="#ffffff"><link rel=icon href=https://unamelinux.com/favicon.svg><link rel=mask-icon href=https://unamelinux.com/mask-icon.svg color=#000000><link rel=apple-touch-icon href=https://unamelinux.com/apple-touch-icon.svg><link rel=manifest href=https://unamelinux.com/manifest.json></head><body><nav><li><a href=https://unamelinux.com/><img src=https://unamelinux.com/logo-small.svg width=66px></a></li><li><a href=https://unamelinux.com/about>About</a></li><li><a href=https://unamelinux.com/contact>Contact</a></li><li><a href=https://unamelinux.com/theme>Theme</a></li><li><a href=https://unamelinux.com/tags>Tags</a></li><li class=align-right><a href=https://github.com/petebuffon><img src=https://unamelinux.com/img/GitHub-Mark-Light-64px.png height=35px></a></li></nav><main><main><article><div class=article-header><h1>LXC and LXD</h1><p>May 7, 2020</p></div><p>Continuing the container series naturally brings us to LXC and LXD. For a background on Linux Containers and an introduction to Docker, see <a href=https://unamelinux.com/posts/docker>Linux Containers and Docker</a>. The rest of the container series posts can be found <a href=https://unamelinux.com/tags/containers>here</a>.</p><hr><h2 id=lxc>LXC</h2><picture>
-<source srcset=containers.webp type=image/webp><source srcset=containers.png type=image/png><source srcset=containers.jpeg type=image/jpeg><img src=containers.jpeg alt=containers width=200px loading=lazy></picture><p>Engineers from IMB developed LXC in 2008. LXC layered userspace tooling on top of the already existing <strong>cgroups</strong> and <strong>namespace</strong> technologies. While LXC improved the user experience of deploying containers, security remained an obstacle with the threat of users being able to break out of containers and attack the host system.</p><p>In version 1.0 of LXC, released in 2014, security was enhanced with an update to cgroups and namespaces, along with support for additional security features including SELinux and Seccomp.</p><p>LXC 1.0 also introduced the concept of <strong>unprivileged</strong> containers. Up to this point all containers were <strong>privileged</strong>, where the container uid 0 was mapped to the host&rsquo;s uid 0. In this case protection of the host and prevention of escape was done through MAC systems, seccomp filters, and dropping of capabilities and namespaces. LXC considers privileged containers as root-unsafe. Unprivileged containers on the other hand are safe by design. The container uid 0 is mapped to an unprivileged user outside of the container and only has extra rights on resources that it owns itself.</p><hr><h2 id=lxd>LXD</h2><p>LXD is a system container manager written in Go, developed by Canonical, and released in 2014. LXD is built on top of LXC to provide its own user experience to manage containers.</p><p>LXD is image based with a wide number of Linux distributions available. It offers a full Linux system running inside containers, resulting in a user experience somewhere in between virtual machines and containers. Unlike virtual machines, containers implemented with LXD utilize the same Kernel as the host system and do not simulate hardware. Unlike Docker containers, LXD containers act more like a full Linux system and are not treated as ethereal application containers.</p><hr><h2 id=installation>Installation</h2><p>I&rsquo;ll be starting with a fresh Ubuntu 20.04 Server install. LXD comes preinstalled on Ubuntu Server, but will need to be installed on Ubuntu Desktop. Installing the Snap version will give you the most up to date version of LXD:</p><pre><code># snap install -y lxd
-</code></pre><p>LXD can alternatively be installed with apt:</p><pre><code># apt install -y lxd
-</code></pre><h2 id=configuration>Configuration</h2><p>By default lxc commands require root privileges. Add your current user to the <strong>lxd</strong> group and run <strong>newgrp</strong> to apply these settings straight away:</p><pre><code># usermod -aG lxd $USER
+<!DOCTYPE html>
+<html><head>
+  <html lang="en">
+  <meta charset="utf-8">
+  <meta name="description" content="Continuing the container series naturally brings us to LXC and LXD.  A brief history of the two container management systems is followed by an introduction to installing, configuring, and running LXD to deploy system containers."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    uname Linux
+    </title>
+  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
+
+  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
+  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+</head>
+<body><nav>
+    <li>
+        <a href="https://unamelinux.com/">
+            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        </a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/about">About</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/contact">Contact</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/theme">Theme</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/tags">Tags</a>
+    </li>
+    <li class="align-right">
+        <a href="https://github.com/petebuffon">
+            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+        </a>
+    </li>
+</nav>
+        <main>
+<main>
+    <article>
+        <div class="article-header">
+            <h1>LXC and LXD</h1>
+            <p>May 7, 2020</p>
+        </div>
+        <p>Continuing the container series naturally brings us to LXC and LXD.  For a background on Linux Containers and an introduction to Docker, see <a href="https://unamelinux.com/posts/docker">Linux Containers and Docker</a>.  The rest of the container series posts can be found <a href="https://unamelinux.com/tags/containers">here</a>.</p>
+<hr>
+<h2 id="lxc">LXC</h2>
+<picture>
+    <source srcset="containers.webp" type="image/webp">
+    <source srcset="containers.png" type="image/png">
+    <source srcset="containers.jpeg" type="image/jpeg">
+    <img 
+        src="containers.jpeg" 
+        alt="containers"
+        width="200px"
+        loading="lazy"
+    >
+</picture>
+<p>Engineers from IMB developed LXC in 2008.  LXC layered userspace tooling on top of the already existing <strong>cgroups</strong> and <strong>namespace</strong> technologies.  While LXC improved the user experience of deploying containers, security remained an obstacle with the threat of users being able to break out of containers and attack the host system.</p>
+<p>In version 1.0 of LXC, released in 2014, security was enhanced with an update to cgroups and namespaces, along with support for additional security features including SELinux and Seccomp.</p>
+<p>LXC 1.0 also introduced the concept of <strong>unprivileged</strong> containers.  Up to this point all containers were <strong>privileged</strong>, where the container uid 0 was mapped to the host&rsquo;s uid 0.  In this case protection of the host and prevention of escape was done through MAC systems, seccomp filters, and dropping of capabilities and namespaces.  LXC considers privileged containers as root-unsafe.  Unprivileged containers on the other hand are safe by design.  The container uid 0 is mapped to an unprivileged user outside of the container and only has extra rights on resources that it owns itself.</p>
+<hr>
+<h2 id="lxd">LXD</h2>
+<p>LXD is a system container manager written in Go, developed by Canonical, and released in 2014.  LXD is built on top of LXC to provide its own user experience to manage containers.</p>
+<p>LXD is image based with a wide number of Linux distributions available.  It offers a full Linux system running inside containers, resulting in a user experience somewhere in between virtual machines and containers.  Unlike virtual machines, containers implemented with LXD utilize the same Kernel as the host system and do not simulate hardware.  Unlike Docker containers, LXD containers act more like a full Linux system and are not treated as ethereal application containers.</p>
+<hr>
+<h2 id="installation">Installation</h2>
+<p>I&rsquo;ll be starting with a fresh Ubuntu 20.04 Server install.  LXD comes preinstalled on Ubuntu Server, but will need to be installed on Ubuntu Desktop.  Installing the Snap version will give you the most up to date version of LXD:</p>
+<pre><code># snap install -y lxd
+</code></pre><p>LXD can alternatively be installed with apt:</p>
+<pre><code># apt install -y lxd
+</code></pre><h2 id="configuration">Configuration</h2>
+<p>By default lxc commands require root privileges.  Add your current user to the <strong>lxd</strong> group and run <strong>newgrp</strong> to apply these settings straight away:</p>
+<pre><code># usermod -aG lxd $USER
 $ newgrp lxd
-</code></pre><p>Configure LXD by runnning the init script. In most cases the default options will be just fine. Go ahead and press <strong>ENTER</strong> at each prompt for the default options. Advanced storage, network, and remote options can be specified at this time. I suggest using the default ZFS storage pool, which allows LXD to take advantage of ZFS features such as cloning and snapshots:</p><pre><code>$ lxd init
+</code></pre><p>Configure LXD by runnning the init script.  In most cases the default options will be just fine.  Go ahead and press <strong>ENTER</strong> at each prompt for the default options.  Advanced storage, network, and remote options can be specified at this time.  I suggest using the default ZFS storage pool, which allows LXD to take advantage of ZFS features such as cloning and snapshots:</p>
+<pre><code>$ lxd init
 Would you like to use LXD clustering? (yes/no) [default=no]: 
 Do you want to configure a new storage pool? (yes/no) [default=yes]: 
 Name of the new storage pool [default=default]: 
@@ -19,27 +96,43 @@ What IPv6 address should be used? (CIDR subnet notation, “auto” or “none�
 Would you like LXD to be available over the network? (yes/no) [default=no]: 
 Would you like stale cached images to be updated automatically? (yes/no) [default=yes] 
 Would you like a YAML &quot;lxd init&quot; preseed to be printed? (yes/no) [default=no]: 
-</code></pre><h2 id=lxd-cli>LXD CLI</h2><p>Launching your first container is easy. Run lxc launch, followed by an image name, and finally a container name of your choosing:</p><pre><code>$ lxc launch ubuntu:20.04 test
-</code></pre><p>List all containers on the system with:</p><pre><code>$ lxc list
+</code></pre><h2 id="lxd-cli">LXD CLI</h2>
+<p>Launching your first container is easy.  Run lxc launch, followed by an image name, and finally a container name of your choosing:</p>
+<pre><code>$ lxc launch ubuntu:20.04 test
+</code></pre><p>List all containers on the system with:</p>
+<pre><code>$ lxc list
 +-------+---------+----------------------+---------------------------------------------+-----------+-----------+
 | NAME  |  STATE  |         IPV4         |                    IPV6                     |   TYPE    | SNAPSHOTS |
 +-------+---------+----------------------+---------------------------------------------+-----------+-----------+
 | test | RUNNING | 10.47.243.213 (eth0) | fd42:9ea0:5534:5192:216:3eff:fe9f:bf (eth0) | CONTAINER | 1         |
 +-------+---------+----------------------+---------------------------------------------+-----------+-----------+
-</code></pre><p>Access your container with a shell:</p><pre><code>$ lxc exec test -- /bin/bash
-</code></pre><p>Or run commands directly:</p><pre><code>$ lxc exec test -- apt update
-</code></pre><p>Containers can be easily stopped and deleted:</p><pre><code>$ lxc stop test
+</code></pre><p>Access your container with a shell:</p>
+<pre><code>$ lxc exec test -- /bin/bash
+</code></pre><p>Or run commands directly:</p>
+<pre><code>$ lxc exec test -- apt update
+</code></pre><p>Containers can be easily stopped and deleted:</p>
+<pre><code>$ lxc stop test
 $ lxc delete test
-</code></pre><h2 id=images>Images</h2><p>Besides the many versions of Ubuntu LXD has by default, LXD also includes a wide variety of distros from its <a href=https://us.images.linuxcontainers.org>public image server</a>.</p><blockquote><p>Note: The images found on this image server are unofficial images are generated using community supported, upstream LXC image templates.</p></blockquote><p>The available images range from Centos to Kali Linux and everything in between. You can list all available images with:</p><pre><code>$ lxc image list image:
-</code></pre><p>Find the image you&rsquo;re looking for and launch:</p><pre><code>$ lxc image list image: | grep centos
+</code></pre><h2 id="images">Images</h2>
+<p>Besides the many versions of Ubuntu LXD has by default, LXD also includes a wide variety of distros from its <a href="https://us.images.linuxcontainers.org">public image server</a>.</p>
+<blockquote>
+<p>Note: The images found on this image server are unofficial images are generated using community supported, upstream LXC image templates.</p>
+</blockquote>
+<p>The available images range from Centos to Kali Linux and everything in between.  You can list all available images with:</p>
+<pre><code>$ lxc image list image:
+</code></pre><p>Find the image you&rsquo;re looking for and launch:</p>
+<pre><code>$ lxc image list image: | grep centos
 $ lxc launch images:centos/8 centos-8
-</code></pre><h2 id=storage>Storage</h2><p>List all LXD storage pools:</p><pre><code>$ lxc storage list
+</code></pre><h2 id="storage">Storage</h2>
+<p>List all LXD storage pools:</p>
+<pre><code>$ lxc storage list
 +---------+-------------+--------+--------------------------------------------+---------+
 |  NAME   | DESCRIPTION | DRIVER |                   SOURCE                   | USED BY |
 +---------+-------------+--------+--------------------------------------------+---------+
 | default |             | zfs    | /var/snap/lxd/common/lxd/disks/default.img | 2       |
 +---------+-------------+--------+--------------------------------------------+---------+
-</code></pre><p>Get info on a specific storage pool:</p><pre><code>$ lxc storage info default
+</code></pre><p>Get info on a specific storage pool:</p>
+<pre><code>$ lxc storage info default
 info:
   description: &quot;&quot;
   driver: zfs
@@ -51,7 +144,8 @@ used by:
   - 647a85725003d873f8bb9a5bd1a09bdc7fd4bcb393b2cf629f7e0edaa58f5637
   profiles:
   - default
-</code></pre><p>Expand a default loop backed ZFS storage pool (use the pool name and image location specified in the lxc storage info output):</p><pre><code># zpool set autoexpand=on default
+</code></pre><p>Expand a default loop backed ZFS storage pool (use the pool name and image location specified in the lxc storage info output):</p>
+<pre><code># zpool set autoexpand=on default
 # zpool online -e default /var/snap/lxd/common/lxd/disks/default.img
 # zpool set autoexpand=off default
 $ lxc storage info default
@@ -66,9 +160,13 @@ used by:
   - 647a85725003d873f8bb9a5bd1a09bdc7fd4bcb393b2cf629f7e0edaa58f5637
   profiles:
   - default
-</code></pre><h2 id=copy-and-snapshots>Copy and Snapshots</h2><p>When utilizing ZFS as a storage back-end, LXD can take almost instantaneous snapshots that initially consume no additional disk space, but over time increase in size as snapshots continue to reference old data.</p><p>Take a few snapshots:</p><pre><code>$ lxc snapshot test snap0
+</code></pre><h2 id="copy-and-snapshots">Copy and Snapshots</h2>
+<p>When utilizing ZFS as a storage back-end, LXD can take almost instantaneous snapshots that initially consume no additional disk space, but over time increase in size as snapshots continue to reference old data.</p>
+<p>Take a few snapshots:</p>
+<pre><code>$ lxc snapshot test snap0
 $ lxc snapshot test snap1
-</code></pre><p>Snapshot info is included with the general info of a container:</p><pre><code>$ lxc info test
+</code></pre><p>Snapshot info is included with the general info of a container:</p>
+<pre><code>$ lxc info test
 Name: test
 Location: none
 Remote: unix://
@@ -80,11 +178,47 @@ Profiles: default
 Snapshots:
   snap0 (taken at 2020/05/07 17:02 UTC) (stateless)
   snap1 (taken at 2020/05/07 17:57 UTC) (stateless)
-</code></pre><p>Containers can be restored from snapshots, but only the latest snapshot can be used:</p><pre><code>lxc restore test snap0
+</code></pre><p>Containers can be restored from snapshots, but only the latest snapshot can be used:</p>
+<pre><code>lxc restore test snap0
 Error: Snapshot 'snap0' cannot be restored due to subsequent snapshot(s). Set zfs.remove_snapshots to override
 lxc restore test snap1
-</code></pre><p>A simple workaround for this behavior (a consequence of the ZFS storage back-end) is to make a copy of the container from the earlier snapshot:</p><pre><code>lxc copy test/snap0 test0
-</code></pre><p>Containers can also be easily copied:</p><pre><code>lxc copy test test1
-</code></pre><p>Delete specific snapshots:</p><pre><code>lxc delete test/snap0
-</code></pre><p>That should pretty much cover the basic usage of LXC and LXD. These two systems have a long history and have gained important features over the years. LXD definitely stands out from both Docker and virtual machines in its own unique niche. Next time we&rsquo;ll be covering networking and reverse proxies with LXD using a practical example.</p><hr><div class=tag><a href=/tags/containers>#containers</a>
-<a href=/tags/lxd>#LXD</a></div></article></main></main><footer><li><a href=https://unamelinux.com/license>&copy; 2020 Peter Buffon</a></li><li><a href=https://unamelinux.com/privacy>Privacy Policy</a></li><li><a href=https://twitter.com/petebuffon><img src=https://unamelinux.com/img/Twitter_Logo_Blue.svg height=50px></a></li><li><a href=https://t.me/joinchat/KnD86BPTALN6747G9_Biog><img src=https://unamelinux.com/img/64px-Telegram_logo.svg.png height=35px></a></li></footer></body></html>
+</code></pre><p>A simple workaround for this behavior (a consequence of the ZFS storage back-end) is to make a copy of the container from the earlier snapshot:</p>
+<pre><code>lxc copy test/snap0 test0
+</code></pre><p>Containers can also be easily copied:</p>
+<pre><code>lxc copy test test1
+</code></pre><p>Delete specific snapshots:</p>
+<pre><code>lxc delete test/snap0
+</code></pre><p>That should pretty much cover the basic usage of LXC and LXD.  These two systems have a long history and have gained important features over the years.  LXD definitely stands out from both Docker and virtual machines in its own unique niche.  Next time we&rsquo;ll be covering networking and reverse proxies with LXD using a practical example.</p>
+<hr>
+
+        <div class="tag">
+            
+            
+            <a href="/tags/containers">#containers</a>
+            
+            <a href="/tags/lxd">#LXD</a>
+            
+            
+        </div>
+    </article>
+</main>
+
+        </main><footer>
+    <li>
+        <a href="https://unamelinux.com/license">&copy; 2020 Peter Buffon</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+    </li>
+    <li>
+        <a href="https://twitter.com/petebuffon">
+            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+        </a>
+    </li>
+    <li>
+        <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
+            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+        </a>
+    </li>
+</footer></body>
+</html>

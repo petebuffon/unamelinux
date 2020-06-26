@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html><head>
+  <html lang="en">
+  <meta charset="utf-8">
+  <meta name="description" content="Quick overview of HTTPS, SSL/TLS, and public key certificates, followed by tutorial and expansion of command-line commands for generating a self-signed certificate using OpenSSL."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    uname Linux
+    </title>
+  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
+
+  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
+  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+</head>
+<body><nav>
+    <li>
+        <a href="https://unamelinux.com/">
+            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        </a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/about">About</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/contact">Contact</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/theme">Theme</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/tags">Tags</a>
+    </li>
+    <li class="align-right">
+        <a href="https://github.com/petebuffon">
+            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+        </a>
+    </li>
+</nav>
+        <main>
+<main>
+    <article>
+        <div class="article-header">
+            <h1>OpenSSL</h1>
+            <p>Jun 26, 2020</p>
+        </div>
+        <p>OpenSSL is a wide spread open source cryptographic software library that contains implementations of the Transport Layer Security (TLS) and Secure Sockets Layer (SSL) protocols.  Today most open source security applications utilize OpenSSL.</p>
+<p>Hypertext Transfer Protocol Secure (HTTPS) is encrypted using TLS or its predecessor SSL.  Encryption of HTTP traffic helps protect against man-in-the-middle and eavesdropping attacks and is a powerful security tool for deploying applications, even those that never see public access.  As a side note, HTTPS is also required for HTTP/2, <a href="https://developers.google.com/web/fundamentals/performance/http2" title="Introduction to HTTP/2">which has several advantages over HTTP/1</a>.</p>
+<h2 id="certificates">Certificates</h2>
+<p>For a website to show the &ldquo;secure connection&rdquo; 🔒 padlock icon in the address bar, the site&rsquo;s certificate has to be signed by a trusted certificate authority, such as Let&rsquo;s Encrypt, for the web browser to accept the certificate without warning.</p>
+<picture>
+    <source srcset="lock.webp" type="image/webp">
+    <source srcset="lock.png" type="image/png">
+    <source srcset="lock.jpeg" type="image/jpeg">
+    <img 
+        src="lock.jpeg" 
+        alt="connection secure"
+        width="400px"
+        loading="lazy"
+    >
+</picture>
+<p>For a site or service contained within one&rsquo;s LAN, a certificate authority cannot sign the certificate because it is not accessible on a public domain.  In this case a self-signed certificate can be implemented.  As the name implies, a self-signed certificate does not need to be signed by a certificate authority.  While this allows for broader use of HTTPS, if an attacker obtains a self-signed certificate, they could intercept traffic to the site or service using the stolen certificate.</p>
+<h2 id="openssl">OpenSSL</h2>
+<picture>
+    <img
+        src="openssl_logo.svg" 
+        alt="OpenSSL logo"
+        width="400px"
+    >
+</picture>
+<p>OpenSSL is installed by default on most Linux distributions.  OpenSSL commands are fairly cryptic, but a self-signed certificate can be generated with one command.  I will go through each of the command-line arguments individually for clarity.</p>
+<pre><code>openssl req \
+    -x509 -nodes -days 365 \
+    -subj '/C=US/ST=State/L=City/CN=www.example.com' \
+    -newkey rsa:2048 -keyout mycert.pem -out mycert.pem
+</code></pre><ul>
+<li>req - indicates certificate request</li>
+<li>-x509 - use x509 certificate standard</li>
+<li>-nodes - do not encrypt key protected with passphrase</li>
+<li>-days 365 - key is valid for 365 days</li>
+<li>-subj &lsquo;/C=US/ST=State/L=City/CN=www.example.com&rsquo; - Country, State, Location, and Common Name of server</li>
+<li>-newkey rsa:2048 - generate RSA key 2048 bits long</li>
+<li>-keyout /private.key - path for private key</li>
+<li>-out /public.pem - path for public key</li>
+</ul>
+<p><a href="https://tools.ietf.org/html/rfc5280" title="IETF.org RFC 5280">x509 is a certificate standard</a>, defining the format of public key certificates.  The subject information is optional, but can be helpful if you&rsquo;re auditing the certificates on your home network.  Certificates can be protected with a passphrase, but I skip this step as for me the additional complexity outweights the minimal security gain.  My current standard, which here I&rsquo;m defining as the cryptographic algorithm Let&rsquo;s Encrypt and Mozilla use, is a 2048 bit RSA key.  Notice the -keyout and -out both point to the same path; this will generate one key file containing both the public and private portions.</p>
+<p>Learning about OpenSSL and cryptography in general can certainly lead you down a rabbit hole.  If you&rsquo;d like to learn more check out the <a href="https://www.openssl.org/">OpenSSL documentation</a> and here for <a href="https://wiki.openssl.org/index.php/Command_Line_Utilities#Certificate_Request_.2F_pkcs10_.2F_req">OpenSSL command-line utilities</a>.</p>
+
+        <div class="tag">
+            
+            
+            <a href="/tags/security">#security</a>
+            
+            <a href="/tags/web-server">#web server</a>
+            
+            
+        </div>
+    </article>
+</main>
+
+        </main><footer>
+    <li>
+        <a href="https://unamelinux.com/license">&copy; 2020 Peter Buffon</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+    </li>
+    <li>
+        <a href="https://twitter.com/petebuffon">
+            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+        </a>
+    </li>
+    <li>
+        <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
+            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+        </a>
+    </li>
+</footer></body>
+</html>

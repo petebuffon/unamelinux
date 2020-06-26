@@ -1,20 +1,111 @@
-<!doctype html><html><head><html lang=en><meta charset=utf-8><meta name=description content="Some thoughts on why you might want a VPN server at home, the advantages of using WireGuard, and finally a step by step guide on installing a WireGuard VPN server at home."><meta name=viewport content="width=device-width,initial-scale=1"><title>uname Linux</title><link rel=stylesheet href=https://unamelinux.com/css/style-min.css><link rel="shortcut icon" href=https://unamelinux.com/favicon.svg><meta name=theme-color content="#ffffff"><link rel=icon href=https://unamelinux.com/favicon.svg><link rel=mask-icon href=https://unamelinux.com/mask-icon.svg color=#000000><link rel=apple-touch-icon href=https://unamelinux.com/apple-touch-icon.svg><link rel=manifest href=https://unamelinux.com/manifest.json></head><body><nav><li><a href=https://unamelinux.com/><img src=https://unamelinux.com/logo-small.svg width=66px></a></li><li><a href=https://unamelinux.com/about>About</a></li><li><a href=https://unamelinux.com/contact>Contact</a></li><li><a href=https://unamelinux.com/theme>Theme</a></li><li><a href=https://unamelinux.com/tags>Tags</a></li><li class=align-right><a href=https://github.com/petebuffon><img src=https://unamelinux.com/img/GitHub-Mark-Light-64px.png height=35px></a></li></nav><main><main><article><div class=article-header><h1>WireGuard</h1><p>Jun 3, 2020</p></div><p>Organizations spanning more than one site often use Virtual Private Networks (VPNs) to protect sensitive data sent from site to site. VPNs allow private networks to be extended across a public network. Most software VPN implementations utilize encryption to further protect data in transit.</p><p>Two of the most common VPNs, IPsec and OpenVPN, are long established and feature rich, but often difficult to set up and deploy. A while ago I attempted to set up a IPsec VPN on my home pfSense firewall, but gave up because of the complex authentication setup required.</p><p>VPNs are also useful for individuals wanting to increase privacy and security. Away from home you can easily and safely connect to services on your LAN as an alternative to opening them up to the internet. Additionally you can keep your internet use private while on public Wifi as all your traffic will be tunneled to your VPN server.</p><p>A key thing to remember is VPNs act as a tunnel. Even though your internet traffic will be inaccessible to those at your local coffee shop, a VPN by itself does not provide true privacy or anonymity. Internet traffic sent through a VPN can still be theoretically snooped at the other endpoint. If you you&rsquo;re looking for robust privacy you should look into <a href=www.torproject.org title="Tor Project">Tor</a> or <a href=https://tails.boum.org/ title=Tails>Tails</a>.</p><hr><picture>
-<img src=wireguard.svg alt="WireGuard logo" width=400px></picture><p><a href=www.wireguard.com>WireGuard</a>, developed by Jason Donenfeld, is a relative newcomer yo the VPN scene reaching a 1.0.0 release in March 2020. WireGuard aims to be simple and easy to use while also having a minimal attack surface, sound cryptography, and high performance.</p><ul><li><p>Simple and Easy-to-use - WireGuard aims to be as easy to configure and deploy as SSH.</p></li><li><p>Minimal Attack Surface - WireGuard has a lean source code with just about 4,000 lines of code as opposed to OpenVPN at 70,000 lines of code. WireGuard is meant to be comprehensively reviewable by individuals.</p></li><li><p>Cryptographically Sound - WireGuard uses the latest cryptography and has received a third-party security audit.</p></li><li><p>High Performance - WireGuard&rsquo;s fast cryptography and integration with the Linux Kernel means it can <a href=https://www.wireguard.com/performance/ title="WireGuard performance">run circles</a> around other VPN software.</p></li></ul><hr><h2 id=installation>Installation</h2><p>WireGuard was incorporated into the 5.6 Linux Kernel and backported into the 5.4 Kernel (in time for the Ubuntu 20.04 release) making installation on Focal Fossa a breeze.</p><p>For this tutorial I will be setting up a WireGuard Ubuntu 20.04 container using lxd on a Ubuntu 20.04 server. The container will map the arbitrary port 51820 with the host server. This project requires either a static public ip address or dynamic DNS and the ability to forward ports on your router. I completed this tutorial with a pfSense router and dynamic DNS set up using Cloudflare&rsquo;s free service with a purchased domain.</p><p>Create a new lxd container:</p><pre><code>$ lxc launch ubuntu:20.04 wireguard
+<!DOCTYPE html>
+<html><head>
+  <html lang="en">
+  <meta charset="utf-8">
+  <meta name="description" content="Some thoughts on why you might want a VPN server at home, the advantages of using WireGuard, and finally a step by step guide on installing a WireGuard VPN server at home."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    uname Linux
+    </title>
+  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
+
+  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
+  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+</head>
+<body><nav>
+    <li>
+        <a href="https://unamelinux.com/">
+            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        </a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/about">About</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/contact">Contact</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/theme">Theme</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/tags">Tags</a>
+    </li>
+    <li class="align-right">
+        <a href="https://github.com/petebuffon">
+            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+        </a>
+    </li>
+</nav>
+        <main>
+<main>
+    <article>
+        <div class="article-header">
+            <h1>WireGuard</h1>
+            <p>Jun 3, 2020</p>
+        </div>
+        <p>Organizations spanning more than one site often use Virtual Private Networks (VPNs) to protect sensitive data sent from site to site.  VPNs allow private networks to be extended across a public network.  Most software VPN implementations utilize encryption to further protect data in transit.</p>
+<p>Two of the most common VPNs, IPsec and OpenVPN, are long established and feature rich, but often difficult to set up and deploy.  A while ago I attempted to set up a IPsec VPN on my home pfSense firewall, but gave up because of the complex authentication setup required.</p>
+<p>VPNs are also useful for individuals wanting to increase privacy and security.  Away from home you can easily and safely connect to services on your LAN as an alternative to opening them up to the internet.  Additionally you can keep your internet use private while on public Wifi as all your traffic will be tunneled to your VPN server.</p>
+<p>A key thing to remember is VPNs act as a tunnel.  Even though your internet traffic will be inaccessible to those at your local coffee shop, a VPN by itself does not provide true privacy or anonymity.  Internet traffic sent through a VPN can still be theoretically snooped at the other endpoint.  If you you&rsquo;re looking for robust privacy you should look into <a href="www.torproject.org" title="Tor Project">Tor</a> or <a href="https://tails.boum.org/" title="Tails">Tails</a>.</p>
+<hr>
+<picture>
+    <img
+        src="wireguard.svg" 
+        alt="WireGuard logo"
+        width="400px"
+    >
+</picture>
+<p><a href="www.wireguard.com">WireGuard</a>, developed by Jason Donenfeld, is a relative newcomer yo the VPN scene reaching a 1.0.0 release in March 2020.  WireGuard aims to be simple and easy to use while also having a minimal attack surface, sound cryptography, and high performance.</p>
+<ul>
+<li>
+<p>Simple and Easy-to-use - WireGuard aims to be as easy to configure and deploy as SSH.</p>
+</li>
+<li>
+<p>Minimal Attack Surface - WireGuard has a lean source code with just about 4,000 lines of code as opposed to OpenVPN at 70,000 lines of code.  WireGuard is meant to be comprehensively reviewable by individuals.</p>
+</li>
+<li>
+<p>Cryptographically Sound - WireGuard uses the latest cryptography and has received a third-party security audit.</p>
+</li>
+<li>
+<p>High Performance - WireGuard&rsquo;s fast cryptography and integration with the Linux Kernel means it can <a href="https://www.wireguard.com/performance/" title="WireGuard performance">run circles</a> around other VPN software.</p>
+</li>
+</ul>
+<hr>
+<h2 id="installation">Installation</h2>
+<p>WireGuard was incorporated into the 5.6 Linux Kernel and backported into the 5.4 Kernel (in time for the Ubuntu 20.04 release) making installation on Focal Fossa a breeze.</p>
+<p>For this tutorial I will be setting up a WireGuard Ubuntu 20.04 container using lxd on a Ubuntu 20.04 server.  The container will map the arbitrary port 51820 with the host server.  This project requires either a static public ip address or dynamic DNS and the ability to forward ports on your router.  I completed this tutorial with a pfSense router and dynamic DNS set up using Cloudflare&rsquo;s free service with a purchased domain.</p>
+<p>Create a new lxd container:</p>
+<pre><code>$ lxc launch ubuntu:20.04 wireguard
 $ lxc exec wireguard -- /bin/bash
-</code></pre><p>Install WireGuard and configure container firewall:</p><pre><code># apt update &amp;&amp; apt upgrade -y
+</code></pre><p>Install WireGuard and configure container firewall:</p>
+<pre><code># apt update &amp;&amp; apt upgrade -y
 # apt install -y wireguard
 # ufw allow 51820 &amp;&amp; ufw enable
-</code></pre><h2 id=keys>Keys</h2><p>Generate as many keys as needed for the number of devices you will connect to your VPN.</p><blockquote><p>Note: The specific keys used in this example have already been deleted and are not in use.</p></blockquote><p>Generate WireGuard keys:</p><pre><code># cd /etc/wireguard &amp;&amp; umask 077
+</code></pre><h2 id="keys">Keys</h2>
+<p>Generate as many keys as needed for the number of devices you will connect to your VPN.</p>
+<blockquote>
+<p>Note: The specific keys used in this example have already been deleted and are not in use.</p>
+</blockquote>
+<p>Generate WireGuard keys:</p>
+<pre><code># cd /etc/wireguard &amp;&amp; umask 077
 # wg genkey | tee server.key | wg pubkey &gt; server.pub
 # wg genkey | tee peer_a.key | wg pubkey &gt; peer_a.pub
 # wg genkey | tee peer_b.key | wg pubkey &gt; peer_b.pub
-</code></pre><p>Keys needed for wg0.conf (copy your own keys generated in the previous step):</p><pre><code># cat server.key
+</code></pre><p>Keys needed for wg0.conf (copy your own keys generated in the previous step):</p>
+<pre><code># cat server.key
 SCURF86WoPr4rsOaKNbtfw9EVSsozu27AkXEHWBNtmM=
 # cat peer_a.pub
 GQaw2aYS4N5UNy1r4WWunVpjXU3YuEHwOsXWhsag/g8=
 # cat peer_b.pub
 EcVSOjJ7y6wVAZkwq20b8DBJzwUVqBFc2CjYU3XF0F4=
-</code></pre><h2 id=server-config>Server Config</h2><p>Server and client IP addresses have been chosen for simplicity. A third client would have IP address 10.200.200.4/32 in the server config and 10.200.200.4/24 in the client config.</p><pre><code># vim /etc/wireguard/wgo.conf
+</code></pre><h2 id="server-config">Server Config</h2>
+<p>Server and client IP addresses have been chosen for simplicity.  A third client would have IP address 10.200.200.4/32 in the server config and 10.200.200.4/24 in the client config.</p>
+<pre><code># vim /etc/wireguard/wgo.conf
 [Interface]
 Address = 10.200.200.1/24
 ListenPort = 51820
@@ -32,11 +123,15 @@ AllowedIPs = 10.200.200.2/32
 # peer_b
 PublicKey = EcVSOjJ7y6wVAZkwq20b8DBJzwUVqBFc2CjYU3XF0F4=
 AllowedIPs = 10.200.200.3/32
-</code></pre><h2 id=client-configs>Client Configs</h2><p>In my case I am setting the DNS server of my clients to the IP address of my router. If your router has a DHCP server you can do the same or set client DNS to any other DNS server e.g. Cloudflare (1.1.1.1) or Google (8.8.8.8).</p><p>Keys needed for peer_a.conf</p><pre><code># cat peer_a.key
+</code></pre><h2 id="client-configs">Client Configs</h2>
+<p>In my case I am setting the DNS server of my clients to the IP address of my router.  If your router has a DHCP server you can do the same or set client DNS to any other DNS server e.g. Cloudflare (1.1.1.1) or Google (8.8.8.8).</p>
+<p>Keys needed for peer_a.conf</p>
+<pre><code># cat peer_a.key
 +DRT3xfc7Hkf9I+HX1tKPXje/uTn1hxHO0KFkvkncGk=
 # cat server.pub
 YR1hPdS+kkhgHh0sC9zNaat9oACAb6eKjlKHjxmd7k8=
-</code></pre><p>Peer A config file:</p><pre><code># vim /etc/wireguard/peer_a.conf
+</code></pre><p>Peer A config file:</p>
+<pre><code># vim /etc/wireguard/peer_a.conf
 [Interface]
 Address = 10.200.200.2/24
 PrivateKey = +DRT3xfc7Hkf9I+HX1tKPXje/uTn1hxHO0KFkvkncGk=
@@ -46,11 +141,13 @@ DNS = 10.0.0.1
 PublicKey = YR1hPdS+kkhgHh0sC9zNaat9oACAb6eKjlKHjxmd7k8=
 AllowedIPs = 0.0.0.0/0, ::/0
 Endpoint = wireguard.example.com:51820
-</code></pre><p>Keys needed for peer_b.conf</p><pre><code># cat peer_b.key
+</code></pre><p>Keys needed for peer_b.conf</p>
+<pre><code># cat peer_b.key
 cPLzRaCjo95KV4lK8n7sVg67x5Pg5OA56qv+l0AHNnc=
 # cat server.pub
 YR1hPdS+kkhgHh0sC9zNaat9oACAb6eKjlKHjxmd7k8=
-</code></pre><p>Peer B config file:</p><pre><code># vim /etc/wireguard/peer_b.conf
+</code></pre><p>Peer B config file:</p>
+<pre><code># vim /etc/wireguard/peer_b.conf
 [Interface]
 Address = 10.200.200.3/24
 PrivateKey = cPLzRaCjo95KV4lK8n7sVg67x5Pg5OA56qv+l0AHNnc=
@@ -60,16 +157,44 @@ DNS = 10.0.0.1
 PublicKey = YR1hPdS+kkhgHh0sC9zNaat9oACAb6eKjlKHjxmd7k8=
 AllowedIPs = 0.0.0.0/0, ::/0
 Endpoint = wireguard.example.com:51820
-</code></pre><p>Enable and start WireGuard service</p><pre><code># systemctl enable --now wg-quick@wg0.service
+</code></pre><p>Enable and start WireGuard service</p>
+<pre><code># systemctl enable --now wg-quick@wg0.service
 # exit
-</code></pre><h2 id=firewalls-and-port-forwarding>Firewalls and Port Forwarding</h2><p>Add a LXD proxy device to map ports between the host server and the wireguard container:</p><pre><code>$ lxc config device add wireguard myport51820 proxy listen=udp:0.0.0.0:51820 connect=udp:127.0.0.1:51820
-</code></pre><p>Port forwarding is fairly straightforward in pfSense. First navigate to the pfSense web GUI. From the top menu select Firewall > NAT and click Add rule. Change Protocol to UDP, enter 51820 in the Destination port range line&rsquo;s first Custom box, enter the host server&rsquo;s IP address in the Redirect target IP line, and enter 51820 in the Redirect target port line&rsquo;s Custom box.</p><picture>
-<source srcset=port-forward.webp type=image/webp><source srcset=port-forward.png type=image/png><source srcset=port-forward.jpeg type=image/jpeg><img src=port-forward.jpeg alt="pfSense port forwarding" width loading=lazy></picture><h2 id=client-test>Client test</h2><p>I will be using an iPhone 7 as a client. The easiest method to transfer a WireGuard config file to a mobile device is by using a qrcode. You can either send the qrcode to straight to stdout or save it as a bitmap file.</p><pre><code>$ lxc exec wireguard -- /bin/bash
+</code></pre><h2 id="firewalls-and-port-forwarding">Firewalls and Port Forwarding</h2>
+<p>Add a LXD proxy device to map ports between the host server and the wireguard container:</p>
+<pre><code>$ lxc config device add wireguard myport51820 proxy listen=udp:0.0.0.0:51820 connect=udp:127.0.0.1:51820
+</code></pre><p>Port forwarding is fairly straightforward in pfSense.  First navigate to the pfSense web GUI.  From the top menu select Firewall &gt; NAT and click Add rule.  Change Protocol to UDP, enter 51820 in the Destination port range line&rsquo;s first Custom box, enter the host server&rsquo;s IP address in the Redirect target IP line, and enter 51820 in the Redirect target port line&rsquo;s Custom box.</p>
+<picture>
+    <source srcset="port-forward.webp" type="image/webp">
+    <source srcset="port-forward.png" type="image/png">
+    <source srcset="port-forward.jpeg" type="image/jpeg">
+    <img 
+        src="port-forward.jpeg" 
+        alt="pfSense port forwarding"
+        width=""
+        loading="lazy"
+    >
+</picture>
+<h2 id="client-test">Client test</h2>
+<p>I will be using an iPhone 7 as a client.  The easiest method to transfer a WireGuard config file to a mobile device is by using a qrcode.  You can either send the qrcode to straight to stdout or save it as a bitmap file.</p>
+<pre><code>$ lxc exec wireguard -- /bin/bash
 # apt install -y qrencode
 $ qrencode -t ansiutf8 -r peer_a.conf
 $ qrencode -t png -r peer_a.conf -o peer_a.png
 </code></pre><picture>
-<source srcset=peer_a.webp type=image/webp><source srcset=peer_a.png type=image/png><source srcset=peer_a.jpeg type=image/jpeg><img src=peer_a.jpeg alt="peer_a qr code" width=200px loading=lazy></picture><p>Install the WireGuard app for iOS and open it up. Tap <strong>Add a tunnel</strong> in the middle of the screen and then tap <strong>Create from QR code</strong>. Name the tunnel <strong>wg0</strong> and enable it by toggling the on switch. If testing at home make sure to turn off Wifi and open up a browser to test the VPN connection. The public IP address on your client device should now match your home public IP address. You can navigate to a site like <a href=https://www.whatismyip.com title=whatismyip>whatismyip</a> to check.</p><p>You can also see stats from the wireguard container with the <strong>wg</strong> command.</p><pre><code># wg
+    <source srcset="peer_a.webp" type="image/webp">
+    <source srcset="peer_a.png" type="image/png">
+    <source srcset="peer_a.jpeg" type="image/jpeg">
+    <img 
+        src="peer_a.jpeg" 
+        alt="peer_a qr code"
+        width="200px"
+        loading="lazy"
+    >
+</picture>
+<p>Install the WireGuard app for iOS and open it up.  Tap <strong>Add a tunnel</strong> in the middle of the screen and then tap <strong>Create from QR code</strong>.  Name the tunnel <strong>wg0</strong> and enable it by toggling the on switch.  If testing at home make sure to turn off Wifi and open up a browser to test the VPN connection.  The public IP address on your client device should now match your home public IP address.  You can navigate to a site like <a href="https://www.whatismyip.com" title="whatismyip">whatismyip</a> to check.</p>
+<p>You can also see stats from the wireguard container with the <strong>wg</strong> command.</p>
+<pre><code># wg
 interface: wg0
   public key: YR1hPdS+kkhgHh0sC9zNaat9oACAb6eKjlKHjxmd7k8=
   private key: (hidden)
@@ -80,7 +205,41 @@ peer: GQaw2aYS4N5UNy1r4WWunVpjXU3YuEHwOsXWhsag/g8=
   allowed ips: 10.200.200.2/32
   latest handshake: 12 seconds ago
   transfer: 7.04 KiB received, 38.15 KiB sent
-</code></pre><p>If you want to dive further into WireGuard make sure to check out the <a href=https://www.wireguard.com/quickstart title="WireGuard docs">WireGuard docs</a>, and the <a href=https://wiki.archlinux.org/index.php/WireGuard title="Arch Wiki WireGuard">Arch Wiki</a> is always is a great resource. If you&rsquo;re having any issues getting your own VPN server set up, feel free to contact me via <a href=https://twitter.com/petebuffon title="Twitter petebuffon">Twitter</a> or <a href=https://t.me/joinchat/KnD86BPTALN6747G9_Biog title="Telegram unameLinux">Telegram</a>.</p><hr><div class=tag><a href=/tags/vpn>#VPN</a>
-<a href=/tags/lxd>#LXD</a>
-<a href=/tags/networking>#networking</a>
-<a href=/tags/containers>#containers</a></div></article></main></main><footer><li><a href=https://unamelinux.com/license>&copy; 2020 Peter Buffon</a></li><li><a href=https://unamelinux.com/privacy>Privacy Policy</a></li><li><a href=https://twitter.com/petebuffon><img src=https://unamelinux.com/img/Twitter_Logo_Blue.svg height=50px></a></li><li><a href=https://t.me/joinchat/KnD86BPTALN6747G9_Biog><img src=https://unamelinux.com/img/64px-Telegram_logo.svg.png height=35px></a></li></footer></body></html>
+</code></pre><p>If you want to dive further into WireGuard make sure to check out the <a href="https://www.wireguard.com/quickstart" title="WireGuard docs">WireGuard docs</a>, and the <a href="https://wiki.archlinux.org/index.php/WireGuard" title="Arch Wiki WireGuard">Arch Wiki</a> is always is a great resource.  If you&rsquo;re having any issues getting your own VPN server set up, feel free to contact me via <a href="https://twitter.com/petebuffon" title="Twitter petebuffon">Twitter</a> or <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog" title="Telegram unameLinux">Telegram</a>.</p>
+<hr>
+
+        <div class="tag">
+            
+            
+            <a href="/tags/vpn">#VPN</a>
+            
+            <a href="/tags/lxd">#LXD</a>
+            
+            <a href="/tags/networking">#networking</a>
+            
+            <a href="/tags/containers">#containers</a>
+            
+            
+        </div>
+    </article>
+</main>
+
+        </main><footer>
+    <li>
+        <a href="https://unamelinux.com/license">&copy; 2020 Peter Buffon</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+    </li>
+    <li>
+        <a href="https://twitter.com/petebuffon">
+            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+        </a>
+    </li>
+    <li>
+        <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
+            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+        </a>
+    </li>
+</footer></body>
+</html>
