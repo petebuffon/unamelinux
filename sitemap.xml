@@ -3,12 +3,47 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://unamelinux.com/posts/openssl/</loc>
-    <lastmod>2020-06-26T00:00:00+00:00</lastmod>
+    <loc>https://unamelinux.com/tags/containers/</loc>
+    <lastmod>2020-08-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/tags/jellyfin/</loc>
+    <lastmod>2020-08-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/tags/networking/</loc>
+    <lastmod>2020-08-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/tags/nginx/</loc>
+    <lastmod>2020-08-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://unamelinux.com/posts/</loc>
+    <lastmod>2020-08-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/posts/reverse-proxy/</loc>
+    <lastmod>2020-08-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/tags/</loc>
+    <lastmod>2020-08-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/tags/web-server/</loc>
+    <lastmod>2020-08-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://unamelinux.com/posts/openssl/</loc>
     <lastmod>2020-06-26T00:00:00+00:00</lastmod>
   </url>
   
@@ -18,27 +53,7 @@
   </url>
   
   <url>
-    <loc>https://unamelinux.com/tags/</loc>
-    <lastmod>2020-06-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://unamelinux.com/tags/web-server/</loc>
-    <lastmod>2020-06-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://unamelinux.com/tags/containers/</loc>
-    <lastmod>2020-06-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://unamelinux.com/tags/lxd/</loc>
-    <lastmod>2020-06-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://unamelinux.com/tags/networking/</loc>
     <lastmod>2020-06-03T00:00:00+00:00</lastmod>
   </url>
   
@@ -74,11 +89,6 @@
   
   <url>
     <loc>https://unamelinux.com/posts/docker-compose/</loc>
-    <lastmod>2020-03-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://unamelinux.com/tags/nginx/</loc>
     <lastmod>2020-03-19T00:00:00+00:00</lastmod>
   </url>
   

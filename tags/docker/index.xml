@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>docker on uname Linux</title>
+    <title>Docker on uname Linux</title>
     <link>https://unamelinux.com/tags/docker/</link>
-    <description>Recent content in docker on uname Linux</description>
+    <description>Recent content in Docker on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 09 Apr 2020 00:00:00 +0000</lastBuildDate>

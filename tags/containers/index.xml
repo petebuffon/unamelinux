@@ -6,10 +6,20 @@
     <description>Recent content in containers on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://unamelinux.com/tags/containers/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Reverse Proxies</title>
+      <link>https://unamelinux.com/posts/reverse-proxy/</link>
+      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/reverse-proxy/</guid>
+      <description>A reverse proxy is a server application that sits in front of one or more web servers and forwards client requests to those web servers. Reverse proxies can be used for (but are not limited to):
+ offloading web server TLS encryption reducing server loads by caching static and dynamic content optimizing web content with compression adding basic HTTP access authentication to web servers allowing traffic to multiple web servers though a single IP address  For this post I will set up a reverse proxy on an Ubuntu 20.</description>
+    </item>
     
     <item>
       <title>WireGuard</title>
