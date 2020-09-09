@@ -6,7 +6,7 @@
     <description>Recent content in Tags on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://unamelinux.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,45 @@
     <item>
       <title>containers</title>
       <link>https://unamelinux.com/tags/containers/</link>
-      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/containers/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Flask</title>
+      <link>https://unamelinux.com/tags/flask/</link>
+      <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/tags/flask/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gunicorn</title>
+      <link>https://unamelinux.com/tags/gunicorn/</link>
+      <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/tags/gunicorn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://unamelinux.com/tags/python/</link>
+      <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>web server</title>
+      <link>https://unamelinux.com/tags/web-server/</link>
+      <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/tags/web-server/</guid>
       <description></description>
     </item>
     
@@ -44,15 +80,6 @@
       <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/nginx/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>web server</title>
-      <link>https://unamelinux.com/tags/web-server/</link>
-      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://unamelinux.com/tags/web-server/</guid>
       <description></description>
     </item>
     
@@ -89,15 +116,6 @@
       <pubDate>Thu, 09 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/docker/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Python</title>
-      <link>https://unamelinux.com/tags/python/</link>
-      <pubDate>Thu, 09 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://unamelinux.com/tags/python/</guid>
       <description></description>
     </item>
     

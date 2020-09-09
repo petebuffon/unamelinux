@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html><head>
+  <html lang="en">
+  <meta charset="utf-8">
+  <meta name="description" content="A step-by-step tutorial on how to to use containers to deploy a Flask web application with the WSGI HTTP server Gunicorn.  A simple recipes application is deployed as an example."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    uname Linux
+    </title>
+  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
+
+  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
+  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+</head>
+<body><nav>
+    <li>
+        <a href="https://unamelinux.com/">
+            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        </a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/about">About</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/contact">Contact</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/theme">Theme</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/tags">Tags</a>
+    </li>
+    <li class="align-right">
+        <a href="https://github.com/petebuffon">
+            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+        </a>
+    </li>
+</nav>
+        <main>
+<main>
+    <article>
+        <div class="article-header">
+            <h1>Gunicorn and Flask</h1>
+            <p>Sep 9, 2020</p>
+        </div>
+        <p>Web applications seem to be everywhere nowadays.  Python is my go to programming language and so I thought I would build a web application using Flask, a lightweight WSGI web application framework.  Starting out with Flask is simple enough, but if you want advanced features such as database integration or user logins, then you will either have to build them yourself or rely on the rich Flask extension community.</p>
+<p>I recently finished CS50: Introduction to Computer Science class on <a href="https://www.edx.org/course/cs50s-introduction-to-computer-science" title="edx course cs50">edX</a>.  I highly recommend the class, it changed the way I think about computers, algorithms, and coding.  I wrote a web app for my CS50 final project called <a href="https://github.com/petebuffon/recipes" title="recipes github repo">Recipes</a>.  This simple application allows you to store, edit, and view recipes quickly and easily using a web interface.</p>
+<picture>
+    <img
+        src="gunicorn.svg" 
+        alt="Gunicorn logo"
+        width="300px"
+    >
+</picture>
+<p>Containers are my current method of choice for running applications at home, so I decided I wanted a way to deploy Recipes using containers.  Additionally I wanted to utilize a production ready HTTP server instead of the default Flask server.  I decided on <a href="https://gunicorn.org/" title="gunicorn.org">Gunicorn</a>, or Green Unicorn, as my HTTP server of choice.  I messed around with uWSGI for a bit, but found its installation and configuration tricky at best.  Gunicorn is written in Python and uses a pre-fork model, where a master process creates workers that handle each request.  Gunicorn is also easy on system resources and a breeze to deploy.</p>
+<p>Assuming python3 is already installed on your system, installation of Gunicorn is as easy as:</p>
+<pre><code>python3 -m pip install gunicorn
+</code></pre><p>Gunicorn could be deployed using this one-liner, where the main Flask file in this case is recipes.py:</p>
+<pre><code>gunicorn recipes:app
+</code></pre><p>We will however want to define some additional configuration.  Let&rsquo;s start with the finished recipes app which has the following directory structure:</p>
+<pre><code>recipes
+├── LICENSE
+├── MANIFEST.in
+├── README.md
+├── recipes
+│   ├── forms.py
+│   ├── helpers.py
+│   ├── __init__.py
+│   ├── recipes.py
+│   ├── schema.sql
+│   ├── static
+│   │   ├── favicon.ico
+│   │   └── styles.css
+│   └── templates
+│       ├── docs.html
+│       ├── edit.html
+│       ├── import.html
+│       ├── index.html
+│       ├── layout.html
+│       ├── login.html
+│       ├── new.html
+│       ├── page_not_found.html
+│       ├── recipe.html
+│       ├── register.html
+│       ├── search.html
+│       └── share.html
+└── setup.py
+</code></pre><p>In the root of our project directory let&rsquo;s create a config directory and a new gunicorn.conf.py file:</p>
+<pre><code>$ mkdir config
+</code></pre><p>gunicorn.conf.py:</p>
+<pre><code>bind = &quot;0.0.0.0:8288&quot;
+chdir = &quot;/opt/recipes/recipes&quot;
+worker_tmp_dir = &quot;/dev/shm&quot;
+workers = 2
+</code></pre><p>Gunicorn configuration files have a simple structure.  Here we are defining the bind port, deployment directory, worker temporary directory and worker number.  Here&rsquo;s a great article on <a href="https://pythonspeed.com/articles/gunicorn-in-docker/" title="Gunicorn in Docker">configuring Gunicorn for Docker</a>.</p>
+<p>Gunicorn uses a health check system on its workers and restarts them if they die.  This check process uses a file on the filesystem and Gunicorn recommends this file be stored in memory.  The default directory for this check file is in /tmp, and Docker containers do not have /tmp on tmpfs by default.  This can sometimes lead to hang of all Gunicorn workers for up to 30 seconds.  A quick fix is to tell Gunicorn to store its temporary file in /dev/shm, shared memory, which uses tmpfs.</p>
+<p>Now let&rsquo;s create a simple Python healthcheck script, healthcheck.py:</p>
+<pre><code>import requests
+
+try:
+    r = requests.get(&quot;http://127.0.0.1:8288&quot;)
+    if str(r) == &quot;&lt;Response [200]&gt;&quot;:
+        print(0)
+    else:
+        print(1)
+except:
+    print(1)
+</code></pre><p>If the script receives a 200 response from http://127.0.0.1:8288 then it will return 0 (sucessful), otherwise the script will return 1 (unsuccessful).</p>
+<p>Next is a an entrypoint Bash script, entrypoint.sh:</p>
+<pre><code>#!/bin/bash
+
+export SECRET_KEY=$(python3 -c &quot;import os; print(os.urandom(16))&quot;)
+
+gunicorn -c /config/gunicorn.conf.py recipes:app
+</code></pre><p>A subshell is used to generate a random 16 byte secret key which is assigned to the environment variable SECRET_KEY.  Flask will use this secret key to cryptographically sign cookies.  The last line is our actual gunicorn command.  The -c flag is used to load configuration, here from /config/gunicorn.conf.py.</p>
+<blockquote>
+<p>Note: I had issues when assigning random keys directly in recipes.py.  Forms with CSRF protection could not be implemented properly as the secret key changed every time recipes.py was run.</p>
+</blockquote>
+<p>Lastly we&rsquo;ll create a Dockerfile, bringing all the new components together.  I used the python:slim (Debian) image as a base:</p>
+<pre><code>FROM python:slim
+
+COPY healthcheck.py entrypoint.sh README.md MANIFEST.ini setup.py /opt/recipes/
+COPY recipes /opt/recipes/recipes
+COPY config /config
+
+WORKDIR /opt/recipes
+
+RUN apt-get update &amp;&amp; apt-get install --no-install-recommends -y tini \
+    &amp;&amp; apt-get clean \
+    &amp;&amp; apt-get autoclean \
+    &amp;&amp; apt-get autoremove -y \
+    &amp;&amp; rm -rf \
+        /tmp/* \
+        /var/lib/apt/lists/* \
+        /var/tmp/*
+
+RUN python3 setup.py install \
+    &amp;&amp; useradd -r recipes \
+    &amp;&amp; chown -R recipes:recipes /opt/recipes /config
+
+VOLUME /config
+
+EXPOSE 8288
+
+USER recipes
+
+HEALTHCHECK --interval=5m --timeout=3s \
+    CMD [&quot;python3&quot;, &quot;healthcheck.py&quot;]
+
+ENTRYPOINT [&quot;/usr/bin/tini&quot;, &quot;--&quot;, &quot;/opt/recipes/entrypoint.sh&quot;]
+</code></pre><p>Going through the Dockerfile item by item:</p>
+<ul>
+<li>Everything needed by the container is copied over to /opt/recipes.  This includes the healthcheck script, entrypoint script, readme file, manifest file, setup file, and inner recipes directory</li>
+<li><a href="https://github.com/krallin/tini" title="Tini repo">Tini</a> is installed to allow for proper SIGTERM termination of Gunicorn</li>
+<li>Recipes is installed as a Python application</li>
+<li>recipes is added as a user</li>
+<li>/config is used as a volume for storing Gunicorn configuration and the SQLite database file</li>
+<li>The healthcheck is implemented and the entrypoint is specified using Tini and our entrypoint script</li>
+</ul>
+<p>Recipes can now be deployed with:</p>
+<pre><code>docker run -d \
+  -- name recipes \
+  -p 8288:8288 \
+  -v recipe_config:/config \
+  --restart unless-stopped \
+  petebuffon/recipes
+</code></pre><p>Using containers to deploy Flask applications with Gunicorn is as easy as that.  You could stop there and deploy the application as is or implement a reverse proxy such as Nginx as well.  A reverse proxy has the benefit of handling requests and passing them on to Gunicorn, reducing the load on Gunicorn, as well as being able to handle SSL termination.</p>
+<p>If your interested in a pre-build version of Recipes, it is also available from <a href="https://hub.docker.com/r/petebuffon/recipes" title="recipes Docker Hub">Docker Hub</a>.</p>
+
+        <div class="tag">
+            
+            
+            <a href="/tags/containers">#containers</a>
+            
+            <a href="/tags/flask">#Flask</a>
+            
+            <a href="/tags/web-server">#web server</a>
+            
+            <a href="/tags/gunicorn">#Gunicorn</a>
+            
+            <a href="/tags/python">#Python</a>
+            
+            
+        </div>
+    </article>
+</main>
+
+        </main><footer>
+    <li>
+        <a href="https://unamelinux.com/license">&copy; 2020 Peter Buffon</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+    </li>
+    <li>
+        <a href="https://twitter.com/petebuffon">
+            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+        </a>
+    </li>
+    <li>
+        <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
+            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+        </a>
+    </li>
+</footer></body>
+</html>

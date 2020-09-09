@@ -6,10 +6,20 @@
     <description>Recent content in containers on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://unamelinux.com/tags/containers/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Gunicorn and Flask</title>
+      <link>https://unamelinux.com/posts/gunicorn/</link>
+      <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/gunicorn/</guid>
+      <description>Web applications seem to be everywhere nowadays. Python is my go to programming language and so I thought I would build a web application using Flask, a lightweight WSGI web application framework. Starting out with Flask is simple enough, but if you want advanced features such as database integration or user logins, then you will either have to build them yourself or rely on the rich Flask extension community.
+I recently finished CS50: Introduction to Computer Science class on edX.</description>
+    </item>
     
     <item>
       <title>Reverse Proxies</title>
