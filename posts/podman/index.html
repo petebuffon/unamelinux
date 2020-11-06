@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html><head>
+  <html lang="en">
+  <meta charset="utf-8">
+  <meta name="description" content="An introduction to the open-source daemonless container engine Podman.  Comparisons are made between Docker and Podman and some of the additional featurse of Podman are explored."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    uname Linux
+    </title>
+  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
+
+  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
+  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+</head>
+<body><nav>
+    <li>
+        <a href="https://unamelinux.com/">
+            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        </a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/about">About</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/contact">Contact</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/theme">Theme</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/tags">Tags</a>
+    </li>
+    <li class="align-right">
+        <a href="https://github.com/petebuffon">
+            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+        </a>
+    </li>
+</nav>
+        <main>
+<main>
+    <article>
+        <div class="article-header">
+            <h1>alias docker=podman</h1>
+            <p>Nov 6, 2020</p>
+        </div>
+        <p>I&rsquo;ve messed around with Podman every now and then and watched it&rsquo;s development over the last few years, but haven&rsquo;t used it extensively.  With Podman&rsquo;s release of version 2.1.0, I thought it would be a great time to explore the project further.</p>
+<picture>
+    <img
+        src="podman.svg" 
+        alt="Podman logo"
+        width="400px"
+    >
+</picture>
+<p>Podman is an open-source daemonless container engine alternative to Docker.  We could simply substitute podman in for docker:</p>
+<pre><code>alias docker=podman
+</code></pre><p>However, Podman also has a number of features that set it a part from Docker.</p>
+<h2 id="daemonless">Daemonless</h2>
+<p>When running commands with the <strong>Docker CLI</strong> such as run, pull, and push, they are sent to the daemon process <strong>dockerd</strong>.  <strong>Dockerd</strong> then in turn interacts with another daemon, <strong>containerD</strong>, which finally interacts with the Linux kernel through the <strong>runC</strong> container runtime process to make these commands happen.</p>
+<p>Podman on the other hand interacts directly with the Linux kernel through <strong>runC</strong> and uses a <strong>fork-and-exec</strong> model, where the container processes are children of the Podman process.  The absence of a Podman daemon results in increased container security as many (or all) of its commands do not have to be run by root and a UNIX socket is not open by default.  Additionally, Podman&rsquo;s lack of a daemon results in lower idle resource usage.</p>
+<h2 id="registries">Registries</h2>
+<p>Podman defines fully qualified image names as consisting of a registry server, namespace, image name, and tag.  When Podman is issued a pull command with an unqualified image, it tries to pull the image from an array of registries in order:</p>
+<pre><code>/etc/containers/registries.conf
+...
+# # An array of host[:port] registries to try when pulling an unqualified image, in order.
+unqualified-search-registries = ['registry.fedoraproject.org', 'registry.access.redhat.com', 'registry.centos.org', 'docker.io']
+...
+</code></pre><p>Searching these registries is not necessary when using a fully qualified image name, resulting in faster image pulls, and is recommended for best security practices:</p>
+<pre><code>/etc/containers/registries.conf
+...
+# NOTE: RISK OF USING UNQUALIFIED IMAGE NAMES
+# We recommend always using fully qualified image names including the registry
+# server (full dns name), namespace, image name, and tag
+# (e.g., registry.redhat.io/ubi8/ubi:latest). Pulling by digest (i.e.,
+# quay.io/repository/name@digest) further eliminates the ambiguity of tags.
+...
+</code></pre><h3 id="fully-qualified-image-name">Fully Qualified Image Name</h3>
+<p>Example pulling the docker.io nginx image using a fully qualified image name:</p>
+<pre><code>$ podman pull docker.io/library/nginx:1.19
+</code></pre><h3 id="digest">Digest</h3>
+<p>A fully qualified image name can also consist of a registry server, namespace, image name, and digest:</p>
+<pre><code>$ podman image inspect --format {{.Digest}} docker.io/library/nginx:1.19
+sha256:1d61d07f97f25aa500cb02dec78237ae139c09f52989aaf856c3ba7135b3aa80
+$ podman pull docker.io/library/nginx@sha256:1d61d07f97f25aa500cb02dec78237ae139c09f52989aaf856c3ba7135b3aa80
+</code></pre><h2 id="rootless-containers">Rootless Containers</h2>
+<p>Podman utilizes cgroups v2 in order to be able to create, run, and build containers, and define networks as a non-privileged user (although root is still required for ip addresses).</p>
+<p>I recently moved from Ubuntu to Fedora on my desktop systems and Podman is conveniently installed on a fresh Fedora 33 system (as well as RHEL and CentOS):</p>
+<pre><code>$ podman --version
+podman version 2.1.1
+</code></pre><p>Let&rsquo;s start by running a trusty Nginx container as a non-privileged user on a Fedora 33 machine:</p>
+<pre><code>$ podman run -d -p 80:80 docker.io/nginx:1.19
+Error: failed to expose ports via rootlessport: &quot;cannot expose privileged port 80, you might need to add \&quot;net.ipv4.ip_unprivileged_port_start=0\&quot; (currently 1024) to /etc/sysctl.conf, or choose a larger port number (&gt;= 1024): listen tcp 0.0.0.0:80: bind: permission denied\n&quot;
+</code></pre><p>Hmm that didn&rsquo;t work.  Port 80 is a privileged port and can&rsquo;t be exposed on a rootless container.  As an alternative we can bind the container&rsquo;s port 80 to the host&rsquo;s port 8080.</p>
+<pre><code>$ podman run -d --name nignx -p 8080:80 docker.io/nginx:1.19
+$ podman rm -f nginx
+</code></pre><p>This time we didn&rsquo;t get any errors.  Alright great, now what else can we do?</p>
+<h2 id="pods">Pods</h2>
+<p>Podman can create and manage pods, a well known concept to those familiar with Kubernetes.  Pods are groups of containers that share resources and are managed together.  Containers within the same pod can communicate via localhost.</p>
+<p>Let&rsquo;s throw together a quick example of a multi-container pod:</p>
+<pre><code>$ podman pod create --name nginx_pod -p 8080:80
+$ podman run -d --name nginx --pod nginx_pod docker.io/nginx:1.19 
+</code></pre><p>Let&rsquo;s break this down.  First we created a new pod named nginx_pod and defined port mapping directly in the pod.  When a pod is create, an infra container is also create and handles all pod networking specifications:</p>
+<pre><code>$ podman ps
+CONTAINER ID  IMAGE                         COMMAND               CREATED         STATUS             PORTS                 NAMES
+909a2eb0caec  docker.io/library/nginx:1.19  nginx -g daemon o...  23 seconds ago  Up 23 seconds ago  0.0.0.0:8080-&gt;80/tcp  nginx
+480e7543c6d8  k8s.gcr.io/pause:3.2                                39 seconds ago  Up 23 seconds ago  0.0.0.0:8080-&gt;80/tcp  2196541d0bdc-infra
+$ podman inspect 480e7543c6d8  
+...          
+&quot;Ports&quot;: {
+    &quot;80/tcp&quot;: [
+        {
+            &quot;HostIp&quot;: &quot;&quot;,
+            &quot;HostPort&quot;: &quot;8080&quot;
+        }
+    ]
+},
+...
+</code></pre><p>Now we&rsquo;ll run a fedora container (within nginx_pod) and curl http://localhost to return the &ldquo;Welcome to nginx!&rdquo; page:</p>
+<pre><code>$ podman run -it --rm --pod nginx_pod fedora curl http://localhost
+...
+&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;
+...
+</code></pre><h2 id="additional-security">Additional Security</h2>
+<p>Resource isolation and read-only mounts are features not exclusive to Podman, but because I haven&rsquo;t covered them before, I thought now would be a great time to incldue them because of their respective increases in container security.</p>
+<h3 id="resource-isolation">Resource Isolation</h3>
+<p>By default containers have all host cpu and memory resources available to them.  These resources can be constrained with the following simple run flags:</p>
+<pre><code>podman run -d --name constrained --cpus .5 --memory 100M docker.io/nginx:1.19
+</code></pre><p>The <strong>&ndash;cpus</strong> .5 flag sets the CPU limit to .5 for the container (<strong>&ndash;cpus</strong> is a short for the combination of <strong>-cpu-period</strong> and <strong>-cpu-quota</strong>).  The <strong>&ndash;memory 100M</strong> flag sets a 100 megabyte memory limit for the container.  Units can be b (bytes), k (kilobytes), m (megabytes), or g (gigabytes).</p>
+<h3 id="read-only">Read Only</h3>
+<p>By default a container&rsquo;s root filesystem is mounted as read-write.  The root filesystem can be mounted read-only with the <strong>&ndash;read-only</strong> run command.  If a container is running in –read-only mode, then Podman mounts a read-write tmpfs on /run, /tmp, and /var/tmp automatically.  These mounts are ephemeral and lost when the container is removed.  All bind mounts remain read-write unless specified as read-only.</p>
+<pre><code>podman run -d -p 8080:80 --read-only docker.io/nginx:1.19
+</code></pre><p>If systemd is running in your container then <strong>/var/log</strong> and <strong>/var/lib/systemd</strong> need to be mounted via tmpfs as well:</p>
+<pre><code>podman run -d -p 8080:80 --read-only --tmpfs /var/log --tmpfs /var/lib/systemd nginx
+</code></pre><h2 id="podman-build">Podman Build</h2>
+<p>While Podman has a container building counterpart named <a href="https://buildah.io/">Buildah</a>, Podman can build container images just as easily as Docker can. The build files can either be named Dockerfile or Containerfile.</p>
+<p>Just use podman build to get started:</p>
+<pre><code>$ podman build -t nginx .
+</code></pre><h2 id="sneak-peak">Sneak Peak</h2>
+<p>That wraps up my introduction to Podman.  Next time I&rsquo;ll cover Podman&rsquo;s ability to create containers from yaml files via the <strong>play kube</strong> command and my new project built to replicate Docker Compose using Podman and Python.</p>
+
+        <div class="tag">
+            
+            
+            <a href="/tags/containers">#containers</a>
+            
+            <a href="/tags/podman">#Podman</a>
+            
+            <a href="/tags/web-server">#web server</a>
+            
+            
+        </div>
+    </article>
+</main>
+
+        </main><footer>
+    <li>
+        <a href="https://unamelinux.com/license">&copy; 2020 Peter Buffon</a>
+    </li>
+    <li>
+        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+    </li>
+    <li>
+        <a href="https://twitter.com/petebuffon">
+            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+        </a>
+    </li>
+    <li>
+        <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
+            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+        </a>
+    </li>
+</footer></body>
+</html>

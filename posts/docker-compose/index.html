@@ -108,18 +108,18 @@ nginx_static
 </code></pre><p>Again let&rsquo;s revisit our simple Nginx container:</p>
 <pre><code>$ docker run -d --name nginx -p 8080:80 --restart unless-stopped nginx
 </code></pre><p>Let&rsquo;s create a docker-compse.yaml file with the equivalent Nginx container with the addition of a volume for the nginx static directory:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">version</span>: <span style="color:#e6db74">&#39;2&#39;</span>
-<span style="color:#66d9ef">services</span>:
-  <span style="color:#66d9ef">nginx</span>:
-    <span style="color:#66d9ef">image</span>: nginx
-    <span style="color:#66d9ef">container_name</span>: nginx
-    <span style="color:#66d9ef">ports</span>:
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;2&#39;</span>
+<span style="color:#f92672">services</span>:
+  <span style="color:#f92672">nginx</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx</span>
+    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">nginx</span>
+    <span style="color:#f92672">ports</span>:
       - <span style="color:#e6db74">&#34;8080:80&#34;</span>
-    <span style="color:#66d9ef">volumes</span>:
+    <span style="color:#f92672">volumes</span>:
       - <span style="color:#e6db74">&#34;nginx_static:/usr/share/nginx/html&#34;</span>
-    <span style="color:#66d9ef">restart</span>: unless-stopped
-<span style="color:#66d9ef">volumes</span>:
-  <span style="color:#66d9ef">nginx_static</span>:
+    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">unless-stopped</span>
+<span style="color:#f92672">volumes</span>:
+  <span style="color:#f92672">nginx_static</span>:
 </code></pre></div><blockquote>
 <p>Note: version &lsquo;2&rsquo; at the beginning of the docker-compose.yaml file will be sufficient for most simple use cases. Docker Compose version &lsquo;3&rsquo; and up incorporated Docker Swarm (Docker&rsquo;s alternatie to Kubernetes) and made minimal changes to the version 2 YAML definitions. <a href="https://docs.docker.com/compose/compose-file/compose-versioning/">Docs reference</a>.</p>
 </blockquote>

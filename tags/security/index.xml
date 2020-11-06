@@ -6,11 +6,7 @@
     <description>Recent content in security on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://unamelinux.com/tags/security/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 26 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/security/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenSSL</title>
       <link>https://unamelinux.com/posts/openssl/</link>

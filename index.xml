@@ -6,10 +6,17 @@
     <description>Recent content on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Feb 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://unamelinux.com/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>alias docker=podman</title>
+      <link>https://unamelinux.com/posts/podman/</link>
+      <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/podman/</guid>
+      <description>I&amp;rsquo;ve messed around with Podman every now and then and watched it&amp;rsquo;s development over the last few years, but haven&amp;rsquo;t used it extensively. With Podman&amp;rsquo;s release of version 2.1.0, I thought it would be a great time to explore the project further.
+  Podman is an open-source daemonless container engine alternative to Docker. We could simply substitute podman in for docker:
+alias docker=podman However, Podman also has a number of features that set it a part from Docker.</description>
+    </item>
     
     <item>
       <title>Gunicorn and Flask</title>
@@ -159,6 +166,15 @@ Over the past five years or so I&amp;rsquo;ve become increasingly interested in 
       <description>The blog was generated using Hugo and is hosted on GitHub Pages using Cloudflare for DNS. I developed the theme myself using HTML, CSS, and a bit of Golang to piece everything together.
 The design of the blog itself was an experiment to create a static website using HTML and CSS. I&amp;rsquo;m going for simplicity and speed here with the potential for further experimentation in the future.
 Right now the Hugo theme code for this site is fairly specific (and a little messy), but I do plan on simplifying and generalizing it in the future so I can release it as a theme on themes.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://unamelinux.com/posts/restic/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/restic/</guid>
+      <description></description>
     </item>
     
   </channel>
