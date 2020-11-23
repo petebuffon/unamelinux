@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>packaging on uname Linux</title>
+    <link>https://unamelinux.com/tags/packaging/</link>
+    <description>Recent content in packaging on uname Linux</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/packaging/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python Packaging</title>
+      <link>https://unamelinux.com/posts/python-packaging/</link>
+      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/python-packaging/</guid>
+      <description>Where to start? With the holidays fast approaching, I thought I would dedicate a blog post to packaging, specifically Python packaging. I&amp;rsquo;ll go ahead and say it, packaging Python projects is confusing. If we go to the official Python documentation and take a look at the Distributing Python Modules section we get the following information about these projects:
+ Distutils - Added to the Python standard library in 1998. The direct use of Distutils is currently being phased out.</description>
+    </item>
+    
+  </channel>
+</rss>
