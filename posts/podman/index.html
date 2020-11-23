@@ -57,7 +57,7 @@
     >
 </picture>
 <p>Podman is an open-source daemonless container engine alternative to Docker.  We could simply substitute podman in for docker:</p>
-<pre><code>alias docker=podman
+<pre><code>$ alias docker=podman
 </code></pre><p>However, Podman also has a number of features that set it a part from Docker.</p>
 <h2 id="daemonless">Daemonless</h2>
 <p>When running commands with the <strong>Docker CLI</strong> such as run, pull, and push, they are sent to the daemon process <strong>dockerd</strong>.  <strong>Dockerd</strong> then in turn interacts with another daemon, <strong>containerD</strong>, which finally interacts with the Linux kernel through the <strong>runC</strong> container runtime process to make these commands happen.</p>
@@ -132,9 +132,9 @@ $ podman inspect 480e7543c6d8
 </code></pre><p>The <strong>&ndash;cpus</strong> .5 flag sets the CPU limit to .5 for the container (<strong>&ndash;cpus</strong> is a short for the combination of <strong>-cpu-period</strong> and <strong>-cpu-quota</strong>).  The <strong>&ndash;memory 100M</strong> flag sets a 100 megabyte memory limit for the container.  Units can be b (bytes), k (kilobytes), m (megabytes), or g (gigabytes).</p>
 <h3 id="read-only">Read Only</h3>
 <p>By default a container&rsquo;s root filesystem is mounted as read-write.  The root filesystem can be mounted read-only with the <strong>&ndash;read-only</strong> run command.  If a container is running in –read-only mode, then Podman mounts a read-write tmpfs on /run, /tmp, and /var/tmp automatically.  These mounts are ephemeral and lost when the container is removed.  All bind mounts remain read-write unless specified as read-only.</p>
-<pre><code>podman run -d -p 8080:80 --read-only docker.io/nginx:1.19
+<pre><code>$ podman run -d -p 8080:80 --read-only docker.io/nginx:1.19
 </code></pre><p>If systemd is running in your container then <strong>/var/log</strong> and <strong>/var/lib/systemd</strong> need to be mounted via tmpfs as well:</p>
-<pre><code>podman run -d -p 8080:80 --read-only --tmpfs /var/log --tmpfs /var/lib/systemd nginx
+<pre><code>$ podman run -d -p 8080:80 --read-only --tmpfs /var/log --tmpfs /var/lib/systemd nginx
 </code></pre><h2 id="podman-build">Podman Build</h2>
 <p>While Podman has a container building counterpart named <a href="https://buildah.io/">Buildah</a>, Podman can build container images just as easily as Docker can. The build files can either be named Dockerfile or Containerfile.</p>
 <p>Just use podman build to get started:</p>

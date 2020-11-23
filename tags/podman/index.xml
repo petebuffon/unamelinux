@@ -15,7 +15,7 @@
       <guid>https://unamelinux.com/posts/podman/</guid>
       <description>I&amp;rsquo;ve messed around with Podman every now and then and watched it&amp;rsquo;s development over the last few years, but haven&amp;rsquo;t used it extensively. With Podman&amp;rsquo;s release of version 2.1.0, I thought it would be a great time to explore the project further.
   Podman is an open-source daemonless container engine alternative to Docker. We could simply substitute podman in for docker:
-alias docker=podman However, Podman also has a number of features that set it a part from Docker.</description>
+$ alias docker=podman However, Podman also has a number of features that set it a part from Docker.</description>
     </item>
     
   </channel>

@@ -6,7 +6,17 @@
     <description>Recent content in Posts on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 23 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python Packaging</title>
+      <link>https://unamelinux.com/posts/python-packaging/</link>
+      <pubDate>Mon, 23 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/python-packaging/</guid>
+      <description>Where to start? With the holidays fast approaching, I thought I would dedicate a blog post to packaging, specifically Python packaging. I&amp;rsquo;ll go ahead and say it, packaging Python projects is confusing. If we go to the official Python documentation and take a look at the Distributing Python Modules section we get the following information about these projects:
+ Distutils - Added to the Python standard library in 1998. The direct use of Distutils is currently being phased out.</description>
+    </item>
+    
     <item>
       <title>alias docker=podman</title>
       <link>https://unamelinux.com/posts/podman/</link>
@@ -15,7 +25,7 @@
       <guid>https://unamelinux.com/posts/podman/</guid>
       <description>I&amp;rsquo;ve messed around with Podman every now and then and watched it&amp;rsquo;s development over the last few years, but haven&amp;rsquo;t used it extensively. With Podman&amp;rsquo;s release of version 2.1.0, I thought it would be a great time to explore the project further.
   Podman is an open-source daemonless container engine alternative to Docker. We could simply substitute podman in for docker:
-alias docker=podman However, Podman also has a number of features that set it a part from Docker.</description>
+$ alias docker=podman However, Podman also has a number of features that set it a part from Docker.</description>
     </item>
     
     <item>
