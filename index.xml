@@ -6,7 +6,17 @@
     <description>Recent content on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 30 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>List Comprehensions</title>
+      <link>https://unamelinux.com/posts/list-comprehensions/</link>
+      <pubDate>Tue, 30 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/list-comprehensions/</guid>
+      <description>I initially thought Python list comprehensions were obtuse and unnecessary, a bit of syntactic sugar I didn&amp;rsquo;t need, but after spending more time with them my opinion has completely flipped. Now I not only use them as much as I can, but I also want to get the word out for those who might not know about them.
+Let’s start with a simple example. Let&amp;rsquo;s say I want to alter all the items in a list using a function and generate a new list.</description>
+    </item>
+    
     <item>
       <title>Python Packaging</title>
       <link>https://unamelinux.com/posts/python-packaging/</link>
