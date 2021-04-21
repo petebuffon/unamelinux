@@ -6,22 +6,31 @@
     <description>Recent content in Tags on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>data structures</title>
-      <link>https://unamelinux.com/tags/data-structures/</link>
-      <pubDate>Tue, 30 Mar 2021 00:00:00 +0000</pubDate>
+      <title>debug</title>
+      <link>https://unamelinux.com/tags/debug/</link>
+      <pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://unamelinux.com/tags/data-structures/</guid>
+      <guid>https://unamelinux.com/tags/debug/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Python</title>
       <link>https://unamelinux.com/tags/python/</link>
-      <pubDate>Tue, 30 Mar 2021 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data structures</title>
+      <link>https://unamelinux.com/tags/data-structures/</link>
+      <pubDate>Tue, 30 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/tags/data-structures/</guid>
       <description></description>
     </item>
     

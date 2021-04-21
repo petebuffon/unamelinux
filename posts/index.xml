@@ -6,7 +6,17 @@
     <description>Recent content in Posts on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mindful Memory</title>
+      <link>https://unamelinux.com/posts/mindful_memory/</link>
+      <pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/mindful_memory/</guid>
+      <description>Python is a high-level programming language and as such doesn&amp;rsquo;t have the same precise control of memory as low-level programs such as C. Despite this mindful Pythonistas can still be aware of the memory consumption of their programs and strive toward writing memory efficient code.
+There are different motivations for reducing memory usage from processing data on a low powered laptop to reducing web server production costs. Almost all of these reasons start with looking at how your current program uses memory.</description>
+    </item>
+    
     <item>
       <title>List Comprehensions</title>
       <link>https://unamelinux.com/posts/list-comprehensions/</link>
