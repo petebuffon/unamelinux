@@ -17,7 +17,7 @@
     </item>
     
     <item>
-      <title>Python</title>
+      <title>python</title>
       <link>https://unamelinux.com/tags/python/</link>
       <pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate>
       
@@ -109,7 +109,7 @@
     <item>
       <title>Jellyfin</title>
       <link>https://unamelinux.com/tags/jellyfin/</link>
-      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/jellyfin/</guid>
       <description></description>
@@ -118,16 +118,16 @@
     <item>
       <title>networking</title>
       <link>https://unamelinux.com/tags/networking/</link>
-      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/networking/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Nginx</title>
+      <title>nginx</title>
       <link>https://unamelinux.com/tags/nginx/</link>
-      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/tags/nginx/</guid>
       <description></description>
@@ -161,7 +161,7 @@
     </item>
     
     <item>
-      <title>Docker</title>
+      <title>docker</title>
       <link>https://unamelinux.com/tags/docker/</link>
       <pubDate>Thu, 09 Apr 2020 00:00:00 +0000</pubDate>
       
@@ -197,6 +197,24 @@
     </item>
     
     <item>
+      <title>home server</title>
+      <link>https://unamelinux.com/tags/home-server/</link>
+      <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/tags/home-server/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>virtual machines</title>
+      <link>https://unamelinux.com/tags/virtual-machines/</link>
+      <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/tags/virtual-machines/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>NAS</title>
       <link>https://unamelinux.com/tags/nas/</link>
       <pubDate>Wed, 05 Feb 2020 00:00:00 +0000</pubDate>
@@ -206,7 +224,7 @@
     </item>
     
     <item>
-      <title>Samba</title>
+      <title>samba</title>
       <link>https://unamelinux.com/tags/samba/</link>
       <pubDate>Wed, 05 Feb 2020 00:00:00 +0000</pubDate>
       

@@ -6,11 +6,11 @@
     <description>Recent content in Jellyfin on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/jellyfin/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 25 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/jellyfin/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Reverse Proxies</title>
       <link>https://unamelinux.com/posts/reverse-proxy/</link>
-      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/posts/reverse-proxy/</guid>
       <description>A reverse proxy is a server application that sits in front of one or more web servers and forwards client requests to those web servers. Reverse proxies can be used for (but are not limited to):

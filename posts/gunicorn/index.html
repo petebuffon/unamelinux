@@ -7,45 +7,40 @@
   <title>
     uname Linux
     </title>
-  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
-  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="stylesheet" href="/css/style-min.css">
+
+  <link rel="shortcut icon" href="/favicon.svg">
+
   <meta name="theme-color" content="#ffffff">
-
-  <meta property="og:title" content="Gunicorn and Flask"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="uname Linux"/>
-  <meta property="og:description" content="A step-by-step tutorial on how to to use containers to deploy a Flask web application with the WSGI HTTP server Gunicorn.  A simple recipes application is deployed as an example."/>
-  <meta property="og:url" content="https://unamelinux.com/posts/gunicorn/"/>
-  <meta property="og:image" content=""/>
-  <meta property="twitter:image" content="" />
-  <meta property="twitter:creator" content="@petebuffon" />
-
-  <link rel="icon" href="https://unamelinux.com/favicon.svg">
-  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
-  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
-  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body><nav>
     <li>
-        <a href="https://unamelinux.com/">
-            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        <a href="/">
+            <img src="/logo-small.svg" width="66px">
         </a>
     </li>
     <li>
-        <a href="https://unamelinux.com/about">About</a>
+        <a href="/about">About</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/contact">Contact</a>
+        <a href="/projects">Projects</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/theme">Theme</a>
+        <a href="/contact">Contact</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/tags">Tags</a>
+        <a href="/theme">Theme</a>
+    </li>
+    <li>
+        <a href="/tags">Tags</a>
     </li>
     <li class="align-right">
         <a href="https://github.com/petebuffon">
-            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+            <img src="/img/GitHub-Mark-Light-64px.png" height="35px">
         </a>
     </li>
 </nav>
@@ -67,11 +62,11 @@
 </picture>
 <p>Containers are my current method of choice for running applications at home, so I decided I wanted a way to deploy Recipes using containers.  Additionally I wanted to utilize a production ready HTTP server instead of the default Flask server.  I decided on <a href="https://gunicorn.org/" title="gunicorn.org">Gunicorn</a>, or Green Unicorn, as my HTTP server of choice.  I messed around with uWSGI for a bit, but found its installation and configuration tricky at best.  Gunicorn is written in Python and uses a pre-fork model, where a master process creates workers that handle each request.  Gunicorn is also easy on system resources and a breeze to deploy.</p>
 <p>Assuming python3 is already installed on your system, installation of Gunicorn is as easy as:</p>
-<pre><code>python3 -m pip install gunicorn
+<pre tabindex="0"><code>python3 -m pip install gunicorn
 </code></pre><p>Gunicorn could be deployed using this one-liner, where the main Flask file in this case is recipes.py:</p>
-<pre><code>gunicorn recipes:app
+<pre tabindex="0"><code>gunicorn recipes:app
 </code></pre><p>We will however want to define some additional configuration.  Let&rsquo;s start with the finished recipes app which has the following directory structure:</p>
-<pre><code>recipes
+<pre tabindex="0"><code>recipes
 ├── LICENSE
 ├── MANIFEST.in
 ├── README.md
@@ -99,20 +94,20 @@
 │       └── share.html
 └── setup.py
 </code></pre><p>In the root of our project directory let&rsquo;s create a config directory and a new gunicorn.conf.py file:</p>
-<pre><code>$ mkdir config
+<pre tabindex="0"><code>$ mkdir config
 </code></pre><p>gunicorn.conf.py:</p>
-<pre><code>bind = &quot;0.0.0.0:8288&quot;
-chdir = &quot;/opt/recipes/recipes&quot;
-worker_tmp_dir = &quot;/dev/shm&quot;
+<pre tabindex="0"><code>bind = &#34;0.0.0.0:8288&#34;
+chdir = &#34;/opt/recipes/recipes&#34;
+worker_tmp_dir = &#34;/dev/shm&#34;
 workers = 2
 </code></pre><p>Gunicorn configuration files have a simple structure.  Here we are defining the bind port, deployment directory, worker temporary directory and worker number.  Here&rsquo;s a great article on <a href="https://pythonspeed.com/articles/gunicorn-in-docker/" title="Gunicorn in Docker">configuring Gunicorn for Docker</a>.</p>
 <p>Gunicorn uses a health check system on its workers and restarts them if they die.  This check process uses a file on the filesystem and Gunicorn recommends this file be stored in memory.  The default directory for this check file is in /tmp, and Docker containers do not have /tmp on tmpfs by default.  This can sometimes lead to hang of all Gunicorn workers for up to 30 seconds.  A quick fix is to tell Gunicorn to store its temporary file in /dev/shm, shared memory, which uses tmpfs.</p>
 <p>Now let&rsquo;s create a simple Python healthcheck script, healthcheck.py:</p>
-<pre><code>import requests
+<pre tabindex="0"><code>import requests
 
 try:
-    r = requests.get(&quot;http://127.0.0.1:8288&quot;)
-    if str(r) == &quot;&lt;Response [200]&gt;&quot;:
+    r = requests.get(&#34;http://127.0.0.1:8288&#34;)
+    if str(r) == &#34;&lt;Response [200]&gt;&#34;:
         print(0)
     else:
         print(1)
@@ -120,9 +115,9 @@ except:
     print(1)
 </code></pre><p>If the script receives a 200 response from http://127.0.0.1:8288 then it will return 0 (sucessful), otherwise the script will return 1 (unsuccessful).</p>
 <p>Next is a an entrypoint Bash script, entrypoint.sh:</p>
-<pre><code>#!/bin/bash
+<pre tabindex="0"><code>#!/bin/bash
 
-export SECRET_KEY=$(python3 -c &quot;import os; print(os.urandom(16))&quot;)
+export SECRET_KEY=$(python3 -c &#34;import os; print(os.urandom(16))&#34;)
 
 gunicorn -c /config/gunicorn.conf.py recipes:app
 </code></pre><p>A subshell is used to generate a random 16 byte secret key which is assigned to the environment variable SECRET_KEY.  Flask will use this secret key to cryptographically sign cookies.  The last line is our actual gunicorn command.  The -c flag is used to load configuration, here from /config/gunicorn.conf.py.</p>
@@ -130,7 +125,7 @@ gunicorn -c /config/gunicorn.conf.py recipes:app
 <p>Note: I had issues when assigning random keys directly in recipes.py.  Forms with CSRF protection could not be implemented properly as the secret key changed every time recipes.py was run.</p>
 </blockquote>
 <p>Lastly we&rsquo;ll create a Dockerfile, bringing all the new components together.  I used the python:slim (Debian) image as a base:</p>
-<pre><code>FROM python:slim
+<pre tabindex="0"><code>FROM python:slim
 
 COPY healthcheck.py entrypoint.sh README.md MANIFEST.ini setup.py /opt/recipes/
 COPY recipes /opt/recipes/recipes
@@ -158,9 +153,9 @@ EXPOSE 8288
 USER recipes
 
 HEALTHCHECK --interval=5m --timeout=3s \
-    CMD [&quot;python3&quot;, &quot;healthcheck.py&quot;]
+    CMD [&#34;python3&#34;, &#34;healthcheck.py&#34;]
 
-ENTRYPOINT [&quot;/usr/bin/tini&quot;, &quot;--&quot;, &quot;/opt/recipes/entrypoint.sh&quot;]
+ENTRYPOINT [&#34;/usr/bin/tini&#34;, &#34;--&#34;, &#34;/opt/recipes/entrypoint.sh&#34;]
 </code></pre><p>Going through the Dockerfile item by item:</p>
 <ul>
 <li>Everything needed by the container is copied over to /opt/recipes.  This includes the healthcheck script, entrypoint script, readme file, manifest file, setup file, and inner recipes directory</li>
@@ -171,7 +166,7 @@ ENTRYPOINT [&quot;/usr/bin/tini&quot;, &quot;--&quot;, &quot;/opt/recipes/entryp
 <li>The healthcheck is implemented and the entrypoint is specified using Tini and our entrypoint script</li>
 </ul>
 <p>Recipes can now be deployed with:</p>
-<pre><code>docker run -d \
+<pre tabindex="0"><code>docker run -d \
   -- name recipes \
   -p 8288:8288 \
   -v recipe_config:/config \
@@ -200,21 +195,20 @@ ENTRYPOINT [&quot;/usr/bin/tini&quot;, &quot;--&quot;, &quot;/opt/recipes/entryp
 
         </main><footer>
     <li>
-        <a href="https://unamelinux.com/license">&copy; 2021 Peter Buffon</a>
+        <a href="/license">&copy; 2022 Peter Buffon</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
     </li>
     <li>
         <a href="https://twitter.com/petebuffon">
-            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+            <img src="/img/Twitter_Logo_Blue.svg" height="50px">
         </a>
     </li>
     <li>
         <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
-            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+            <img src="/img/64px-Telegram_logo.svg.png" height="35px">
         </a>
     </li>
-</footer>
-</body>
+</footer></body>
 </html>

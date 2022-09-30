@@ -6,11 +6,11 @@
     <description>Recent content in networking on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/networking/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 25 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/networking/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Reverse Proxies</title>
       <link>https://unamelinux.com/posts/reverse-proxy/</link>
-      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/posts/reverse-proxy/</guid>
       <description>A reverse proxy is a server application that sits in front of one or more web servers and forwards client requests to those web servers. Reverse proxies can be used for (but are not limited to):
@@ -25,6 +25,15 @@
       <guid>https://unamelinux.com/posts/wireguard/</guid>
       <description>Organizations spanning more than one site often use Virtual Private Networks (VPNs) to protect sensitive data sent from site to site. VPNs allow private networks to be extended across a public network. Most software VPN implementations utilize encryption to further protect data in transit.
 Two of the most common VPNs, IPsec and OpenVPN, are long established and feature rich, but often difficult to set up and deploy. A while ago I attempted to set up a IPsec VPN on my home pfSense firewall, but gave up because of the complex authentication setup required.</description>
+    </item>
+    
+    <item>
+      <title>Virtual Machines</title>
+      <link>https://unamelinux.com/posts/virtual-machines/</link>
+      <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/virtual-machines/</guid>
+      <description></description>
     </item>
     
     <item>

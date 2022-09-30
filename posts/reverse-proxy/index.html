@@ -2,50 +2,45 @@
 <html><head>
   <html lang="en">
   <meta charset="utf-8">
-  <meta name="description" content="A complete guide to setting up a self hosted local network reverse proxy using a Nginx container with encryption provided by a self-signed certificate.  Docker Compose is used to manage the reverse proxy container as well as a Jellyfin media server application."/>
+  <meta name="description" content=""/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
     uname Linux
     </title>
-  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
-  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="stylesheet" href="/css/style-min.css">
+
+  <link rel="shortcut icon" href="/favicon.svg">
+
   <meta name="theme-color" content="#ffffff">
-
-  <meta property="og:title" content="Reverse Proxies"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="uname Linux"/>
-  <meta property="og:description" content="A complete guide to setting up a self hosted local network reverse proxy using a Nginx container with encryption provided by a self-signed certificate.  Docker Compose is used to manage the reverse proxy container as well as a Jellyfin media server application."/>
-  <meta property="og:url" content="https://unamelinux.com/posts/reverse-proxy/"/>
-  <meta property="og:image" content=""/>
-  <meta property="twitter:image" content="" />
-  <meta property="twitter:creator" content="@petebuffon" />
-
-  <link rel="icon" href="https://unamelinux.com/favicon.svg">
-  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
-  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
-  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body><nav>
     <li>
-        <a href="https://unamelinux.com/">
-            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        <a href="/">
+            <img src="/logo-small.svg" width="66px">
         </a>
     </li>
     <li>
-        <a href="https://unamelinux.com/about">About</a>
+        <a href="/about">About</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/contact">Contact</a>
+        <a href="/projects">Projects</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/theme">Theme</a>
+        <a href="/contact">Contact</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/tags">Tags</a>
+        <a href="/theme">Theme</a>
+    </li>
+    <li>
+        <a href="/tags">Tags</a>
     </li>
     <li class="align-right">
         <a href="https://github.com/petebuffon">
-            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+            <img src="/img/GitHub-Mark-Light-64px.png" height="35px">
         </a>
     </li>
 </nav>
@@ -54,7 +49,7 @@
     <article>
         <div class="article-header">
             <h1>Reverse Proxies</h1>
-            <p>Aug 26, 2020</p>
+            <p>Aug 25, 2020</p>
         </div>
         <p>A reverse proxy is a server application that sits in front of one or more web servers and forwards client requests to those web servers. Reverse proxies can be used for (but are not limited to):</p>
 <ul>
@@ -64,45 +59,23 @@
 <li>adding basic HTTP access authentication to web servers</li>
 <li>allowing traffic to multiple web servers though a single IP address</li>
 </ul>
-<p>For this post I will set up a reverse proxy on an Ubuntu 20.04 server using a Nginx Docker container with TLS encryption provided by a self-signed certificate.  Nginx is a web server that serves a large chunk of websites on the internet and can also be used as a reverse proxy.  Make sure to change example.com to your preferred server name and server_IP to your own server&rsquo;s IP address.  I will use Jellyfin as an example of an application to self host.  See previous posts on <a href="https://unamelinux.com/posts/docker/" title="Linux Containers and Docker">Docker</a> and <a href="https://unamelinux.com/posts/docker-compose/" title="Docker Compose and Volumes">Docker Compose</a> for an installation and configuration refresher.</p>
+<p>For this post I will set up a reverse proxy on an Ubuntu 20.04 server using a Nginx Docker container with TLS encryption provided by a self-signed certificate.  Nginx is a web server that serves a large chunk of websites on the internet and can also be used as a reverse proxy.  I will use Jellyfin as an example of an application to self host.See previous posts on <a href="https://unamelinux.com/posts/docker/" title="Linux Containers and Docker">Docker</a> and <a href="https://unamelinux.com/posts/docker-compose/" title="Docker Compose and Volumes">Docker Compose</a> for an installation and configuration refresher.</p>
 <blockquote>
-<p>Note: self-signed certificates are not sufficient for services open to the public internet.  Use this reverse proxy setup only for local networks.</p>
+<p>Note: self-signed certificates are not sufficient for services open to the public internet.  I use this reverse proxy setup for LAN use only.</p>
 </blockquote>
 <h2 id="setup">Setup</h2>
-<p>I have created a github repo for this project as there are a fair number of configuration files and directories involved.  First download the repo and generate a self-signed certificate using OpenSSL.  For an in depth explanation, see the <a href="https://unamelinux.com/posts/openssl/" title="OpenSSL">OpenSSL</a> post:</p>
-<pre><code>$ cd ~/ &amp;&amp; git clone https://github.com/petebuffon/reverse_proxy.git
+<p>I have created a github repo for this project as there are a fair number of configuration files and directories invovled.  First download the repo and generate a self-signed certificate using OpenSSL.  For an in depth explanation of OpenSSL, see previous post <a href="https://unamelinux.com/posts/openssl/" title="OpenSSL">here</a>:</p>
+<pre tabindex="0"><code>$ cd ~/ &amp;&amp; git clone https://github.com/petebuffon/reverse_proxy.git
 $ cd reverse_proxy/nginx &amp;&amp; mkdir keys
 $ openssl req \
   -x509 -nodes -days 365 \
-  -subj '/C=US/ST=State/L=City/CN=www.example.com' \
+  -subj &#39;/C=US/ST=State/L=City/CN=www.example.com&#39; \
   -newkey rsa:2048 -keyout ./keys/mycert.pem -out ./keys/mycert.pem
 </code></pre><p>The default Nginx container image will automatically run as root and this is a bad idea.  If you need further convincing, RedHat has a great write up on <a href="https://www.redhat.com/en/resources/container-security-openshift-cloud-devops-whitepaper" title="Ten layers of container security">container security</a>.</p>
-<p>The default.conf and nginx.conf config files require some alterations to allow Nginx be run as a non root user.  The default listening port needs to be changed from 80 to 8080 in default.conf as unprivileged users can&rsquo;t use ports under 1000.  The directory paths in nginx.conf need to be changed from /var/run to /tmp/nginx.</p>
-<picture>
-    <img
-        src="NGINX-Logo-White-Endorsement-RGB.svg" 
-        alt="Nginx logo"
-        width="200px"
-    >
-</picture>
-<p>Nginx uses a text-based configuration file written in a specific format.  By default this file is named nginx.conf and is located in the <strong>/etc/nginx</strong> directory.  The configuration file consists of <strong>directives</strong> separated by whitespace from their parameters.  Single-line directives each end with a semicolon.  Multi-line directives, called <strong>blocks</strong>, are enclosed in curly braces.</p>
-<p>By default nginx.conf adds all files ending with .conf in the <strong>/etc/nginx/conf.d</strong> directory to its configuration.  This is done with the following line in nginx.conf:</p>
-<pre><code>include /etc/nginx/conf.d/*.conf;
-</code></pre><p>There are a few top-level directives, called <strong>contexts</strong>, that each refer to a different traffic type.  In this project we will only be dealing with the <strong>http</strong> context.  Within a http context, one or more <strong>server</strong> blocks are included that define <strong>virtual servers</strong>.  Here is a simple example of a Nginx configuration file, example.com.conf, that serves static content:</p>
-<pre><code>server {
-  listen 127.0.0.1:80;
-  server_name example.com;
-
-  root /www/data;
-
-  location / { 
-  }
-}
-</code></pre><p>In this example, the Nginx web server is serving traffic on the local host IP (127.0.0.1) on port 80, clients access the web server at the domain example.com, the root of the web server is /www/data, and the root of /www/data is served.</p>
-<p>In general, contexts are <strong>inherited</strong> from one level to another, parent to child.  Some directives can appear in multiple contexts, and in this case you can override the parent context by also including the directive in a child context.</p>
+<p>The default.conf and nginx.conf config files require some alterations to allow nginx be run as a non root user.  The default listening port needs to be changed from 80 to 8080 in default.conf as unprivileged users can&rsquo;t use ports under 1000.  The directory paths in nginx.conf need to be changed from /var/run to /tmp/.</p>
 <h2 id="compression">Compression</h2>
-<p>Compression can easily be enabled in nginx.conf to reduce the size of transmitted data.  Here we are enabling gzip compression for specific file types when they are over 1024 bytes in size.  See the official Nginx documentation on <a href="https://docs.nginx.com/nginx/admin-guide/web-server/compression/" title="Compression and Decompression">compression</a> for more info:</p>
-<pre><code>...
+<p>Compression can easily be enabled in nginx.conf to reduce the size of transmitted data.  See the official nginx documentation on <a href="https://docs.nginx.com/nginx/admin-guide/web-server/compression/" title="Compression and Decompression">compression</a> for more info:</p>
+<pre tabindex="0"><code>...
 gzip on;
 gzip_disable msie6;
 gzip_proxied no-cache no-store private expired auth;
@@ -113,30 +86,23 @@ gunzip on;
 ...
 </code></pre><h2 id="dockerfile">Dockerfile</h2>
 <p>In the custom dockerfile we are simply copying the custom config files into a new container image, adding a new user nginx with uid 2000, and assigning the proper permissions to the new nginx user:</p>
-<pre><code>FROM nginx
+<pre tabindex="0"><code>FROM nginx
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./conf.d /etc/nginx/conf.d
 COPY ./keys /etc/nginx/keys
 
 RUN userdel nginx \
-    &amp;&amp; mkdir /tmp/nginx \
     &amp;&amp; useradd -u 2000 nginx \
-    &amp;&amp; chown -R nginx:nginx /etc/nginx /var/cache/nginx /tmp/nginx
-
-EXPOSE 8080
-
-STOPSIGNAL SIGTERM
+    &amp;&amp; chown -R nginx:nginx /etc/nginx /var/cache/nginx
 
 USER nginx:nginx
-
-CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]
 </code></pre><h2 id="configs">Configs</h2>
-<p>If we take a look at our project&rsquo;s conf.d directory, there are four config files: defalt.conf, ssl.conf, proxy.conf, and jellyfin.conf.  Separating out config files by role makes it easier to make changes down the line.  Additionally, config options in ssl.conf and proxy.conf will not need to be rewritten for every virtual server.</p>
-<p>As the config files are copied into the container image at build time, changes made to config files will not be seen until the container image is rebuilt and recreated.</p>
-<h2 id="sslconf">ssl.conf</h2>
-<p>The lines from ssl.conf were copied almost verbatim from Mozilla&rsquo;s <a href="https://ssl-config.mozilla.org/" title="Mozilla SSL Configuration Generator">SSL Configuration Generator</a> using the modern configuration option:</p>
-<pre><code>ssl_certificate /etc/nginx/keys/mycert.pem;
+<p>If we take a look at the conf.d directory, we have four config files, defalt.conf, ssl.conf, proxy.conf, and jellyfin.conf.  Separating out config files by role makes it easier down the line to make changes.  Additionally config options in ssl.conf and proxy.conf will not need to be rewritten for every individual web service.</p>
+<p>As the config files are copied into the container image at build time, changes made to config files will not be seen until the container image is rebuilt and deployed.</p>
+<h2 id="ssl">SSL</h2>
+<p>The lines from ssl.conf were copied almost verbatum from Mozilla&rsquo;s <a href="https://ssl-config.mozilla.org/" title="Mozilla SSL Configuration Generator">SSL Configuration Generator</a> (the modern option was chosen):</p>
+<pre tabindex="0"><code>ssl_certificate /etc/nginx/keys/mycert.pem;
 ssl_certificate_key /etc/nginx/keys/mycert.pem;
 
 ssl_session_timeout 1d;
@@ -146,29 +112,22 @@ ssl_session_tickets off;
 ssl_protocols TLSv1.3;
 ssl_prefer_server_ciphers off;
 
-add_header Strict-Transport-Security &quot;max-age=63072000&quot; always;
+add_header Strict-Transport-Security &#34;max-age=63072000&#34; always;
 </code></pre><blockquote>
 <p>Note: OCSP Stapling is not needed as a self-signed certificate is being used.</p>
 </blockquote>
-<h2 id="proxyconf">proxy.conf</h2>
-<p>The proxy.conf file sets some good defaults for proxying connections.  The proxy_set_header directive alters headers seen by the client.  Setting <strong>Host</strong> to the <strong>host</strong> variable ensures the correct domain name is set for the server.  Setting <strong>X-Real-IP</strong> to the variable <strong>remote_addr</strong> and setting <strong>X-Forwarded-For</strong> to the <strong>proxy_add_x_forwarded_for</strong> variable allows the upstream server to see the original IP address of a connecting client:</p>
-<pre><code>proxy_set_header Host $host;
+<h2 id="proxy">Proxy</h2>
+<p>The proxy.conf file sets some good options for proxying connections.  The proxy_set_header directive alters headers seen by the client.  Setting <strong>Host</strong> to the <strong>host</strong> variable ensures the correct domain name is set for the server.  Setting <strong>X-Real-IP</strong> to the variable <strong>remote_addr</strong> and setting <strong>X-Forwarded-For</strong> to the <strong>proxy_add_x_forwarded_for</strong> variable allows the upstream server to see the original IP address of a connecting client:</p>
+<pre tabindex="0"><code>proxy_set_header Host $host;
 proxy_set_header X-Real-IP $remote_addr;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 </code></pre><blockquote>
-<p>Note: If any proxy settings are altered in an application config file, all proxy directives will need to be redefined as seen in jellyfin.conf.</p>
+<p>Note: If any proxy settings are changed in a config file, the entire set of proxy configs will need to be redefined as seen in jellyfin.conf.</p>
 </blockquote>
-<picture>
-    <img
-        src="jellyfin.svg" 
-        alt="Jellyfin logo"
-        width="250px"
-    >
-</picture>
-<p><a href="https://jellyfin.org/" title="Jellyfin">Jellyfin</a> is a free and open source media server alternative to Emby and Plex.  I use <a href="https://hub.docker.com/r/linuxserver/jellyfin" title="linuxserver docker hub">linuxserver.io&rsquo;s</a> image for Jellyfin, but Jellyfin also provides its own <a href="https://hub.docker.com/r/jellyfin/jellyfin" title="jellyfin image">image</a>.  The jellyfin.conf file was derived from Jellyfin&rsquo;s <a href="https://jellyfin.org/docs/general/networking/nginx.html" title="Jellyfin Nginx">documentation</a>.</p>
-<p>jellyfin.conf contains two locations, a root location and a websocket location with additional proxy headers required for websockets. Port 8080 traffic is redirected to the TLS encrypted 8443 port, which is upgraded to http version 2.0.</p>
-<p>In both locations the variable <strong>upstream</strong> is set to the Jellyfin&rsquo;s container name at port 8096.  Setting the resolver to Docker&rsquo;s DNS IP, 127.0.0.11, ensures Nginx is able to find the Jellyfin server.  The proxy is then set with <strong>proxy_pass</strong> to the <strong>upstream</strong> variable.   If application container went down, the reverse proxy would go down as well without this workaround:</p>
-<pre><code>server {
+<h2 id="jellyfin">Jellyfin</h2>
+<p>Jellyfin.conf contains two locations, a root location and a websocket location with different proxy headers. Port 8080 traffic is redirected to the TLS encrypted 8443 port, which is upgraded to http version 2.0.</p>
+<p>In both locations the variable <strong>upstream</strong> is set to Jellyfin&rsquo;s address at port 8096.  Setting the resolver to Docker&rsquo;s DNS IP, 127.0.0.11, ensures nginx is able to find the jellyfin server by name.  The proxy is then set with <strong>proxy_pass</strong> to the <strong>upstream</strong> variable which was just set.   If one proxied server went down, the reverse proxy would go down as well without this workaround.  See Jellyfin&rsquo;s documentation on <a href="https://jellyfin.org/docs/general/networking/nginx.html" title="Nginx">reverse proxies</a> for more details.</p>
+<pre tabindex="0"><code>server {
   listen 8080;
   server_name jellyfin.example.com;
   return 301 https://$host$request_uri;
@@ -196,7 +155,7 @@ server {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection &quot;upgrade&quot;;
+    proxy_set_header Connection &#34;upgrade&#34;;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header X-Forwarded-Protocol $scheme;
     proxy_set_header X-Forwarded-Host $http_host;
@@ -204,16 +163,14 @@ server {
     proxy_pass $upstream;
   }
 }
-</code></pre><h2 id="docker-compose">Docker Compose</h2>
-<p>Here is the docker-compose.yml file for the project:</p>
-<pre><code>version: '2'
+</code></pre><p>Now we&rsquo;ll finally put it all together with a Docker Compose file:</p>
+<pre tabindex="0"><code>version: &#39;2&#39;
 services:
   reverse_proxy:
     build:
       context: ./nginx
     container_name: reverse_proxy
     environment:
-      # change to your timezine
       - TZ=America/Los_Angeles
     ports:
       - 80:8080
@@ -227,20 +184,16 @@ services:
     image: linuxserver/jellyfin
     container_name: jellyfin
     environment:
-      # change to owner of media files
       - PUID=4000
       - GUID=4000
-      # change to your timezone
       - TZ=America/Los_Angeles
     ports:
-      # discovery port
       - 1900:1900
     volumes:
       - jellyfin_config:/config
-      #/pathtomedia:/data
-    # https://jellyfin.org/docs/general/administration/hardware-acceleration.html
-    # devices:
-      # - /dev/dri:/dev/dri
+      /pathtomedia:/data
+    devices:
+      - /dev/dri:/dev/dri
     restart: unless-stopped
 
 volumes:
@@ -249,16 +202,15 @@ volumes:
 networks:
   default:
   public:
-</code></pre><p>Now let&rsquo;s finally get everything up:</p>
-<pre><code>docker-compose build --pull &amp;&amp; docker-compose pull &amp;&amp; docker-compose up -d
-</code></pre><h2 id="name-resolution">Name Resolution</h2>
-<p>Lastly we&rsquo;ll have to add a line to a client&rsquo;s /etc/hosts file in order to reach the reverse proxy by server name:</p>
-<pre><code>...
-jellyfin.example.com    server_IP
+</code></pre><p>Let&rsquo;s get everything up:</p>
+<pre tabindex="0"><code>docker-compose pull &amp;&amp; docker-compose up -d
+</code></pre><p>We&rsquo;ll finally have to add a line to a client&rsquo;s /etc/hosts file in order to reach the reverse proxy:</p>
+<pre tabindex="0"><code>...
+jellyfin.example.com    &lt;server_IP&gt;
 ...
-</code></pre><p>Editing /etc/hosts on every client computer is your only option unless you&rsquo;re hosting your own DNS server.</p>
-<p>I use pfSense for my router at home so I just had to add a host override.  First navigate to the pfSense web GUI.  From the top menu select Services / DNS Resolver  General Settings.  Go to the host override section.  Enter example.com in Domain and server_IP in IP Address. In Additional Names for this host, enter jellyfin in Host and example.com in Domain.  Click Save and Apply Changes.</p>
-<p>You should now be able to immediately navigate to jellyfin.example.com.  You will have to accept the self-signed certificate.</p>
+</code></pre><p>Editing /etc/hosts on every client computer is your only option unless you&rsquo;re hosting your own DNS server.  As I using Pfsense for my router I just had to add a host override:</p>
+<p>Services / DNS Resolver / General Settings</p>
+<p>Go to the Host Overrides section</p>
 <picture>
     <source srcset="host-override.webp" type="image/webp">
     <source srcset="host-override.png" type="image/png">
@@ -270,14 +222,13 @@ jellyfin.example.com    server_IP
         loading="lazy"
     >
 </picture>
-<p>There you have it.  Using one application, Jellyfin as an example, it is easy to generate Nginx config files for many other applications.  Most simple applications will require a few proxy header directives and possibly some additional proxy header directives for websockets.  A lot of projects will also include documentation for using reverse proxies with their product.</p>
+<p>Enter example.com in Domain and server_IP in IP Address, in Additional Names for this host enter jellyfin in Host and example.com in Domain.  Click Save and Apply Changes.  You should now be able to immediately navgivate to jellyfin.example.com.</p>
+<p>useradd -u 4000 media</p>
 
         <div class="tag">
             
             
-            <a href="/tags/nginx">#Nginx</a>
-            
-            <a href="/tags/web-server">#web server</a>
+            <a href="/tags/nginx">#nginx</a>
             
             <a href="/tags/containers">#containers</a>
             
@@ -292,21 +243,20 @@ jellyfin.example.com    server_IP
 
         </main><footer>
     <li>
-        <a href="https://unamelinux.com/license">&copy; 2021 Peter Buffon</a>
+        <a href="/license">&copy; 2022 Peter Buffon</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
     </li>
     <li>
         <a href="https://twitter.com/petebuffon">
-            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+            <img src="/img/Twitter_Logo_Blue.svg" height="50px">
         </a>
     </li>
     <li>
         <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
-            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+            <img src="/img/64px-Telegram_logo.svg.png" height="35px">
         </a>
     </li>
-</footer>
-</body>
+</footer></body>
 </html>

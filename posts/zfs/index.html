@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html><head>
+  <html lang="en">
+  <meta charset="utf-8">
+  <meta name="description" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    uname Linux
+    </title>
+  <link rel="stylesheet" href="/css/style-min.css">
+
+  <link rel="shortcut icon" href="/favicon.svg">
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body><nav>
+    <li>
+        <a href="/">
+            <img src="/logo-small.svg" width="66px">
+        </a>
+    </li>
+    <li>
+        <a href="/about">About</a>
+    </li>
+    <li>
+        <a href="/projects">Projects</a>
+    </li>
+    <li>
+        <a href="/contact">Contact</a>
+    </li>
+    <li>
+        <a href="/theme">Theme</a>
+    </li>
+    <li>
+        <a href="/tags">Tags</a>
+    </li>
+    <li class="align-right">
+        <a href="https://github.com/petebuffon">
+            <img src="/img/GitHub-Mark-Light-64px.png" height="35px">
+        </a>
+    </li>
+</nav>
+        <main>
+<main>
+    <article>
+        <div class="article-header">
+            <h1>ZFS on Linux</h1>
+            <p>Aug 11, 2019</p>
+        </div>
+        <p>I&rsquo;ve known about ZFS for quite a while now, but it has seemed either too complicated or just not the right fit.</p>
+<p>After Jim Salter talked about ZFS on <a href="https://techsnap.systems/401">techSNAP</a> and Alex Kretzschmar wrote a great <a href="https://blog.linuxserver.io/2019/05/14/getting-started-with-zfs-on-linux/">blog post</a> on ZFS, I was conviced me to give it a shot at home.</p>
+<p>What really hit home for me was the lack of redundancy on my current setup at home. Yes I have backups in place in case of catastrophic failure, but I had nothing to prevent data degredation over time.  ZFS finally clicked for me when I made the comparison between checksums and DNA repair.  It suddently all made sense, if DNA requires repair mechanisms, why not data storage?  What this really boils down to is maintaining important data over time, knowing my data will remain bit for bit identical today and ten years from now.</p>
+<p>I think one of the barriers to entry for ZFS is that it has its own lingo.  Here&rsquo;s a simple breakdown.</p>
+<ul>
+<li>pool - Basic building block of ZFS.  A pool is made up of one or more vdevs.</li>
+<li>vdev - Most often a disk, but can also be a partition or file.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>I have a fairly low spec home server.  It has a Intel Kaby Lake Pentium G4600 two core four thread CPU with 8 GB of DDR4 RAM.  Currently Ubuntu is the only Linux distribution to include the ZFS kernel module and user-level ZFS tools.  ZFS on Linux can be installed on other distributions, but requires either installation by DKMS or compiling from source.  The following instructions assume a LTS installed of Ubuntu.  Go ahead and install ZFS on an updated system.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> pete@home:~$ sudo apt install zfsutils-linux</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>As a side note the ARC (adaptive replacement cache) by default will grow to half of the maximum RAM.  This default can be changed, but has not been an issue even with my system&rsquo;s modest amount of RAM.</p>
+<h2 id="finding-your-drives">Finding your Drives</h2>
+<ul>
+<li>mirror - Consists of two or more devices.  Only holds as much data as its smallest member.  Can withstand the failure of all but one of its members without losing data.</li>
+</ul>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pete@home:~$ ls -l /dev/disk/by-id
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">9</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M1SAV1ZD -&gt; ../../sda
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M1SAV1ZD-part1 -&gt; ../../sda1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M1SAV1ZD-part9 -&gt; ../../sda9
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">9</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M7KKJ4YL -&gt; ../../sdb
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M7KKJ4YL-part1 -&gt; ../../sdb1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M7KKJ4YL-part9 -&gt; ../../sdb9
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">13</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-eui.0100000000000000 -&gt; ../../nvme0n1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">15</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-eui.0100000000000000-part1 -&gt; ../../nvme0n1p1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">15</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-eui.0100000000000000-part2 -&gt; ../../nvme0n1p2
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">13</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-HP_SSD_EX900_120GB_HBSE19111700355 -&gt; ../../nvme0n1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">15</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-HP_SSD_EX900_120GB_HBSE19111700355-part1 -&gt; ../../nvme0n1p1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">15</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-HP_SSD_EX900_120GB_HBSE19111700355-part2 -&gt; ../../nvme0n1p2
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">9</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee210d6f2d1 -&gt; ../../sdb
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee210d6f2d1-part1 -&gt; ../../sdb1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee210d6f2d1-part9 -&gt; ../../sdb9
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">9</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee2649ad2e6 -&gt; ../../sda
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee2649ad2e6-part1 -&gt; ../../sda1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee2649ad2e6-part9 -&gt; ../../sda9</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<p>#identify drives by wwn ID
+ls -l /dev/disk/by-id</p>
+<p>#create zpool
+#ashift=12 parameter will use 4k blocksizes, standard on most drives
+#atime=off system has to update &ldquo;Accessed&rdquo; attribute of every file every time you look at it
+#compression=lz4 lz4 compression is faster than storage
+zpool create -o ashift=12 tank mirror /dev/disk/by-id/wwn-0x50014ee2649ad2e6 /dev/disk/by-id/wwn-0x50014ee210d6f2d1</p>
+<p>#set parameters
+zfs set atime=off tank
+zfs set compression=lz4 tank</p>
+<p>#create datasets
+sudo zfs create tank/documents</p>
+<h2 id="zpool-status">zpool status</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pete@home:~$ sudo zpool status
+</span></span><span style="display:flex;"><span>  pool: tank
+</span></span><span style="display:flex;"><span> state: ONLINE
+</span></span><span style="display:flex;"><span>  scan: scrub repaired 0B in 1h57m with <span style="color:#ae81ff">0</span> errors on Sun Aug <span style="color:#ae81ff">11</span> 02:21:48 <span style="color:#ae81ff">2019</span>
+</span></span><span style="display:flex;"><span>config:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	NAME                        STATE     READ WRITE CKSUM
+</span></span><span style="display:flex;"><span>	tank                        ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	  mirror-0                  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	    wwn-0x50014ee2649ad2e6  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	    wwn-0x50014ee210d6f2d1  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>errors: No known data errors</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="ram">RAM</h2>
+<p>I have a fairly low spec home server.  It has a Intel Kaby Lake Pentium G4600 two core four thread CPU with 8 GB of DDR4 RAM.  I was under the impression ZFS required a huge amount of RAM to run.</p>
+<p>On an updated system with the drives you want to use installed, go ahead and install ZFS.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> pete@home:~$ sudo apt install zfsutils-linux</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="finding-your-drives-1">Finding your Drives</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pete@home:~$ ls -l /dev/disk/by-id
+</span></span><span style="display:flex;"><span>total <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">9</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M1SAV1ZD -&gt; ../../sda
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M1SAV1ZD-part1 -&gt; ../../sda1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M1SAV1ZD-part9 -&gt; ../../sda9
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">9</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M7KKJ4YL -&gt; ../../sdb
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M7KKJ4YL-part1 -&gt; ../../sdb1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 ata-WDC_WD20EFRX-68EUZN0_WD-WCC4M7KKJ4YL-part9 -&gt; ../../sdb9
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">13</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-eui.0100000000000000 -&gt; ../../nvme0n1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">15</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-eui.0100000000000000-part1 -&gt; ../../nvme0n1p1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">15</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-eui.0100000000000000-part2 -&gt; ../../nvme0n1p2
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">13</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-HP_SSD_EX900_120GB_HBSE19111700355 -&gt; ../../nvme0n1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">15</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-HP_SSD_EX900_120GB_HBSE19111700355-part1 -&gt; ../../nvme0n1p1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">15</span> Aug  <span style="color:#ae81ff">9</span> 16:10 nvme-HP_SSD_EX900_120GB_HBSE19111700355-part2 -&gt; ../../nvme0n1p2
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">9</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee210d6f2d1 -&gt; ../../sdb
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee210d6f2d1-part1 -&gt; ../../sdb1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee210d6f2d1-part9 -&gt; ../../sdb9
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">9</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee2649ad2e6 -&gt; ../../sda
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee2649ad2e6-part1 -&gt; ../../sda1
+</span></span><span style="display:flex;"><span>lrwxrwxrwx <span style="color:#ae81ff">1</span> root root <span style="color:#ae81ff">10</span> Aug  <span style="color:#ae81ff">9</span> 16:10 wwn-0x50014ee2649ad2e6-part9 -&gt; ../../sda9</span></span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="zpool-status-1">zpool status</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pete@home:~$ sudo zpool status
+</span></span><span style="display:flex;"><span>  pool: tank
+</span></span><span style="display:flex;"><span> state: ONLINE
+</span></span><span style="display:flex;"><span>  scan: scrub repaired 0B in 1h57m with <span style="color:#ae81ff">0</span> errors on Sun Aug <span style="color:#ae81ff">11</span> 02:21:48 <span style="color:#ae81ff">2019</span>
+</span></span><span style="display:flex;"><span>config:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	NAME                        STATE     READ WRITE CKSUM
+</span></span><span style="display:flex;"><span>	tank                        ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	  mirror-0                  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	    wwn-0x50014ee2649ad2e6  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	    wwn-0x50014ee210d6f2d1  ONLINE       <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>errors: No known data errors</span></span></code></pre></td></tr></table>
+</div>
+</div>
+
+        <div class="tag">
+            
+            
+            <a href="/tags/zfs">#ZFS</a>
+            
+            
+        </div>
+    </article>
+</main>
+
+        </main><footer>
+    <li>
+        <a href="/license">&copy; 2022 Peter Buffon</a>
+    </li>
+    <li>
+        <a href="/privacy">Privacy Policy</a>
+    </li>
+    <li>
+        <a href="https://twitter.com/petebuffon">
+            <img src="/img/Twitter_Logo_Blue.svg" height="50px">
+        </a>
+    </li>
+    <li>
+        <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
+            <img src="/img/64px-Telegram_logo.svg.png" height="35px">
+        </a>
+    </li>
+</footer></body>
+</html>

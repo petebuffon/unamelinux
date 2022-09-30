@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>uname Linux</title>
+    <link>https://unamelinux.com/projects/</link>
+    <description>Recent content on uname Linux</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 30 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>💀 Scuwl 💀</title>
+      <link>https://unamelinux.com/projects/scuwl/</link>
+      <pubDate>Fri, 30 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/projects/scuwl/</guid>
+      <description>Simple custom wordlist generator Scuwl (skull) is a Python CLI program that quickly and easily generates a wordlist from a webpage. The idea for Scuwl was inspired by the program Cewl. Scuwl defaults to a crawling depth of zero and most webpages return a wordlist in less than a second. Using a crawling depth of one generally takes a few minutes.
+Scuwl is fast because it recursively scrapes websites asynchronously. Scuwl minimizes its memory footprint by processing HTML as it goes and updating the wordlist in memory as a set.</description>
+    </item>
+    
+  </channel>
+</rss>

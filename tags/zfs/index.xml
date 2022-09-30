@@ -17,5 +17,16 @@
 The screen of the XPS 13 is fantastic with great color and clarity.</description>
     </item>
     
+    <item>
+      <title>ZFS on Linux</title>
+      <link>https://unamelinux.com/posts/zfs/</link>
+      <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/zfs/</guid>
+      <description>I&amp;rsquo;ve known about ZFS for quite a while now, but it has seemed either too complicated or just not the right fit.
+After Jim Salter talked about ZFS on techSNAP and Alex Kretzschmar wrote a great blog post on ZFS, I was conviced me to give it a shot at home.
+What really hit home for me was the lack of redundancy on my current setup at home. Yes I have backups in place in case of catastrophic failure, but I had nothing to prevent data degredation over time.</description>
+    </item>
+    
   </channel>
 </rss>

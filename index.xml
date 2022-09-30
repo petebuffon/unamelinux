@@ -6,7 +6,17 @@
     <description>Recent content on uname Linux</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 30 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>💀 Scuwl 💀</title>
+      <link>https://unamelinux.com/projects/scuwl/</link>
+      <pubDate>Fri, 30 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/projects/scuwl/</guid>
+      <description>Simple custom wordlist generator Scuwl (skull) is a Python CLI program that quickly and easily generates a wordlist from a webpage. The idea for Scuwl was inspired by the program Cewl. Scuwl defaults to a crawling depth of zero and most webpages return a wordlist in less than a second. Using a crawling depth of one generally takes a few minutes.
+Scuwl is fast because it recursively scrapes websites asynchronously. Scuwl minimizes its memory footprint by processing HTML as it goes and updating the wordlist in memory as a set.</description>
+    </item>
+    
     <item>
       <title>Mindful Memory</title>
       <link>https://unamelinux.com/posts/mindful_memory/</link>
@@ -61,7 +71,7 @@ I recently finished CS50: Introduction to Computer Science class on edX.</descri
     <item>
       <title>Reverse Proxies</title>
       <link>https://unamelinux.com/posts/reverse-proxy/</link>
-      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/posts/reverse-proxy/</guid>
       <description>A reverse proxy is a server application that sits in front of one or more web servers and forwards client requests to those web servers. Reverse proxies can be used for (but are not limited to):
@@ -139,6 +149,15 @@ The screen of the XPS 13 is fantastic with great color and clarity.</description
     </item>
     
     <item>
+      <title>Virtual Machines</title>
+      <link>https://unamelinux.com/posts/virtual-machines/</link>
+      <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/virtual-machines/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Simple Samba</title>
       <link>https://unamelinux.com/posts/samba/</link>
       <pubDate>Wed, 05 Feb 2020 00:00:00 +0000</pubDate>
@@ -146,6 +165,17 @@ The screen of the XPS 13 is fantastic with great color and clarity.</description
       <guid>https://unamelinux.com/posts/samba/</guid>
       <description>As a first post I thought I would tackle a topic I initially avoided for quite a while, Samba. Setting up a Samba server can be incredibly simple and is a great first step to setting up your own personal cloud at home.
 Sharing files via Samba allows me to go from my desktop to my laptop without skipping a beat. I can also feel at ease because my sensitive files are password protected and remain solely on the LAN.</description>
+    </item>
+    
+    <item>
+      <title>ZFS on Linux</title>
+      <link>https://unamelinux.com/posts/zfs/</link>
+      <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/zfs/</guid>
+      <description>I&amp;rsquo;ve known about ZFS for quite a while now, but it has seemed either too complicated or just not the right fit.
+After Jim Salter talked about ZFS on techSNAP and Alex Kretzschmar wrote a great blog post on ZFS, I was conviced me to give it a shot at home.
+What really hit home for me was the lack of redundancy on my current setup at home. Yes I have backups in place in case of catastrophic failure, but I had nothing to prevent data degredation over time.</description>
     </item>
     
     <item>
@@ -164,7 +194,7 @@ No personally identifiable information is collected on this site.</description>
       <pubDate>Thu, 14 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/license/</guid>
-      <description>Copyright 2021 Peter Buffon
+      <description>Copyright 2022 Peter Buffon
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &amp;ldquo;Software&amp;rdquo;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</description>
     </item>
     
@@ -184,7 +214,7 @@ Over the past five years or so I&amp;rsquo;ve become increasingly interested in 
       <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/contact/</guid>
-      <description>If you have any questions, comments, or just want to reach out feel free to contact me via Twitter or Telegram.</description>
+      <description>If you have any questions, comments, or just want to reach out feel free to contact me via email, pabuffon@gmail.com.</description>
     </item>
     
     <item>

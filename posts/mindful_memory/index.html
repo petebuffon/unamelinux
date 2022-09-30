@@ -7,45 +7,40 @@
   <title>
     uname Linux
     </title>
-  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
-  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="stylesheet" href="/css/style-min.css">
+
+  <link rel="shortcut icon" href="/favicon.svg">
+
   <meta name="theme-color" content="#ffffff">
-
-  <meta property="og:title" content="Mindful Memory"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="uname Linux"/>
-  <meta property="og:description" content="Every wonder how much memory your Python scripts are consuming?  Look no further than getsizeof and tracemalloc found in the Python Standard Library."/>
-  <meta property="og:url" content="https://unamelinux.com/posts/mindful_memory/"/>
-  <meta property="og:image" content="https://unamelinux.com/posts/mindful_memory/image.png"/>
-  <meta property="twitter:image" content="https://unamelinux.com/posts/mindful_memory/image.png" />
-  <meta property="twitter:creator" content="@petebuffon" />
-
-  <link rel="icon" href="https://unamelinux.com/favicon.svg">
-  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
-  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
-  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body><nav>
     <li>
-        <a href="https://unamelinux.com/">
-            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        <a href="/">
+            <img src="/logo-small.svg" width="66px">
         </a>
     </li>
     <li>
-        <a href="https://unamelinux.com/about">About</a>
+        <a href="/about">About</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/contact">Contact</a>
+        <a href="/projects">Projects</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/theme">Theme</a>
+        <a href="/contact">Contact</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/tags">Tags</a>
+        <a href="/theme">Theme</a>
+    </li>
+    <li>
+        <a href="/tags">Tags</a>
     </li>
     <li class="align-right">
         <a href="https://github.com/petebuffon">
-            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+            <img src="/img/GitHub-Mark-Light-64px.png" height="35px">
         </a>
     </li>
 </nav>
@@ -60,14 +55,14 @@
 <p>There are different motivations for reducing memory usage from processing data on a low powered laptop to reducing web server production costs.  Almost all of these reasons start with looking at how your current program uses memory.</p>
 <h2 id="sysgetsizeof">sys.getsizeof()</h2>
 <p>Let&rsquo;s start with a simple function, <strong>getsizeof</strong> in the <strong>sys</strong> module.  This function returns the size of an object in bytes.  Here we can see the string &ldquo;Python&rdquo; consumes 55 bytes of memory.</p>
-<pre><code>from sys import getsizeof
-&gt;&gt;&gt; getsizeof(&quot;Python&quot;)
+<pre tabindex="0"><code>from sys import getsizeof
+&gt;&gt;&gt; getsizeof(&#34;Python&#34;)
 55
 </code></pre><p>Getsizeof has limited functionality because it only returns the direct memory consumption of an object.  This means Python container objects, including dicts, lists, tuples, and sets, as well as classes won&rsquo;t return their full memory consumption footprint with getsizeof.</p>
 <h2 id="tracemalloc">tracemalloc</h2>
 <p>The <a href="https://docs.python.org/3/library/tracemalloc.html">tracemalloc module</a> is a debug tool used to trace memory blocks allocation.  It can easily be incorporated into scripts to find the largest memory hogs.</p>
 <p>Here is a simple test script, floats.py</p>
-<pre><code>from random import random 
+<pre tabindex="0"><code>from random import random 
 
 floats = [random() for _ in range(10000000)]
 
@@ -75,29 +70,28 @@ def main():
     print(floats[:3])
 
 main()
-
 </code></pre><p>This script simply generates a list of 10 million random floats and prints out the first three.</p>
-<pre><code>$ python floats.py 
+<pre tabindex="0"><code>$ python floats.py 
 [0.9937146951190611, 0.9803072888538571, 0.6177404904978063]
 </code></pre><p>Now let&rsquo;s add tracemalloc to our floats.py script and see what lines consume the most memory.</p>
-<pre><code>import tracemalloc
+<pre tabindex="0"><code>import tracemalloc
 tracemalloc.start()
 from random import random 
 
 floats = [random() for _ in range(10000000)]
 snapshot = tracemalloc.take_snapshot()
-top_stats = snapshot.statistics(&quot;lineno&quot;)
+top_stats = snapshot.statistics(&#34;lineno&#34;)
 
 def main():
     # print(floats[:3])
-    print(&quot;[ Top Ten ]&quot;)
+    print(&#34;[ Top Ten ]&#34;)
     for stat in top_stats[:10]:
         print(stat)
 
 main()
 </code></pre><p>First we import <strong>tracemalloc</strong> from the Standard Library.  Then we start the trace with <strong>tracemalloc.start()</strong>, take a snapshot with <strong>tracemalloc.take_snapshot().</strong>, and calculate the statistics with <strong>snapshot.statistics(&ldquo;lineno&rdquo;)</strong>  Finally we print the top ten largest memory consumers.</p>
 <p>Alright now let&rsquo;s run our altered script.</p>
-<pre><code>$ python floats.py 
+<pre tabindex="0"><code>$ python floats.py 
 [ Top Ten ]
 /home/pete/floats.py:5: size=314 MiB, count=10000000, average=33 B
 &lt;frozen importlib._bootstrap_external&gt;:587: size=40.2 KiB, count=444, average=93 B
@@ -126,21 +120,20 @@ main()
 
         </main><footer>
     <li>
-        <a href="https://unamelinux.com/license">&copy; 2021 Peter Buffon</a>
+        <a href="/license">&copy; 2022 Peter Buffon</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
     </li>
     <li>
         <a href="https://twitter.com/petebuffon">
-            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+            <img src="/img/Twitter_Logo_Blue.svg" height="50px">
         </a>
     </li>
     <li>
         <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
-            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+            <img src="/img/64px-Telegram_logo.svg.png" height="35px">
         </a>
     </li>
-</footer>
-</body>
+</footer></body>
 </html>

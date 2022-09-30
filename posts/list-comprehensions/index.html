@@ -7,45 +7,40 @@
   <title>
     uname Linux
     </title>
-  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
-  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="stylesheet" href="/css/style-min.css">
+
+  <link rel="shortcut icon" href="/favicon.svg">
+
   <meta name="theme-color" content="#ffffff">
-
-  <meta property="og:title" content="List Comprehensions"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="uname Linux"/>
-  <meta property="og:description" content="Why you should start using list comprehensions in your Python code, a brief look at a feature of lists you might have overlooked."/>
-  <meta property="og:url" content="https://unamelinux.com/posts/list-comprehensions/"/>
-  <meta property="og:image" content="https://unamelinux.com/posts/list-comprehensions/image.png"/>
-  <meta property="twitter:image" content="https://unamelinux.com/posts/list-comprehensions/image.png" />
-  <meta property="twitter:creator" content="@petebuffon" />
-
-  <link rel="icon" href="https://unamelinux.com/favicon.svg">
-  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
-  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
-  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body><nav>
     <li>
-        <a href="https://unamelinux.com/">
-            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        <a href="/">
+            <img src="/logo-small.svg" width="66px">
         </a>
     </li>
     <li>
-        <a href="https://unamelinux.com/about">About</a>
+        <a href="/about">About</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/contact">Contact</a>
+        <a href="/projects">Projects</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/theme">Theme</a>
+        <a href="/contact">Contact</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/tags">Tags</a>
+        <a href="/theme">Theme</a>
+    </li>
+    <li>
+        <a href="/tags">Tags</a>
     </li>
     <li class="align-right">
         <a href="https://github.com/petebuffon">
-            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+            <img src="/img/GitHub-Mark-Light-64px.png" height="35px">
         </a>
     </li>
 </nav>
@@ -59,7 +54,7 @@
         <p>I initially thought Python list comprehensions were obtuse and unnecessary, a bit of syntactic sugar I didn&rsquo;t need, but after spending more time with them my opinion has completely flipped.  Now I not only use them as much as I can, but I also want to get the word out for those who might not know about them.</p>
 <p>Let’s start with a simple example.  Let&rsquo;s say I want to alter all the items in a list using a function and generate a new list.  Our list will be <strong>x</strong> and our function will be <strong>sqrt</strong> from the math module.</p>
 <p>First up is the straightforward method using a for loop.</p>
-<pre><code>&gt;&gt;&gt; from math import sqrt
+<pre tabindex="0"><code>&gt;&gt;&gt; from math import sqrt
 &gt;&gt;&gt; x = range(1000)
 &gt;&gt;&gt; y = []
 &gt;&gt;&gt; for i range x:
@@ -67,16 +62,16 @@
 &gt;&gt;&gt; y[:5]
 [0.0, 1.0, 1.4142135623730951, 1.7320508075688772, 2.0, 2.23606797749979]
 </code></pre><p>Now here&rsquo;s the same example using list comprehension.</p>
-<pre><code>&gt;&gt;&gt; y = [sqrt(i) for i in x]
+<pre tabindex="0"><code>&gt;&gt;&gt; y = [sqrt(i) for i in x]
 &gt;&gt;&gt; y[:5]
 [0.0, 1.0, 1.4142135623730951, 1.7320508075688772, 2.0, 2.23606797749979]
 </code></pre><p>List comprehension is simply a set of brackets containing an expression followed by a for clause.</p>
 <p>Additionally, one or more if clauses can be added to a list comprehension.</p>
-<pre><code>&gt;&gt;&gt; z = [sqrt(i) for i in x if i &gt; 50]
+<pre tabindex="0"><code>&gt;&gt;&gt; z = [sqrt(i) for i in x if i &gt; 50]
 &gt;&gt;&gt; z[:5]
 [7.14142842854285, 7.211102550927978, 7.280109889280518, 7.3484692283495345, 7.416198487095663]
 </code></pre><p>List comprehension also allows for the simple creation of lists on the fly, let&rsquo;s say 1000 random floats.</p>
-<pre><code>&gt;&gt;&gt; import random
+<pre tabindex="0"><code>&gt;&gt;&gt; import random
 &gt;&gt;&gt; floats = [random.random() for _ in range(1000)]
 &gt;&gt;&gt; floats[:5]
 [0.7780346266380861, 0.6197484726418738, 0.8439569186352499, 0.21261969119693835, 0.1844600543795476]
@@ -96,21 +91,20 @@
 
         </main><footer>
     <li>
-        <a href="https://unamelinux.com/license">&copy; 2021 Peter Buffon</a>
+        <a href="/license">&copy; 2022 Peter Buffon</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
     </li>
     <li>
         <a href="https://twitter.com/petebuffon">
-            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+            <img src="/img/Twitter_Logo_Blue.svg" height="50px">
         </a>
     </li>
     <li>
         <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
-            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+            <img src="/img/64px-Telegram_logo.svg.png" height="35px">
         </a>
     </li>
-</footer>
-</body>
+</footer></body>
 </html>

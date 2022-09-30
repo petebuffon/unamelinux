@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>virtual machines on uname Linux</title>
+    <link>https://unamelinux.com/tags/virtual-machines/</link>
+    <description>Recent content in virtual machines on uname Linux</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 07 Feb 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://unamelinux.com/tags/virtual-machines/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Virtual Machines</title>
+      <link>https://unamelinux.com/posts/virtual-machines/</link>
+      <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/virtual-machines/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

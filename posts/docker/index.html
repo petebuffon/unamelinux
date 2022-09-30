@@ -7,45 +7,40 @@
   <title>
     uname Linux
     </title>
-  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
-  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="stylesheet" href="/css/style-min.css">
+
+  <link rel="shortcut icon" href="/favicon.svg">
+
   <meta name="theme-color" content="#ffffff">
-
-  <meta property="og:title" content="Linux Containers and Docker"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="uname Linux"/>
-  <meta property="og:description" content="The first post in a multi-part container series.  A brief introduction on Linux containers is followed by a guide on installing Docker, using the Docker CLI, and managing containers."/>
-  <meta property="og:url" content="https://unamelinux.com/posts/docker/"/>
-  <meta property="og:image" content=""/>
-  <meta property="twitter:image" content="" />
-  <meta property="twitter:creator" content="@petebuffon" />
-
-  <link rel="icon" href="https://unamelinux.com/favicon.svg">
-  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
-  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
-  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body><nav>
     <li>
-        <a href="https://unamelinux.com/">
-            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        <a href="/">
+            <img src="/logo-small.svg" width="66px">
         </a>
     </li>
     <li>
-        <a href="https://unamelinux.com/about">About</a>
+        <a href="/about">About</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/contact">Contact</a>
+        <a href="/projects">Projects</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/theme">Theme</a>
+        <a href="/contact">Contact</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/tags">Tags</a>
+        <a href="/theme">Theme</a>
+    </li>
+    <li>
+        <a href="/tags">Tags</a>
     </li>
     <li class="align-right">
         <a href="https://github.com/petebuffon">
-            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+            <img src="/img/GitHub-Mark-Light-64px.png" height="35px">
         </a>
     </li>
 </nav>
@@ -84,35 +79,35 @@
 </ul>
 <hr>
 <h2 id="installing-docker">Installing Docker</h2>
-<pre><code># apt update &amp;&amp; apt install -y docker.io
+<pre tabindex="0"><code># apt update &amp;&amp; apt install -y docker.io
 </code></pre><blockquote>
 <p>Note: The Docker package in Ubuntu 18.04, currently version 18.09.7, lags behind the current release, 19.03.07.  If you would prefer a newer version of Docker, I would recommend using Ubuntu 19.10 as a base, which currently includes Docker version 19.03.2. Alternatively if you would like the absolute latest version of Docker you can set up <a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository">Docker repositories</a> and install from them.</p>
 </blockquote>
 <p>The Docker daemon always runs as the root user.  I find it convenient to add my user to the docker group so that sudo is not required when running Docker commands.</p>
-<pre><code># usermod -aG docker $USER
+<pre tabindex="0"><code># usermod -aG docker $USER
 </code></pre><p>Logging out and back in again in will be required for the changes to go into effect.</p>
 <hr>
 <h2 id="docker-cli">Docker CLI</h2>
 <p>Verify Docker is working by firing up an Ubuntu container:</p>
-<pre><code>$ docker run -it ubuntu bash
+<pre tabindex="0"><code>$ docker run -it ubuntu bash
 </code></pre><p>This command is our first use of the Docker CLI.  <strong>Run</strong> specifies that we want to create and run a container, <strong>-it</strong> specifies an interactive pseudo-TTY, <strong>ubuntu</strong> specifies the image we want to use, and finally <strong>bash</strong> specifies the command to run once the container has been created.</p>
 <p>As bash was invoked we now have a root bash shell inside the new Ubuntu container.  Go ahead and explore a bit.  Almost all of the commands you can run in Ubuntu you can run in your Ubuntu container, except to minimize file size, many programs will not be installed by default.  Once you&rsquo;re done you can leave the container with the <strong>exit</strong> command.</p>
 <p>To see what containers are currently running:</p>
-<pre><code>$ docker ps
+<pre tabindex="0"><code>$ docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 </code></pre><p>No containers were returned because <strong>docker ps</strong> only returns running containers on the system and our new container was stopped on being exited.  To see all containers on the system use:</p>
-<pre><code>$ docker ps -a
+<pre tabindex="0"><code>$ docker ps -a
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                        PORTS               NAMES
-6637b187fe0e        ubuntu              &quot;bash&quot;              12 minutes ago      Exited (127) 11 minutes ago                       affectionate_shamir
+6637b187fe0e        ubuntu              &#34;bash&#34;              12 minutes ago      Exited (127) 11 minutes ago                       affectionate_shamir
 </code></pre><p>We can access this container again with the <strong>start</strong> and <strong>exec</strong> commands.  The container is referenced by its unique container ID (6637b187fe0e) or randomly generated name (in this example affectionate_shamir).</p>
-<pre><code>$ docker start affectionate_shamir
+<pre tabindex="0"><code>$ docker start affectionate_shamir
 affectionate_shamir
 $ docker exec -it 6637b187fe0e bash
 </code></pre><p>To delete the container (the &ndash;force flag is needed for running containers):</p>
-<pre><code>$ docker rm --force affectionate_shamir
+<pre tabindex="0"><code>$ docker rm --force affectionate_shamir
 affectionate_shamir
 </code></pre><p>Similar syntax can be used to list and remove images</p>
-<pre><code>$ docker images
+<pre tabindex="0"><code>$ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 ubuntu              latest              72300a873c2c        12 days ago         64.2MB
 $ docker image rm ubuntu
@@ -129,22 +124,22 @@ Deleted: sha256:cc4590d6a7187ce8879dd8ea931ffaa18bc52a1c1df702c9d538b2f0c927709d
 <p>Note: As with downloading and installing any software and on your system, there is potential for malicious code from Docker Hub.  Exercize caution and generally stick to using official Docker images or images created by a project&rsquo;s authors when possible.</p>
 </blockquote>
 <p>Let&rsquo;s download the <a href="https://hub.docker.com/_/nginx">official Nginx docker image</a> to our system with the pull command:</p>
-<pre><code>$ docker pull nginx
+<pre tabindex="0"><code>$ docker pull nginx
 </code></pre><h2 id="tags">Tags</h2>
 <p>If you scroll down to the <strong>Image Variants</strong> section we can see there are multiple OS base options.  If you want a smaller image base for your nginx container then specify the Alpine image with a colon.  This is one instance of an image tag.</p>
-<pre><code>$ docker pull nginx:alpine
+<pre tabindex="0"><code>$ docker pull nginx:alpine
 </code></pre><p>Looking at our images again we can see that we can have multiple nginx images.  Another thing to note was that when we pulled the <strong>nginx</strong> image, the default flag was <strong>latest</strong>.</p>
-<pre><code>$ docker images
+<pre tabindex="0"><code>$ docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 nginx               alpine              377c0837328f        47 hours ago        19.7MB
 nginx               latest              6678c7c2e56c        47 hours ago        127MB
 </code></pre><p>If we navigate to the supported tags of the nginx Docker Hub page we can see there are even more tag options available.  We can also use tags to specify a specific image version.</p>
-<pre><code>$ docker pull nginx:1.16
+<pre tabindex="0"><code>$ docker pull nginx:1.16
 </code></pre><h2 id="flags-and-web-servers">Flags and Web Servers</h2>
 <p>Next we&rsquo;ll host a static html file with an nginx container to showcase other docker run flags and a common docker use case, as a web server.  First let&rsquo;s create simple html file to host:</p>
-<pre><code>$ cd ~/ &amp;&amp; echo 'Hello world!' &gt; index.html
+<pre tabindex="0"><code>$ cd ~/ &amp;&amp; echo &#39;Hello world!&#39; &gt; index.html
 </code></pre><p>Now this time we&rsquo;ll run our nginx container in the background:</p>
-<pre><code>$ docker run -d --name nginx -p 8080:80 -v ~/index.html:/usr/share/nginx/html/index.html:ro nginx
+<pre tabindex="0"><code>$ docker run -d --name nginx -p 8080:80 -v ~/index.html:/usr/share/nginx/html/index.html:ro nginx
 </code></pre><blockquote>
 <p>Note: When issuing a docker run command, Docker will first try to find the image locally. If an image isn&rsquo;t found, Docker will then search the Docker Hub.  In this case a separate docker pull command isn&rsquo;t necessary.</p>
 </blockquote>
@@ -156,7 +151,7 @@ nginx               latest              6678c7c2e56c        47 hours ago        
 <hr>
 <h2 id="updating-containers">Updating containers</h2>
 <p>The process of updating containers illustrates their ephemeral nature.  First let&rsquo;s imagine an updated version of the latest nginx image has been released.  In order to update our container we must first stop and delete the container.  We then pull the new version of the image and start a new instance of the container using our original docker run command.</p>
-<pre><code>$ docker stop nginx &amp;&amp; docker rm nginx
+<pre tabindex="0"><code>$ docker stop nginx &amp;&amp; docker rm nginx
 $ docker pull nginx
 $ docker run -d --name nginx -p 8080:80 -v ~/index.html:/usr/share/nginx/html/index.html:ro nginx
 </code></pre><blockquote>
@@ -170,11 +165,11 @@ $ docker run -d --name nginx -p 8080:80 -v ~/index.html:/usr/share/nginx/html/in
             
             <a href="/tags/containers">#containers</a>
             
-            <a href="/tags/nginx">#Nginx</a>
+            <a href="/tags/nginx">#nginx</a>
             
             <a href="/tags/web-server">#web server</a>
             
-            <a href="/tags/docker">#Docker</a>
+            <a href="/tags/docker">#docker</a>
             
             
         </div>
@@ -183,21 +178,20 @@ $ docker run -d --name nginx -p 8080:80 -v ~/index.html:/usr/share/nginx/html/in
 
         </main><footer>
     <li>
-        <a href="https://unamelinux.com/license">&copy; 2021 Peter Buffon</a>
+        <a href="/license">&copy; 2022 Peter Buffon</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
     </li>
     <li>
         <a href="https://twitter.com/petebuffon">
-            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+            <img src="/img/Twitter_Logo_Blue.svg" height="50px">
         </a>
     </li>
     <li>
         <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
-            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+            <img src="/img/64px-Telegram_logo.svg.png" height="35px">
         </a>
     </li>
-</footer>
-</body>
+</footer></body>
 </html>

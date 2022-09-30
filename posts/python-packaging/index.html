@@ -7,45 +7,40 @@
   <title>
     uname Linux
     </title>
-  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
-  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="stylesheet" href="/css/style-min.css">
+
+  <link rel="shortcut icon" href="/favicon.svg">
+
   <meta name="theme-color" content="#ffffff">
-
-  <meta property="og:title" content="Python Packaging"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="uname Linux"/>
-  <meta property="og:description" content="Python packaging is confusing.  A brief history of Python packaging is explored, followed by an in depth look at modern Python packaging tooling."/>
-  <meta property="og:url" content="https://unamelinux.com/posts/python-packaging/"/>
-  <meta property="og:image" content=""/>
-  <meta property="twitter:image" content="" />
-  <meta property="twitter:creator" content="@petebuffon" />
-
-  <link rel="icon" href="https://unamelinux.com/favicon.svg">
-  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
-  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
-  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body><nav>
     <li>
-        <a href="https://unamelinux.com/">
-            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        <a href="/">
+            <img src="/logo-small.svg" width="66px">
         </a>
     </li>
     <li>
-        <a href="https://unamelinux.com/about">About</a>
+        <a href="/about">About</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/contact">Contact</a>
+        <a href="/projects">Projects</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/theme">Theme</a>
+        <a href="/contact">Contact</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/tags">Tags</a>
+        <a href="/theme">Theme</a>
+    </li>
+    <li>
+        <a href="/tags">Tags</a>
     </li>
     <li class="align-right">
         <a href="https://github.com/petebuffon">
-            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+            <img src="/img/GitHub-Mark-Light-64px.png" height="35px">
         </a>
     </li>
 </nav>
@@ -68,28 +63,28 @@
 <p>I&rsquo;m going to suggest instead we go directly to the <a href="https://setuptools.readthedocs.io/en/latest/userguide/index.html" title="setuptools documentation">Setuptools documentation</a> and took a look at their most up-to-date packaging guide.</p>
 <h2 id="project-structure">Project Structure</h2>
 <p>Let&rsquo;s start an example project called meowproject.  Meowproject is a simple Python package that will print &ldquo;Meow!&rdquo; when run.  We want a directory structure with the following standard format:</p>
-<pre><code>meowpkg
+<pre tabindex="0"><code>meowpkg
 ├── meowpkg
 │   ├── __init__.py
 │   └── meow.py
 ├── pyproject.toml
 └── setup.cfg
 </code></pre><p>Let&rsquo;s go through these files one by one.  If we follow the instructions on the <a href="https://setuptools.readthedocs.io/en/latest/userguide/quickstart.html" title="setuptools quickstart">Setuptools quickstart</a> guide we should first create a simple pyproject.toml file:</p>
-<pre><code>[build-system]
-requires = [&quot;setuptools&quot;, &quot;wheel&quot;]
-build-backend = &quot;setuptools.build_meta&quot;
+<pre tabindex="0"><code>[build-system]
+requires = [&#34;setuptools&#34;, &#34;wheel&#34;]
+build-backend = &#34;setuptools.build_meta&#34;
 </code></pre><p>Our <strong>init</strong>.py file will remain empty and we&rsquo;ll create our simple meow.py script:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
-  <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Meow!&#34;</span>)
-</code></pre></div><p>Next we&rsquo;ll create a setup.cfg which will contain the meat of our packaging configuration:</p>
-<pre><code>[metadata]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>  print(<span style="color:#e6db74">&#34;Meow!&#34;</span>)
+</span></span></code></pre></div><p>Next we&rsquo;ll create a setup.cfg which will contain the meat of our packaging configuration:</p>
+<pre tabindex="0"><code>[metadata]
 name = meowpkg
 version = 0.0.1
 
 [options]
 packages = find:
 install_requires =
-  python_version &gt;= &quot;3.8&quot;
+  python_version &gt;= &#34;3.8&#34;
 
 [options.entry_points]
 console_scripts =
@@ -103,7 +98,7 @@ console_scripts =
 <h2 id="venv">Venv</h2>
 <p>Before we move on I thought I would mention the module <a href="https://docs.python.org/3/library/venv.html" title="venv">Venv</a>, which allows for the creation of virtual environments, each having their own Python binary and independent set of installed Python Packages.</p>
 <p>Let&rsquo;s create a virtual environment for our new package:</p>
-<pre><code>$ cd ~/meowpkg
+<pre tabindex="0"><code>$ cd ~/meowpkg
 python -m venv venv
 source venv/bin/activate
 </code></pre><p>Here we set up our new virtual environment in a directory called venv.  I like this method because it separates environment files from the rest of the project and reduces clutter.  We then activate our environment with <strong>source venv/bin/activate</strong> to enter the environment, which can be seen with a change to in our terminal <strong>(venv)</strong>.</p>
@@ -112,12 +107,12 @@ source venv/bin/activate
 </blockquote>
 <h2 id="setuptools">Setuptools</h2>
 <p>We&rsquo;ll need to install a <a href="https://www.python.org/dev/peps/pep-0517/" title="pep517">pep517</a> compatible builder.  Even though it&rsquo;s a fairly new project, let&rsquo;s install <a href="https://pypa-build.readthedocs.io/en/latest/">build</a>, build meowpkg in the current directory, and install the generated wheel file in the resulting <strong>dist</strong> directory:</p>
-<pre><code>$ (venv) python -m pip install build
+<pre tabindex="0"><code>$ (venv) python -m pip install build
 $ (venv) python -m build .
 $ (venv) cd dist
 $ (venv) python -m pip install meowpkg-0.0.1-py3-none-any.whl
 </code></pre><p>Finally let&rsquo;s test out our new program</p>
-<pre><code>(venv) $ meow
+<pre tabindex="0"><code>(venv) $ meow
 Meow!
 </code></pre><p>Success!</p>
 <h2 id="distribute">Distribute</h2>
@@ -125,21 +120,21 @@ Meow!
 <h2 id="zipapp">Zipapp</h2>
 <p><a href="https://docs.python.org/3/library/zipapp.html" title="zipapp">Zipapp</a> is a module used to create zip files of Python code, allowing them to be directly run by the Python interpreter.  This allows for self-contained and executable single file Python programs, which only Python itself.  In this case a single file could be uploaded to a public or private repo, such Github and downloaded directly.</p>
 <p>Here we have a similar file and directory structure as the previous example, but we are missing the venv directory, and the pyproject.toml and setup.cfg files as they are not necessary. Let&rsquo;s generate an executable archive from our meowpkg directory:</p>
-<pre><code>$ python -m zipapp meowpkg -p &quot;/usr/bin/env python3&quot; -m &quot;meow:main&quot; -o meow_0.0.1
+<pre tabindex="0"><code>$ python -m zipapp meowpkg -p &#34;/usr/bin/env python3&#34; -m &#34;meow:main&#34; -o meow_0.0.1
 </code></pre><p>Here we are calling the zipapp module, specifying the &ldquo;meowpkg&rdquo; directory to archive, specifying the correct Python interpreter to use, what script to use as the entrypoint, and an output filename.</p>
 <p>Now let&rsquo;s test out our self-contained package in a fresh environment.  We&rsquo;ll go ahead and use a container for this:</p>
-<pre><code>$ podman run -it --rm -v ./meow_0.0.1:/meow:Z docker.io/python:slim /meow_0.0.1
+<pre tabindex="0"><code>$ podman run -it --rm -v ./meow_0.0.1:/meow:Z docker.io/python:slim /meow_0.0.1
 Meow!
 </code></pre><blockquote>
 <p>Note: If you specify the interpreter as &ldquo;/usr/bin/python&rdquo; or &ldquo;/usr/bin/python3&rdquo; issues could arise depending on how specific distributions name their Python interpreters.</p>
 </blockquote>
 <p>Alright what if our package has dependencies?  Simply install the dependencies in the source directory and then build:</p>
-<pre><code>$ python -m pip install PyYaml --target .
+<pre tabindex="0"><code>$ python -m pip install PyYaml --target .
 $ ls
 build  meow_0.0.1  meowpkg.egg-info  PyYAML-5.3.1.dist-info  venv
 dist   meowpkg     pyproject.toml    setup.cfg               yaml
 </code></pre><p>We could alternatively create a <strong>requirements.txt</strong> if the project had a large number of dependencies:</p>
-<pre><code>$ python -m pip install -r requirements.txt --target .
+<pre tabindex="0"><code>$ python -m pip install -r requirements.txt --target .
 </code></pre><p>Hopefully that cleared up some of the confusion with creating Python packages.  With a solid foundation, modern Python package tooling is actually pretty straight forward to use.</p>
 
         <div class="tag">
@@ -160,21 +155,20 @@ dist   meowpkg     pyproject.toml    setup.cfg               yaml
 
         </main><footer>
     <li>
-        <a href="https://unamelinux.com/license">&copy; 2021 Peter Buffon</a>
+        <a href="/license">&copy; 2022 Peter Buffon</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
     </li>
     <li>
         <a href="https://twitter.com/petebuffon">
-            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+            <img src="/img/Twitter_Logo_Blue.svg" height="50px">
         </a>
     </li>
     <li>
         <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
-            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+            <img src="/img/64px-Telegram_logo.svg.png" height="35px">
         </a>
     </li>
-</footer>
-</body>
+</footer></body>
 </html>

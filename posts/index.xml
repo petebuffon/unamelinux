@@ -61,7 +61,7 @@ I recently finished CS50: Introduction to Computer Science class on edX.</descri
     <item>
       <title>Reverse Proxies</title>
       <link>https://unamelinux.com/posts/reverse-proxy/</link>
-      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 25 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://unamelinux.com/posts/reverse-proxy/</guid>
       <description>A reverse proxy is a server application that sits in front of one or more web servers and forwards client requests to those web servers. Reverse proxies can be used for (but are not limited to):
@@ -139,6 +139,15 @@ The screen of the XPS 13 is fantastic with great color and clarity.</description
     </item>
     
     <item>
+      <title>Virtual Machines</title>
+      <link>https://unamelinux.com/posts/virtual-machines/</link>
+      <pubDate>Fri, 07 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/virtual-machines/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Simple Samba</title>
       <link>https://unamelinux.com/posts/samba/</link>
       <pubDate>Wed, 05 Feb 2020 00:00:00 +0000</pubDate>
@@ -146,6 +155,17 @@ The screen of the XPS 13 is fantastic with great color and clarity.</description
       <guid>https://unamelinux.com/posts/samba/</guid>
       <description>As a first post I thought I would tackle a topic I initially avoided for quite a while, Samba. Setting up a Samba server can be incredibly simple and is a great first step to setting up your own personal cloud at home.
 Sharing files via Samba allows me to go from my desktop to my laptop without skipping a beat. I can also feel at ease because my sensitive files are password protected and remain solely on the LAN.</description>
+    </item>
+    
+    <item>
+      <title>ZFS on Linux</title>
+      <link>https://unamelinux.com/posts/zfs/</link>
+      <pubDate>Sun, 11 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://unamelinux.com/posts/zfs/</guid>
+      <description>I&amp;rsquo;ve known about ZFS for quite a while now, but it has seemed either too complicated or just not the right fit.
+After Jim Salter talked about ZFS on techSNAP and Alex Kretzschmar wrote a great blog post on ZFS, I was conviced me to give it a shot at home.
+What really hit home for me was the lack of redundancy on my current setup at home. Yes I have backups in place in case of catastrophic failure, but I had nothing to prevent data degredation over time.</description>
     </item>
     
     <item>

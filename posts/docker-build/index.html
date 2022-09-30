@@ -7,45 +7,40 @@
   <title>
     uname Linux
     </title>
-  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
-  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="stylesheet" href="/css/style-min.css">
+
+  <link rel="shortcut icon" href="/favicon.svg">
+
   <meta name="theme-color" content="#ffffff">
-
-  <meta property="og:title" content="Docker Build"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="uname Linux"/>
-  <meta property="og:description" content="The third post in a multi-part container series.  How to build and mange your own images in Docker with docker build."/>
-  <meta property="og:url" content="https://unamelinux.com/posts/docker-build/"/>
-  <meta property="og:image" content=""/>
-  <meta property="twitter:image" content="" />
-  <meta property="twitter:creator" content="@petebuffon" />
-
-  <link rel="icon" href="https://unamelinux.com/favicon.svg">
-  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
-  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
-  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body><nav>
     <li>
-        <a href="https://unamelinux.com/">
-            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        <a href="/">
+            <img src="/logo-small.svg" width="66px">
         </a>
     </li>
     <li>
-        <a href="https://unamelinux.com/about">About</a>
+        <a href="/about">About</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/contact">Contact</a>
+        <a href="/projects">Projects</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/theme">Theme</a>
+        <a href="/contact">Contact</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/tags">Tags</a>
+        <a href="/theme">Theme</a>
+    </li>
+    <li>
+        <a href="/tags">Tags</a>
     </li>
     <li class="align-right">
         <a href="https://github.com/petebuffon">
-            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+            <img src="/img/GitHub-Mark-Light-64px.png" height="35px">
         </a>
     </li>
 </nav>
@@ -63,13 +58,13 @@
 <hr>
 <h2 id="dockerfile">Dockerfile</h2>
 <p>Let&rsquo;s create our Dockfile in the compose directory of home.</p>
-<pre><code>$ mkdir -p ~/compose/python-3.8 &amp;&amp; cd ~/compose/python-3.8
+<pre tabindex="0"><code>$ mkdir -p ~/compose/python-3.8 &amp;&amp; cd ~/compose/python-3.8
 </code></pre><p>Here is the Dockerfile we will be building towards in our example:</p>
-<pre><code>FROM ubuntu:18.04
+<pre tabindex="0"><code>FROM ubuntu:18.04
 
 # set up environment
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PYTHON_VERSION=&quot;3.8&quot;
+ENV PYTHON_VERSION=&#34;3.8&#34;
 
 # install dependencies
 RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
@@ -95,7 +90,7 @@ RUN ./configure \
         --with-system-ffi \
         --without-ensurepip
 
-RUN make -j &quot;$(nproc)&quot; &amp;&amp; make install
+RUN make -j &#34;$(nproc)&#34; &amp;&amp; make install
 
 # download and set up pip
 WORKDIR /tmp
@@ -113,33 +108,33 @@ RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
 
 COPY --from=0 /usr/local/bin /usr/local/bin
 COPY --from=0 /usr/local/lib /usr/local/lib
-CMD [&quot;python3&quot;]
+CMD [&#34;python3&#34;]
 </code></pre><h2 id="build">Build</h2>
 <p>Before we examine the Dockerfile in detail, let&rsquo;s go ahead and build our image with the <strong>docker build</strong> command.  Compiling Python will take a few minutes, potentially longer based on your system:</p>
-<pre><code>$ docker build -t petebuffon/python-3.8.2 .
+<pre tabindex="0"><code>$ docker build -t petebuffon/python-3.8.2 .
 </code></pre><p>You can give your image any name you want.  Here to differentiate images from the Docker Hub and images I have created, I am preceding container names with my Github profile name and a slash.  The build command ends with a space a <strong>period</strong> indicating docker should look for a Dockerfile to build from in the current directory.</p>
 <hr>
 <h2 id="instructions-and-layers">Instructions and Layers</h2>
 <p>Each action in a Dockerfile is preceded by an <strong>INSTRUCTION</strong> argument all in UPPERCASE. Instructions in a Dockerfile are run in order during build time.  Each instruction represents a read-only layer which are stacked at build time to form a complete Docker image.  The <strong>RUN</strong>, <strong>COPY</strong>, and <strong>ADD</strong> instructions create layers while all other instructions create temporary intermediate images that do not increase the size of the build.</p>
 <p>When a docker image is run and a container is generated, a new writable layer is added on top of the read-only layers.  All changes made to the container during its lifetime are written to this writable container layer.</p>
 <p>Let&rsquo;s take a look at all of the layers of our image:</p>
-<pre><code>$ docker history petebuffon/python-3.8
+<pre tabindex="0"><code>$ docker history petebuffon/python-3.8
 IMAGE               CREATED              CREATED BY                                      SIZE                COMMENT
-b406a2d3f589        About a minute ago   /bin/sh -c #(nop)  CMD [&quot;python3&quot;]              0B                  
+b406a2d3f589        About a minute ago   /bin/sh -c #(nop)  CMD [&#34;python3&#34;]              0B                  
 7f21428b44b9        About a minute ago   /bin/sh -c #(nop) COPY dir:c33605b876f922410…   221MB               
 31934cf85de9        About a minute ago   /bin/sh -c #(nop) COPY dir:de52b8b155bffd961…   17.3MB              
 b683d2cbe1de        About a minute ago   /bin/sh -c apt-get update &amp;&amp; apt-get install…   6.35MB              
-4e5021d210f6        2 weeks ago          /bin/sh -c #(nop)  CMD [&quot;/bin/bash&quot;]            0B                  
-&lt;missing&gt;           2 weeks ago          /bin/sh -c mkdir -p /run/systemd &amp;&amp; echo 'do…   7B                  
-&lt;missing&gt;           2 weeks ago          /bin/sh -c set -xe   &amp;&amp; echo '#!/bin/sh' &gt; /…   745B                
-&lt;missing&gt;           2 weeks ago          /bin/sh -c [ -z &quot;$(apt-get indextargets)&quot; ]     987kB               
+4e5021d210f6        2 weeks ago          /bin/sh -c #(nop)  CMD [&#34;/bin/bash&#34;]            0B                  
+&lt;missing&gt;           2 weeks ago          /bin/sh -c mkdir -p /run/systemd &amp;&amp; echo &#39;do…   7B                  
+&lt;missing&gt;           2 weeks ago          /bin/sh -c set -xe   &amp;&amp; echo &#39;#!/bin/sh&#39; &gt; /…   745B                
+&lt;missing&gt;           2 weeks ago          /bin/sh -c [ -z &#34;$(apt-get indextargets)&#34; ]     987kB               
 &lt;missing&gt;           2 weeks ago          /bin/sh -c #(nop) ADD file:594fa35cf803361e6…   63.2MB 
 </code></pre><p>A Dockerfile must begin with a <strong>FROM</strong> instruction, which specifies the parent image.  Docker treats lines that begin with <strong>#</strong> as a comment.  Add any necessary environment variables with the <strong>ENV</strong> instruction and set the working directory with the <strong>WORKDIR</strong> instruction.</p>
 <p>Each <strong>RUN</strong> instruction precedes a single command to the base OS of the container image.  Multiple commands can be strung together with <strong>&amp;&amp;</strong> in order to reduce the number layers in the final image.  If any changes are made to the Dockerfile and the build command is run again, only the changed layers will have to be rebuilt.</p>
 <hr>
 <h2 id="multi-stage-builds-and-cmd">multi-stage builds and CMD</h2>
 <p>Invoking a second <strong>FROM</strong> instruction in a Dockerfile sets up a multi-stage build.  Here our final container image is based on a fresh Ubuntu 18.04 image.  The <strong>COPY</strong> instruction copies files or directories from one location to another.  Here we are copying the <strong>/usr/local/bin</strong> and <strong>/usr/local/lib</strong> directories from our first stage (denoted with &ndash;from=0) to our fresh image.</p>
-<pre><code>$ docker images
+<pre tabindex="0"><code>$ docker images
 REPOSITORY              TAG                 IMAGE ID            CREATED             SIZE
 petebuffon/python-3.8   latest              b406a2d3f589        21 hours ago        309MB
 &lt;none&gt;                  &lt;none&gt;              e7e5b2133bf4        21 hours ago        874MB
@@ -149,13 +144,13 @@ ubuntu                  18.04               4e5021d210f6        2 weeks ago     
 <p>Note: Base images such as Alpine can reduce image sizes even further.  The current Alpine base image is a lean 5.95MB.</p>
 </blockquote>
 <p>There can be only one <strong>CMD</strong> instruction in a Dockerfile.  A <strong>CMD</strong> instruction often specifies an executable, in our case, <strong>python3</strong>.  The preferred form of the <strong>CMD</strong> instruction is: CMD [&ldquo;executable&rdquo;,&ldquo;param1&rdquo;,&ldquo;param2&rdquo;].  When a new container is spun up without a command specified, the container will default to running the contents of the <strong>CMD</strong> instruction:</p>
-<pre><code>$ docker run -it --rm petebuffon/python-3.8
+<pre tabindex="0"><code>$ docker run -it --rm petebuffon/python-3.8
 Python 3.8.2+ (heads/3.8:6318e45, Apr  8 2020, 19:35:50) 
 [GCC 7.5.0] on linux
-Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+Type &#34;help&#34;, &#34;copyright&#34;, &#34;credits&#34; or &#34;license&#34; for more information.
 &gt;&gt;&gt;
 </code></pre><p>When a new container is spun up with a command specified, the <strong>CMD</strong> instruction is not run and replaced by the specified command.</p>
-<pre><code>$ docker run -it --rm petebuffon/python-3.8 /bin/bash
+<pre tabindex="0"><code>$ docker run -it --rm petebuffon/python-3.8 /bin/bash
 root@d256094e3573:/#
 </code></pre><p>We now have a fully functional python-3.8 container image ready for use.  You can just use it yourself or even upload it to the <a href="https://dockerhub.com">Docker Hub</a>.  Creating functional images can take some work and perhaps require many iterations to get them just right.</p>
 <p>Leveraging layers in the images can help reduce build time between steps.  Sometimes it can help to run a container from a base image directly to get a more immediate and interactive response to troublesome commands.</p>
@@ -163,13 +158,13 @@ root@d256094e3573:/#
 <h2 id="updates">Updates</h2>
 <p>Over time both your parent image and the packages installed on your image will become outdated.  In order to update your own containers you will have to re-run the build command, stop any running containers, and re-create them.  If you utilize Compose, this process is fairly streamlined.</p>
 <p>You can set up your own images in Compose with the following syntax in your docker-compose.yaml file:</p>
-<pre><code>version: '2'
+<pre tabindex="0"><code>version: &#39;2&#39;
 services:
   python-3.8:
     build: ./python-3.8
     restart: unless-stopped
 </code></pre><p>In order to update your own images with Compose, run:</p>
-<pre><code>$ docker-compose build --pull 
+<pre tabindex="0"><code>$ docker-compose build --pull 
 $ docker-compose up -d
 </code></pre><p>You should now be relatively comfortable with building Docker images.  Be sure to check out Docker&rsquo;s <a href="https://docs.docker.com/engine/reference/builder/">Dockerfile reference</a> and <a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">Best practices for writing Dockerfiles</a> documentation.  Well that should just about wrap it up for Docker.  Next time we&rsquo;ll be looking at another Linux Container implementation, <strong>LXD</strong>.</p>
 <hr>
@@ -179,9 +174,9 @@ $ docker-compose up -d
             
             <a href="/tags/containers">#containers</a>
             
-            <a href="/tags/python">#Python</a>
+            <a href="/tags/python">#python</a>
             
-            <a href="/tags/docker">#Docker</a>
+            <a href="/tags/docker">#docker</a>
             
             
         </div>
@@ -190,21 +185,20 @@ $ docker-compose up -d
 
         </main><footer>
     <li>
-        <a href="https://unamelinux.com/license">&copy; 2021 Peter Buffon</a>
+        <a href="/license">&copy; 2022 Peter Buffon</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
     </li>
     <li>
         <a href="https://twitter.com/petebuffon">
-            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+            <img src="/img/Twitter_Logo_Blue.svg" height="50px">
         </a>
     </li>
     <li>
         <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
-            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+            <img src="/img/64px-Telegram_logo.svg.png" height="35px">
         </a>
     </li>
-</footer>
-</body>
+</footer></body>
 </html>

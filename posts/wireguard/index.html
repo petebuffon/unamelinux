@@ -7,45 +7,40 @@
   <title>
     uname Linux
     </title>
-  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
-  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="stylesheet" href="/css/style-min.css">
+
+  <link rel="shortcut icon" href="/favicon.svg">
+
   <meta name="theme-color" content="#ffffff">
-
-  <meta property="og:title" content="WireGuard"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="uname Linux"/>
-  <meta property="og:description" content="Some thoughts on why you might want a VPN server at home, the advantages of using WireGuard, and finally a step by step guide on installing a WireGuard VPN server at home."/>
-  <meta property="og:url" content="https://unamelinux.com/posts/wireguard/"/>
-  <meta property="og:image" content=""/>
-  <meta property="twitter:image" content="" />
-  <meta property="twitter:creator" content="@petebuffon" />
-
-  <link rel="icon" href="https://unamelinux.com/favicon.svg">
-  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
-  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
-  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body><nav>
     <li>
-        <a href="https://unamelinux.com/">
-            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        <a href="/">
+            <img src="/logo-small.svg" width="66px">
         </a>
     </li>
     <li>
-        <a href="https://unamelinux.com/about">About</a>
+        <a href="/about">About</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/contact">Contact</a>
+        <a href="/projects">Projects</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/theme">Theme</a>
+        <a href="/contact">Contact</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/tags">Tags</a>
+        <a href="/theme">Theme</a>
+    </li>
+    <li>
+        <a href="/tags">Tags</a>
     </li>
     <li class="align-right">
         <a href="https://github.com/petebuffon">
-            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+            <img src="/img/GitHub-Mark-Light-64px.png" height="35px">
         </a>
     </li>
 </nav>
@@ -88,10 +83,10 @@
 <p>WireGuard was incorporated into the 5.6 Linux Kernel and backported into the 5.4 Kernel (in time for the Ubuntu 20.04 release) making installation on Focal Fossa a breeze.</p>
 <p>For this tutorial I will be setting up a WireGuard Ubuntu 20.04 container using lxd on a Ubuntu 20.04 server.  The container will map the arbitrary port 51820 with the host server.  This project requires either a static public ip address or dynamic DNS and the ability to forward ports on your router.  I completed this tutorial with a pfSense router and dynamic DNS set up using Cloudflare&rsquo;s free service with a purchased domain.</p>
 <p>Create a new lxd container:</p>
-<pre><code>$ lxc launch ubuntu:20.04 wireguard
+<pre tabindex="0"><code>$ lxc launch ubuntu:20.04 wireguard
 $ lxc exec wireguard -- /bin/bash
 </code></pre><p>Install WireGuard and configure container firewall:</p>
-<pre><code># apt update &amp;&amp; apt upgrade -y
+<pre tabindex="0"><code># apt update &amp;&amp; apt upgrade -y
 # apt install -y wireguard
 # ufw allow 51820 &amp;&amp; ufw enable
 </code></pre><h2 id="keys">Keys</h2>
@@ -100,12 +95,12 @@ $ lxc exec wireguard -- /bin/bash
 <p>Note: The specific keys used in this example have already been deleted and are not in use.</p>
 </blockquote>
 <p>Generate WireGuard keys:</p>
-<pre><code># cd /etc/wireguard &amp;&amp; umask 077
+<pre tabindex="0"><code># cd /etc/wireguard &amp;&amp; umask 077
 # wg genkey | tee server.key | wg pubkey &gt; server.pub
 # wg genkey | tee peer_a.key | wg pubkey &gt; peer_a.pub
 # wg genkey | tee peer_b.key | wg pubkey &gt; peer_b.pub
 </code></pre><p>Keys needed for wg0.conf (copy your own keys generated in the previous step):</p>
-<pre><code># cat server.key
+<pre tabindex="0"><code># cat server.key
 SCURF86WoPr4rsOaKNbtfw9EVSsozu27AkXEHWBNtmM=
 # cat peer_a.pub
 GQaw2aYS4N5UNy1r4WWunVpjXU3YuEHwOsXWhsag/g8=
@@ -113,7 +108,7 @@ GQaw2aYS4N5UNy1r4WWunVpjXU3YuEHwOsXWhsag/g8=
 EcVSOjJ7y6wVAZkwq20b8DBJzwUVqBFc2CjYU3XF0F4=
 </code></pre><h2 id="server-config">Server Config</h2>
 <p>Server and client IP addresses have been chosen for simplicity.  A third client would have IP address 10.200.200.4/32 in the server config and 10.200.200.4/24 in the client config.</p>
-<pre><code># vim /etc/wireguard/wgo.conf
+<pre tabindex="0"><code># vim /etc/wireguard/wgo.conf
 [Interface]
 Address = 10.200.200.1/24
 ListenPort = 51820
@@ -134,12 +129,12 @@ AllowedIPs = 10.200.200.3/32
 </code></pre><h2 id="client-configs">Client Configs</h2>
 <p>In my case I am setting the DNS server of my clients to the IP address of my router.  If your router has a DHCP server you can do the same or set client DNS to any other DNS server e.g. Cloudflare (1.1.1.1) or Google (8.8.8.8).</p>
 <p>Keys needed for peer_a.conf</p>
-<pre><code># cat peer_a.key
+<pre tabindex="0"><code># cat peer_a.key
 +DRT3xfc7Hkf9I+HX1tKPXje/uTn1hxHO0KFkvkncGk=
 # cat server.pub
 YR1hPdS+kkhgHh0sC9zNaat9oACAb6eKjlKHjxmd7k8=
 </code></pre><p>Peer A config file:</p>
-<pre><code># vim /etc/wireguard/peer_a.conf
+<pre tabindex="0"><code># vim /etc/wireguard/peer_a.conf
 [Interface]
 Address = 10.200.200.2/24
 PrivateKey = +DRT3xfc7Hkf9I+HX1tKPXje/uTn1hxHO0KFkvkncGk=
@@ -150,12 +145,12 @@ PublicKey = YR1hPdS+kkhgHh0sC9zNaat9oACAb6eKjlKHjxmd7k8=
 AllowedIPs = 0.0.0.0/0, ::/0
 Endpoint = wireguard.example.com:51820
 </code></pre><p>Keys needed for peer_b.conf</p>
-<pre><code># cat peer_b.key
+<pre tabindex="0"><code># cat peer_b.key
 cPLzRaCjo95KV4lK8n7sVg67x5Pg5OA56qv+l0AHNnc=
 # cat server.pub
 YR1hPdS+kkhgHh0sC9zNaat9oACAb6eKjlKHjxmd7k8=
 </code></pre><p>Peer B config file:</p>
-<pre><code># vim /etc/wireguard/peer_b.conf
+<pre tabindex="0"><code># vim /etc/wireguard/peer_b.conf
 [Interface]
 Address = 10.200.200.3/24
 PrivateKey = cPLzRaCjo95KV4lK8n7sVg67x5Pg5OA56qv+l0AHNnc=
@@ -166,11 +161,11 @@ PublicKey = YR1hPdS+kkhgHh0sC9zNaat9oACAb6eKjlKHjxmd7k8=
 AllowedIPs = 0.0.0.0/0, ::/0
 Endpoint = wireguard.example.com:51820
 </code></pre><p>Enable and start WireGuard service</p>
-<pre><code># systemctl enable --now wg-quick@wg0.service
+<pre tabindex="0"><code># systemctl enable --now wg-quick@wg0.service
 # exit
 </code></pre><h2 id="firewalls-and-port-forwarding">Firewalls and Port Forwarding</h2>
 <p>Add a LXD proxy device to map ports between the host server and the wireguard container:</p>
-<pre><code>$ lxc config device add wireguard myport51820 proxy listen=udp:0.0.0.0:51820 connect=udp:127.0.0.1:51820
+<pre tabindex="0"><code>$ lxc config device add wireguard myport51820 proxy listen=udp:0.0.0.0:51820 connect=udp:127.0.0.1:51820
 </code></pre><p>Port forwarding is fairly straightforward in pfSense.  First navigate to the pfSense web GUI.  From the top menu select Firewall &gt; NAT and click Add rule.  Change Protocol to UDP, enter 51820 in the Destination port range line&rsquo;s first Custom box, enter the host server&rsquo;s IP address in the Redirect target IP line, and enter 51820 in the Redirect target port line&rsquo;s Custom box.</p>
 <picture>
     <source srcset="port-forward.webp" type="image/webp">
@@ -185,7 +180,7 @@ Endpoint = wireguard.example.com:51820
 </picture>
 <h2 id="client-test">Client test</h2>
 <p>I will be using an iPhone 7 as a client.  The easiest method to transfer a WireGuard config file to a mobile device is by using a qrcode.  You can either send the qrcode to straight to stdout or save it as a bitmap file.</p>
-<pre><code>$ lxc exec wireguard -- /bin/bash
+<pre tabindex="0"><code>$ lxc exec wireguard -- /bin/bash
 # apt install -y qrencode
 $ qrencode -t ansiutf8 -r peer_a.conf
 $ qrencode -t png -r peer_a.conf -o peer_a.png
@@ -202,7 +197,7 @@ $ qrencode -t png -r peer_a.conf -o peer_a.png
 </picture>
 <p>Install the WireGuard app for iOS and open it up.  Tap <strong>Add a tunnel</strong> in the middle of the screen and then tap <strong>Create from QR code</strong>.  Name the tunnel <strong>wg0</strong> and enable it by toggling the on switch.  If testing at home make sure to turn off Wifi and open up a browser to test the VPN connection.  The public IP address on your client device should now match your home public IP address.  You can navigate to a site like <a href="https://www.whatismyip.com" title="whatismyip">whatismyip</a> to check.</p>
 <p>You can also see stats from the wireguard container with the <strong>wg</strong> command.</p>
-<pre><code># wg
+<pre tabindex="0"><code># wg
 interface: wg0
   public key: YR1hPdS+kkhgHh0sC9zNaat9oACAb6eKjlKHjxmd7k8=
   private key: (hidden)
@@ -234,21 +229,20 @@ peer: GQaw2aYS4N5UNy1r4WWunVpjXU3YuEHwOsXWhsag/g8=
 
         </main><footer>
     <li>
-        <a href="https://unamelinux.com/license">&copy; 2021 Peter Buffon</a>
+        <a href="/license">&copy; 2022 Peter Buffon</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
     </li>
     <li>
         <a href="https://twitter.com/petebuffon">
-            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+            <img src="/img/Twitter_Logo_Blue.svg" height="50px">
         </a>
     </li>
     <li>
         <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
-            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+            <img src="/img/64px-Telegram_logo.svg.png" height="35px">
         </a>
     </li>
-</footer>
-</body>
+</footer></body>
 </html>

@@ -7,45 +7,40 @@
   <title>
     uname Linux
     </title>
-  <link rel="stylesheet" href="https://unamelinux.com/css/style-min.css">
-  <link rel="shortcut icon" href="https://unamelinux.com/favicon.svg">
+  <link rel="stylesheet" href="/css/style-min.css">
+
+  <link rel="shortcut icon" href="/favicon.svg">
+
   <meta name="theme-color" content="#ffffff">
-
-  <meta property="og:title" content="Docker Compose and Volumes"/>
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="uname Linux"/>
-  <meta property="og:description" content="The second post in a multi-part container series. An expansion on Docker volumes followed by how to get started with Docker Compose and easily manage multiple containers."/>
-  <meta property="og:url" content="https://unamelinux.com/posts/docker-compose/"/>
-  <meta property="og:image" content=""/>
-  <meta property="twitter:image" content="" />
-  <meta property="twitter:creator" content="@petebuffon" />
-
-  <link rel="icon" href="https://unamelinux.com/favicon.svg">
-  <link rel="mask-icon" href="https://unamelinux.com/mask-icon.svg" color="#000000">
-  <link rel="apple-touch-icon" href="https://unamelinux.com/apple-touch-icon.svg">
-  <link rel="manifest" href="https://unamelinux.com/manifest.json">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="mask-icon" href="/mask-icon.svg" color="#000000">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+  <link rel="manifest" href="/manifest.json">
 </head>
 <body><nav>
     <li>
-        <a href="https://unamelinux.com/">
-            <img src="https://unamelinux.com/logo-small.svg" width="66px">
+        <a href="/">
+            <img src="/logo-small.svg" width="66px">
         </a>
     </li>
     <li>
-        <a href="https://unamelinux.com/about">About</a>
+        <a href="/about">About</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/contact">Contact</a>
+        <a href="/projects">Projects</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/theme">Theme</a>
+        <a href="/contact">Contact</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/tags">Tags</a>
+        <a href="/theme">Theme</a>
+    </li>
+    <li>
+        <a href="/tags">Tags</a>
     </li>
     <li class="align-right">
         <a href="https://github.com/petebuffon">
-            <img src="https://unamelinux.com/img/GitHub-Mark-Light-64px.png" height="35px">
+            <img src="/img/GitHub-Mark-Light-64px.png" height="35px">
         </a>
     </li>
 </nav>
@@ -72,11 +67,11 @@
 <hr>
 <h2 id="installation">Installation</h2>
 <p>Let&rsquo;s begin by installing Compose</p>
-<pre><code># apt update &amp;&amp; apt install -y docker-compose
+<pre tabindex="0"><code># apt update &amp;&amp; apt install -y docker-compose
 </code></pre><blockquote>
 <p>Note: The Docker Compose package in Ubuntu 18.04, currently version 1.17.1-2, lags behind the current release, 1.25.4. If you would prefer a newer version of Compose, I would recommend using Ubuntu 19.10 as a base, which currently includes Compose version 1.21.0-3. Alternatively you can directly download the binary if you would like the absolute latest version of Docker Compose <a href="https://docs.docker.com/compose/install">as seen in the docs</a>:</p>
 </blockquote>
-<pre><code>$ curl -L &quot;https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
+<pre tabindex="0"><code>$ curl -L &#34;https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)&#34; -o /usr/local/bin/docker-compose
 $ chmod +x /usr/local/bin/docker-compose
 </code></pre><blockquote>
 <p>Note: replace the version number with the latest version number.</p>
@@ -86,22 +81,22 @@ $ chmod +x /usr/local/bin/docker-compose
 <hr>
 <h2 id="volumes">Volumes</h2>
 <p>At this point before continuing with Compose, I&rsquo;d like to introduce another Docker concept, volumes. Volumes allow for persistent data storage and are managed completely by Docker. I introduced a related topic in the last post, <strong>bind mounts</strong>, which are dependent on the directory structure of the host machine as seen here:</p>
-<pre><code>$ docker run -d --name nginx -p 8080:80 -v ~/index.html:/usr/share/nginx/html/index.html:ro nginx
+<pre tabindex="0"><code>$ docker run -d --name nginx -p 8080:80 -v ~/index.html:/usr/share/nginx/html/index.html:ro nginx
 </code></pre><p>While both volumes and bind mounts are called with the <strong>-v</strong> flag and use the <strong>text:text</strong> structure, they are differentiated with the text contained before the colon. Bind mounts begin with a path on the host machine and volumes begin with a volume name. The path after the colon designates the mount point on the container file structure. Let&rsquo;s illustrate the same container, but this time using a volume instead of a bind mount:</p>
-<pre><code>$ cd ~/ &amp;&amp; echo 'Hello world!' &gt; index.html
+<pre tabindex="0"><code>$ cd ~/ &amp;&amp; echo &#39;Hello world!&#39; &gt; index.html
 $ docker run -d --name nginx -p 8080:80 -v nginx_static:/usr/share/nginx/html nginx
 $ docker cp ~/index.html nginx:/usr/share/nginx/html/
 $ docker restart nginx
 </code></pre><p>In a browser navigate to localhost:8080 or host_ip_address:8080 and you should find the <strong>Hello world!</strong> page (you might have to open a private browser tab to avoid cached content). Here we created a new Docker container, <strong>nginx</strong>, and a new volume, <strong>nginx_static</strong>. Nginx_static was populated with the default contents of Nginx&rsquo;s static directory, <strong>/usr/share/nginx/html</strong>. Using the Docker copy command we then copied our custom html to nginx_static mounted in nginx.</p>
 <p>A key feature of volumes is their enduring nature, as opposed to the ephemeral nature of containers. Let&rsquo;s remove our nginx container and create a new one with the same parameters:</p>
-<pre><code>$ docker stop nginx
+<pre tabindex="0"><code>$ docker stop nginx
 nginx
 $ docker rm nginx
 nginx
 $ docker run -d --name nginx -p 8080:80 -v nginx_static:/usr/share/nginx/html nginx
 </code></pre><p>If we had created the nginx container without the nginx_static volume, we would have found the default nginx landing page, but instead we found our custom html file intact (again you may have to open a new private browser window to avoid cached content).</p>
 <p>All volumes on the system can be listed with <strong>docker volume ls</strong> and specific volumes can be deleted with <strong>docker volume rm</strong>:</p>
-<pre><code>$ docker volume ls
+<pre tabindex="0"><code>$ docker volume ls
 DRIVER VOLUME NAME
 local nginx_static
 $ docker stop nginx
@@ -112,29 +107,29 @@ $ docker volume rm nginx_static
 nginx_static
 </code></pre><h2 id="from-docker-to-docker-compose">From Docker to Docker Compose</h2>
 <p>Now that we know a bit about volumes let&rsquo;s continue learning about Compose by making a new directory:</p>
-<pre><code>$ mkdir ~/compose &amp;&amp; cd ~/compose
+<pre tabindex="0"><code>$ mkdir ~/compose &amp;&amp; cd ~/compose
 </code></pre><p>Again let&rsquo;s revisit our simple Nginx container:</p>
-<pre><code>$ docker run -d --name nginx -p 8080:80 --restart unless-stopped nginx
+<pre tabindex="0"><code>$ docker run -d --name nginx -p 8080:80 --restart unless-stopped nginx
 </code></pre><p>Let&rsquo;s create a docker-compse.yaml file with the equivalent Nginx container with the addition of a volume for the nginx static directory:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;2&#39;</span>
-<span style="color:#f92672">services</span>:
-  <span style="color:#f92672">nginx</span>:
-    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx</span>
-    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">nginx</span>
-    <span style="color:#f92672">ports</span>:
-      - <span style="color:#e6db74">&#34;8080:80&#34;</span>
-    <span style="color:#f92672">volumes</span>:
-      - <span style="color:#e6db74">&#34;nginx_static:/usr/share/nginx/html&#34;</span>
-    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">unless-stopped</span>
-<span style="color:#f92672">volumes</span>:
-  <span style="color:#f92672">nginx_static</span>:
-</code></pre></div><blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;2&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">nginx</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">nginx</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;8080:80&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;nginx_static:/usr/share/nginx/html&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">restart</span>: <span style="color:#ae81ff">unless-stopped</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">nginx_static</span>:
+</span></span></code></pre></div><blockquote>
 <p>Note: version &lsquo;2&rsquo; at the beginning of the docker-compose.yaml file will be sufficient for most simple use cases. Docker Compose version &lsquo;3&rsquo; and up incorporated Docker Swarm (Docker&rsquo;s alternatie to Kubernetes) and made minimal changes to the version 2 YAML definitions. <a href="https://docs.docker.com/compose/compose-file/compose-versioning/">Docs reference</a>.</p>
 </blockquote>
 <p>Now with our config file created let&rsquo;s start the container with our first Compose command:</p>
-<pre><code>$ docker-compose up -d
-Creating network &quot;compose_default&quot; with the default driver
-Creating volume &quot;compose_nginx_static&quot; with default driver
+<pre tabindex="0"><code>$ docker-compose up -d
+Creating network &#34;compose_default&#34; with the default driver
+Creating volume &#34;compose_nginx_static&#34; with default driver
 Creating nginx ... 
 Creating nginx ... done
 </code></pre><p>Compose uses a project name (the location of the docker-compose.yaml file, in this case compose) to isolate environments from each other. Networks will be created automatically following the projectName_default naming scheme.</p>
@@ -142,10 +137,10 @@ Creating nginx ... done
 <hr>
 <h2 id="cli">CLI</h2>
 <p>Generally when working with Compose I&rsquo;ll just <strong>cd</strong> into the compose directory first, but you can use the <strong>-f</strong> flag to run Compose commands from any directory:</p>
-<pre><code>$ docker-compose -f /home/pete/compose/docker-compose.yaml up -d
+<pre tabindex="0"><code>$ docker-compose -f /home/pete/compose/docker-compose.yaml up -d
 </code></pre><p>This is especially useful for running Compose commands with scripts.</p>
 <p>In order to update containers you&rsquo;ll run the following:</p>
-<pre><code>$ docker-compose pull &amp;&amp; docker-compose up -d
+<pre tabindex="0"><code>$ docker-compose pull &amp;&amp; docker-compose up -d
 Pulling nginx (nginx:latest)...
 latest: Pulling from library/nginx
 Digest: sha256:2539d4344dd18e1df02be842ffc435f8e1f699cfc55516e2cf2cb16b7a9aea0b
@@ -153,24 +148,24 @@ Status: Image is up to date for nginx:latest
 test_nginx is up-to-date
 </code></pre><p>With the <strong>docker-compose pull</strong> command, Compose will check if any containers specified in the docker-compose.yaml have an updated image, then download any new images as necessary. Then with <strong>docker-compose up -d</strong>, Compose removes and recreates only the containers with updated images. This is a massive improvement from checking for new container images, manually removing them, and then finally recreating from their original run command. Additionally, any volumes will be retained and attached to recreated containers.</p>
 <p>In order to stop and destroy all running containers, use the following command:</p>
-<pre><code>$ docker-compose down
+<pre tabindex="0"><code>$ docker-compose down
 Stopping nginx ... done
 Removing nginx ... done
 Removing network compose_default
 </code></pre><p>You can see all containers and networks were removed, but volumes remained intact. Volumes can also be deleted with the <strong>docker-compose down</strong> command by adding the <strong>-v</strong> flag.</p>
-<pre><code>$ docker-compose down -v
+<pre tabindex="0"><code>$ docker-compose down -v
 Stopping nginx ... done
 Removing nginx ... done
 Removing network compose_default
 Removing volume compose_nginx_static
 </code></pre><p>Additionally if you remove a container&rsquo;s configuration from the docker-compose.yaml file and run <strong>docker-compose up -d</strong> without running <strong>docker-compose down</strong> first, the containers will not be automatically removed from the system:</p>
-<pre><code>$ docker-compose up -d
+<pre tabindex="0"><code>$ docker-compose up -d
 WARNING: Found orphan containers (nginx) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.
 </code></pre><p>You will need to use the <strong>&ndash;remove-orphans</strong> flag:</p>
-<pre><code>$ docker-compose up -d --remove-orphans
-Removing orphan container &quot;nginx&quot;
+<pre tabindex="0"><code>$ docker-compose up -d --remove-orphans
+Removing orphan container &#34;nginx&#34;
 </code></pre><p>Lastly you can either remove orphaned volumes directly with <strong>docker volume rm</strong> or prune all local volumes not used by at least one container:</p>
-<pre><code>$ docker volume prune
+<pre tabindex="0"><code>$ docker volume prune
 WARNING! This will remove all local volumes not used by at least one container.
 Are you sure you want to continue? [y/N] y
 Deleted Volumes:
@@ -178,7 +173,7 @@ compose_nginx_static
 
 Total reclaimed space: 1.106kB
 </code></pre><p>Check out the Compose manual page for additional commands.</p>
-<pre><code>$ man docker-compose
+<pre tabindex="0"><code>$ man docker-compose
 </code></pre><p>Next time we&rsquo;ll continue with Docker by expanding our knowledge of Compose and build some containers from scratch with the <strong>docker</strong> build command.</p>
 <hr>
 
@@ -187,11 +182,11 @@ Total reclaimed space: 1.106kB
             
             <a href="/tags/containers">#containers</a>
             
-            <a href="/tags/nginx">#Nginx</a>
+            <a href="/tags/nginx">#nginx</a>
             
             <a href="/tags/web-server">#web server</a>
             
-            <a href="/tags/docker">#Docker</a>
+            <a href="/tags/docker">#docker</a>
             
             
         </div>
@@ -200,21 +195,20 @@ Total reclaimed space: 1.106kB
 
         </main><footer>
     <li>
-        <a href="https://unamelinux.com/license">&copy; 2021 Peter Buffon</a>
+        <a href="/license">&copy; 2022 Peter Buffon</a>
     </li>
     <li>
-        <a href="https://unamelinux.com/privacy">Privacy Policy</a>
+        <a href="/privacy">Privacy Policy</a>
     </li>
     <li>
         <a href="https://twitter.com/petebuffon">
-            <img src="https://unamelinux.com/img/Twitter_Logo_Blue.svg" height="50px">
+            <img src="/img/Twitter_Logo_Blue.svg" height="50px">
         </a>
     </li>
     <li>
         <a href="https://t.me/joinchat/KnD86BPTALN6747G9_Biog">
-            <img src="https://unamelinux.com/img/64px-Telegram_logo.svg.png" height="35px">
+            <img src="/img/64px-Telegram_logo.svg.png" height="35px">
         </a>
     </li>
-</footer>
-</body>
+</footer></body>
 </html>
